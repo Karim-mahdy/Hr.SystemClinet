@@ -33,6 +33,7 @@ export class EmployeeviewComponent {
           this.employees = this.employees.filter((emp: any) => emp.id != employeeId);
         },
       });
+      
     }
   }
 }

@@ -95,7 +95,8 @@ export class EmployeeformComponent implements OnInit {
         console.log(this.employeeId);
         console.log(this.AddEmployee.valid);
         this.eployeeService.EditEmployee(this.AddEmployee.value, this.employeeId).subscribe({
-          next: (response) => {
+          next: (response:any) => {
+             console.log(response);
             console.log(response.message);
             this.router.navigate(['/Dashboard/Employee']);
           },
@@ -107,8 +108,9 @@ export class EmployeeformComponent implements OnInit {
       else {
        
         this.eployeeService.AddEmployee(this.AddEmployee.value).subscribe({
-          next: (response) => {
-            //console.log(response.message);
+          next: (response:any) => {
+            console.log(response);
+            console.log(response.message);
             this.router.navigate(['/Dashboard/Employee']);
           },
           error: (error) => {

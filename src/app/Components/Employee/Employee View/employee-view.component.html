@@ -1,0 +1,69 @@
+<div class="container my-5 overflow-auto px-5">
+    <h1 class="text-center text-dark mb-3">Employees</h1>
+    <button class="btn btn-secondary mb-4" [routerLink]="['/Dashboard/Employee/Add']">
+      Add New Employee
+    </button>
+  
+    <table
+      id="dt-filter-select"
+      [dtTrigger]="dtTrigger"
+      datatable
+      [dtOptions]="dtoption"
+      class="table pt-3 table-light"
+      cellspacing="0"
+      width="100%"
+    >
+      <thead>
+        <tr>
+          <th class="th-sm">Employee Name</th>
+          <th class="th-sm">Country</th>
+          <th class="th-sm">Salary</th>
+          <th class="th-sm">Department</th>
+          <th class="th-sm">Birthdate</th>
+          <th class="th-sm">Nationality</th>
+          <th class="th-sm">NationalId</th>
+          <th class="th-sm">HireDate</th>
+          <th class="th-sm">ArrivalTime</th>
+          <th class="th-sm">LeaveTime</th>
+          <th class="th-sm">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of employees">
+          <td>{{ e.firstName }} {{ e.lastName }}</td>
+          <td>{{ e.country }}</td>
+          <td>{{ e.salary }}</td>
+          <td>{{ e.deptName }}</td>
+          <td>{{ e.birthDate }}</td>
+          <td>{{ e.nationality }}</td>
+          <td>{{ e.nationalId }}</td>
+          <td>{{ e.hireDate }}</td>
+          <td>{{ e.arrivalTime }}</td>
+          <td>{{ e.leaveTime }}</td>
+          <td class="">
+            <i
+              class="bi bi-pencil-square text-primary mx-2"
+              [routerLink]="['/Dashboard/Employee/Edit',e.id]"
+            ></i>
+            <i class="bi bi-trash3 text-danger " (click)="deletemp(e.id)"></i>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th class="th-sm">Employee Name</th>
+          <th class="th-sm">Country</th>
+          <th class="th-sm">Salary</th>
+          <th class="th-sm">Department</th>
+          <th class="th-sm">Birthdate</th>
+          <th class="th-sm">Nationality</th>
+          <th class="th-sm">NationalId</th>
+          <th class="th-sm">HireDate</th>
+          <th class="th-sm">ArrivalTime</th>
+          <th class="th-sm">LeaveTime</th>
+          <th class="th-sm">Actions</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  

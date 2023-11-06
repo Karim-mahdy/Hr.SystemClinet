@@ -1,0 +1,217 @@
+<link
+  href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+  rel="stylesheet"
+/>
+<!-- SIDEBAR -->
+<section id="sidebar" [ngClass]="{ hide: flag }">
+  <a href="#" class="brand">
+    <i class="bx bxs-smile"></i>
+    <span class="text">Hr System</span>
+  </a>
+  <ul class="side-menu top">
+    <li
+      [routerLink]="['Employee']"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a>
+        <i class="bx bx-group"></i>
+        <span class="text">Employees</span>
+      </a>
+    </li>
+
+    <li
+      [routerLink]="['Depatment']"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a >
+        <i class="bx bxs-building"></i>
+        <span class="text">Departments</span>
+      </a>
+    </li>
+
+    <li
+      [routerLink]="['attendancereport']"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a>
+        <i class="bx bx-check-square"></i>
+        <span class="text">Attendance</span>
+      </a>
+    </li>
+    <li
+      [routerLink]="['employeesalary']"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a>
+        <i class="bx bx-dollar"></i>
+        <span class="text">Salary</span>
+      </a>
+    </li>
+  </ul>
+
+  <ul class="ms-4 mt-2 qq">
+    <li id="dropdown">
+      <a data-bs-toggle="collapse" href="#dropdown-lvl1" class="acc">
+        <i class="bx bx-wallet me-2"></i
+        ><span class="text"> Account Settings</span
+        ><i class="bx bx-chevron-down ms-2 ll"></i>
+        <span class="caret"></span>
+      </a>
+
+      <div id="dropdown-lvl1" class="panel-collapse collapse">
+        <div class="panel-body">
+          <ul class="nav navbar-nav side-menu top mt-0">
+            <li
+              [routerLink]="['users']"
+              [routerLinkActive]="'active'"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <a><i class="bx bx-group"></i>Users</a>
+            </li>
+            <li
+              [routerLink]="['addadmin']"
+              [routerLinkActive]="'active'"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <a><i class="bx bxs-user-plus"></i>New User</a>
+            </li>
+            <li
+              [routerLink]="['userpermissions']"
+              [routerLinkActive]="'active'"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <a><i class="bx bx-group"></i>Rules</a>
+            </li>
+            <li
+              [routerLink]="['w']"
+              [routerLinkActive]="'active'"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <a> <i class="bx bxs-user-plus"></i>New Groups</a>
+            </li>
+            <li
+              [routerLink]="['generalsettings']"
+              [routerLinkActive]="'active'"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <a><i class="bx bxs-cog"></i>General Settings</a>
+            </li>
+            <li
+              [routerLink]="['publicholidays']"
+              [routerLinkActive]="'active'"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <a><i class="bx bxs-cog"></i> Vacations</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
+  </ul>
+
+  <!-- <ul class="ms-4 mt-2 qq">
+    <li id="dropdown">
+      <a data-bs-toggle="collapse" href="#dropdown-lvl11" class="acc">
+        <i class="bx bx-lock-open-alt me-2"></i
+        ><span class="text">Authentication</span>
+        <i class="bx bx-chevron-down ms-2 ll"></i>
+        <span class="caret"></span>
+      </a>
+
+      <div id="dropdown-lvl11" class="panel-collapse collapse">
+        <div class="panel-body">
+          <ul class="nav navbar-nav side-menu top mt-0">
+            <li>
+              <a href="#"><i class="bx bx-group"></i>Users</a>
+            </li>
+            <li>
+              <a href="#"><i class="bx bxs-user-plus"></i>New User</a>
+            </li>
+            <li>
+              <a href="#"><i class="bx bx-group"></i>Groups</a>
+            </li>
+            <li>
+              <a href="#"> <i class="bx bxs-user-plus"></i>New Groups</a>
+            </li>
+            <li>
+              <a href="#"><i class="bx bxs-cog"></i>General Settings</a>
+            </li>
+            <li>
+              <a href="#"><i class="bx bxs-cog"></i> Vacations</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
+  </ul> -->
+  <ul class="side-menu">
+    <li>
+      <a href="#">
+        <i class="bx bxs-cog"></i>
+        <span class="text">Settings</span>
+      </a>
+    </li>
+    <li
+    
+    >
+      <a href="#" class="logout"  >
+        <i class="bx bxs-log-out-circle"></i>
+        <span class="text" >Logout</span>
+      </a>
+    </li>
+  </ul>
+</section>
+<!-- SIDEBAR -->
+
+<!-- CONTENT -->
+<section id="content">
+  <!-- NAVBAR -->
+  <nav>
+    <i class="bx bx-menu" (click)="ToggleSidebar()"></i>
+
+    <form action="#">
+      <div class="form-input">
+        <input type="search" placeholder="Search..." />
+        <button type="submit" class="search-btn">
+          <i class="bx bx-search"></i>
+        </button>
+      </div>
+    </form>
+
+    <a href="#" class="notification">
+      <i class="bx bxs-bell"></i>
+      <span class="num">8</span>
+    </a>
+    <!-- <a href="#" class="profile">
+      <img src="assets/img/1.jpg" />
+    </a> -->
+    <div>
+      <div class="btn-group text-dark">
+        <button
+          class="btn btn-link dropdown-toggle text-dark"
+          type="button"
+          id="defaultDropdown"
+          data-bs-toggle="dropdown"
+          data-bs-auto-close="true"
+          aria-expanded="false"
+        >
+          User Name
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="defaultDropdown">
+          <li><a class="dropdown-item p-2" href="#">profile</a></li>
+          <li><a class="dropdown-item p-2" href="#">Settings</a></li>
+          <li><a class="dropdown-item p-2" href="#" >Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- NAVBAR -->
+
+  <router-outlet></router-outlet>
+  <!-- MAIN -->
+</section>
+<!-- CONTENT -->

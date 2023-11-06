@@ -1,0 +1,349 @@
+<div class="container py-4 eee">
+    <h1 class="text-center text-primary">Employee Salaries</h1>
+  
+    <div class="container mt-5 mb-5">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12 col-md-4 col-lg-2 mt-2">
+              <div class="input-group">
+                <input
+                  type="text"
+                  id="searchInput"
+                  placeholder="Search"
+                  class="form-control"
+                  name="Search"
+                  required
+                />
+                <button type="button" class="btn btn-primary">
+                  <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </div>
+  
+            <div class="d-flex col-12 col-lg-3 text-center mt-2">
+              <label
+                for="yearSelect"
+                class="form-label mx-2 text-primary fs-5 col-2 col-md-3"
+                >Year</label
+              >
+              <input
+                class="form-control"
+                type="number"
+                value="2000"
+                step="1"
+                min="2000"
+                name="Year"
+                formControlName="Year"
+              />
+            </div>
+            <div class="d-flex col-12 col-lg-3 text-center mt-2">
+              <label
+                for="monthSelect"
+                class="form-label mx-2 text-primary fs-5 col-2 col-md-3"
+                >Month</label
+              >
+              <select
+                class="form-select"
+                id="monthSelect"
+                name="selectedMonth"
+                required
+              >
+                <option value="01" disabled selected>January</option>
+                <option value="02">February</option>
+                <option value="03">March</option>
+                <option value="04">April</option>
+                <option value="05">May</option>
+                <option value="06">June</option>
+                <option value="07">July</option>
+                <option value="08">August</option>
+                <option value="09">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+              </select>
+            </div>
+            <div
+              class="d-flex col-12 col-md-12 col-lg-2 justify-content-center mt-2"
+            >
+              <button type="button" class="btn btn-primary w-50">Search</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="container overflow-auto">
+      <table
+        id="dt-filter-select"
+        datatable
+        class="table pt-3 table-light"
+        cellspacing="0"
+        width="100%"
+      >
+        <thead>
+          <tr>
+            <th class="th-sm">Employee Name</th>
+            <th class="th-sm">Department</th>
+            <th class="th-sm">Basic Salary</th>
+            <th class="th-sm">Attendance Days</th>
+            <th class="th-sm">Absence Days</th>
+            <th class="th-sm">Additional Hours</th>
+            <th class="th-sm">Discount per Hour</th>
+            <th class="th-sm">Total Discount</th>
+            <th class="th-sm">Net Salary</th>
+            <th class="th-sm">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>System </td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>
+              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
+              <i class="bi bi-printer mx-2 text-primary"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          
+          
+        </tbody>
+        
+      </table>
+    </div>
+  </div>
+  

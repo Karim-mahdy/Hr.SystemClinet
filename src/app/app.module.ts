@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './Components/Dashboard/dashboard.component';
@@ -11,6 +10,9 @@ import { DataTablesModule } from "angular-datatables";
 import { HttpClientModule } from '@angular/common/http';
 import { EmployeeformComponent } from './Components/Employee/Employee Form/employee-form.component';
 import { EmployeeviewComponent } from './Components/Employee/Employee View/employee-view.component';
+import { SalaryReportsComponent } from './Components/Salary/salary-reports.component';
+import { AttendanceformComponent } from './Components/Attendance/Attendance Form/attendanceform.component';
+import { AttendanceviewComponent } from './Components/Attendance/Attendance View/attendanceview.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,9 @@ import { EmployeeviewComponent } from './Components/Employee/Employee View/emplo
     DepartmentFormComponent,
     EmployeeformComponent,
     EmployeeviewComponent,
+    SalaryReportsComponent,
+    AttendanceformComponent,
+    AttendanceviewComponent,
   ],
   imports: [
     BrowserModule,

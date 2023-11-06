@@ -1,0 +1,275 @@
+<div class="container py-4 bg-light">
+    <h3 class="text-center text-dark">
+      Employee Attendance and Departure Report
+    </h3>
+  
+    <div class="container mt-5 mb-2">
+      <div class="d-flex justify-content-between">
+        <div>
+          <div class="d-flex">
+            <button type="button" class="btn btn-primary btn-sm">Excel</button>
+            <button
+              type="button"
+              class="btn btn-primary btn-sm mx-2"
+              [routerLink]="['/Dashboard/Attendance/Add']"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+        <div>
+          <div class="d-flex justify-content-end">
+            <div class="input-group">
+              <input
+                type="search"
+                id="searchInput"
+                placeholder="Search"
+                class="form-control form-control-sm"
+              />
+              <button type="button" class="btn btn-primary">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row mt-2">
+        <div class="col-md-6">
+          <form>
+            <div class="d-flex">
+              <button type="button" class="btn btn-primary btn-sm me-2">
+                From
+              </button>
+              <input
+                class="form-control form-control-sm me-2"
+                type="date"
+                name="date"
+              />
+              <button type="button" class="btn btn-primary btn-sm me-2">
+                To
+              </button>
+              <input
+                class="form-control form-control-sm me-2"
+                type="date"
+                name="date"
+              />
+              <button type="button" class="btn btn-primary btn-sm me-2">
+                Show
+              </button>
+            </div>
+          </form>
+        </div>
+  
+        <div class="col-md-4">
+          <div class="d-flex justify-content-end">
+            <i class="bi bi-file-earmark-pdf h3 mx-2 text-danger"></i>
+            <i class="bi bi-printer h3 text-primary"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container overflow-auto">
+      <table
+        id="dt-filter-select"
+        datatable
+        class="table pt-3 table-light"
+        cellspacing="0"
+        width="100%"
+      >
+        <thead>
+          <tr>
+            <th class="th-sm">Department</th>
+            <th class="th-sm">Employee Name</th>
+            <th class="th-sm">Time Attendance</th>
+            <th class="th-sm">Leaving Time</th>
+            <th class="th-sm">Date</th>
+            <th class="th-sm">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr >
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>
+              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
+              <i class="bi bi-printer mx-2 text-primary"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>
+              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
+              <i class="bi bi-printer mx-2 text-primary"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>
+              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
+              <i class="bi bi-printer mx-2 text-primary"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>
+              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
+              <i class="bi bi-printer mx-2 text-primary"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>
+              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
+              <i class="bi bi-printer mx-2 text-primary"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>
+              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
+              <i class="bi bi-printer mx-2 text-primary"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>
+              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
+              <i class="bi bi-printer mx-2 text-primary"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>
+              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
+              <i class="bi bi-printer mx-2 text-primary"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>
+              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
+              <i class="bi bi-printer mx-2 text-primary"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>
+              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
+              <i class="bi bi-printer mx-2 text-primary"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>
+              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
+              <i class="bi bi-printer mx-2 text-primary"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>
+              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
+              <i class="bi bi-printer mx-2 text-primary"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>
+              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
+              <i class="bi bi-printer mx-2 text-primary"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>
+              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
+              <i class="bi bi-printer mx-2 text-primary"></i>
+            </td>
+          </tr>
+          <tr>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+            <td>2011/04/25</td>
+            <td>
+              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
+              <i class="bi bi-printer mx-2 text-primary"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

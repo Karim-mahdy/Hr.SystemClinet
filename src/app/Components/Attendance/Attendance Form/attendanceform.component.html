@@ -1,0 +1,124 @@
+<section class="vh-100 gradient-custom sec">
+    <div class="container py-5 h-100">
+      <div class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-lg-9 col-xl-7">
+          <div
+            class="card shadow-2-strong card-registration"
+            style="border-radius: 15px"
+          >
+            <div class="card-body p-4 p-md-5">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Attendance</h3>
+              <form [formGroup]="Employee" (submit)="OnSubmit()">
+                <div class="row">
+                  <div class="col-md-6 mb-2">
+                    <label
+                      for="gender"
+                      class="form-label select-label me-3 d-block"
+                      >Employee Name</label
+                    >
+                    
+                    <select
+                  
+                      id="EmployeeName"
+                      class="select form-control-lg w-100"
+                      formControlName="SelectedOption"
+                      data-live-search="true"
+                    >
+                      <option value="" disabled>Select Name</option>
+                      <option value="2">Male</option>
+                      <option value="3">Female</option>
+                    </select>
+                    <div *ngIf="controls.SelectedOption.touched || submitted">
+                      <p
+                        *ngIf="controls.SelectedOption.hasError('required')"
+                        class="text-danger"
+                      >
+                        Employee Name is required
+                      </p>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-6 mb-2">
+                    <label class="form-label" for="BirthDate"> Date</label>
+                    <input
+                      class="form-control form-control-lg"
+                      id="date"
+                      type="date"
+                      name="date"
+                      formControlName="date"
+                    />
+                    <div *ngIf="controls.date.touched || submitted">
+                      <p
+                        *ngIf="controls.date.hasError('required')"
+                        class="text-danger"
+                      >
+                        BirthDate is required
+                      </p>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="row">
+                  <div class="col-md-6 mb-2 d-flex align-items-center">
+                    <div class="form-outline datepicker w-100">
+                      <label class="form-label" for="ArrivalTime"
+                        >Arrival Time</label
+                      >
+                      <input
+                        type="time"
+                        id="ArrivalTime"
+                        class="form-control form-control-lg"
+                        name="ArrivalTime"
+                        formControlName="ArrivalTime"
+                      />
+                      <div *ngIf="controls.ArrivalTime.touched || submitted">
+                        <p
+                          *ngIf="controls.ArrivalTime.hasError('required')"
+                          class="text-danger"
+                        >
+                          ArrivalTime is required
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-6 mb-2">
+                    <div class="form-outline">
+                      <label class="form-label" for="LeaveTime"
+                        >Leave Time</label
+                      >
+                      <input
+                        type="time"
+                        id="LeaveTime"
+                        class="form-control form-control-lg"
+                        name="LeaveTime"
+                        formControlName="LeaveTime"
+                      />
+                      <div *ngIf="controls.LeaveTime.touched || submitted">
+                        <p
+                          *ngIf="controls.LeaveTime.hasError('required')"
+                          class="text-danger"
+                        >
+                          EmailAddress is required
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="mt-4 pt-2 d-flex justify-content-end">
+                  <input
+                    class="btn btn-lg btn-primary"
+                    type="submit"
+                    value="Submit"
+                  />
+                </div>
+              </form>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

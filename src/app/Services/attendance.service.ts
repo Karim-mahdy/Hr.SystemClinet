@@ -8,7 +8,8 @@ export class AttendanceService {
 
   constructor(private http: HttpClient) {}
 
-  baseUrl: string = ' ';
+  baseUrl: string = 'https://localhost:44343/api/Attendance';
+  EmpsUrl:string= 'https://localhost:44343/api/Attendance/GetEmployeeList';
 
   GetAllAttendance() {
     return this.http.get(this.baseUrl);
@@ -24,5 +25,8 @@ export class AttendanceService {
   }
   DeleteAttendance(attendanceid:number){
     return this.http.delete(`${this.baseUrl}/${attendanceid}`)
+  }
+  GetEmployeeList(){
+    return this.http.get(this.EmpsUrl)
   }
 }

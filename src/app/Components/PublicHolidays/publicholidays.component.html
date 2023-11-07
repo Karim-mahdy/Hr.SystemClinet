@@ -1,0 +1,83 @@
+<section class="vh-100 gradient-custom sec">
+    <div class="container py-5 h-100 ">
+      <div class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-lg-9 col-xl-7">
+          <div
+            class="card shadow-2-strong card-registration"
+            style="border-radius: 15px"
+          >
+            <div class="card-body p-4 p-md-5">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">
+                Public Holiday
+              </h3>
+              <form>
+                <div class="row">
+                  <div class="col-md-5 mb-4">
+                    <div class="form-outline">
+                      <label class="form-label" for="Name">Name</label>
+                      <input
+                        type="text"
+                        id="Name"
+                        class="form-control form-control-lg"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-md-5 mb-4">
+                    <label class="form-label" for="Date"> Date</label>
+                    <input
+                      class="form-control form-control-lg"
+                      id="Date"
+                      type="date"
+                      name="date"
+                    />
+                  </div>
+                  <div class="col-2 mt-4 pt-2 ">
+                      <input
+                        class="btn btn-lg btn-primary"
+                        type="submit"
+                        value="Add"
+                      />
+                    </div>
+                </div>
+  
+               
+              </form>
+  
+              <div class="row">
+                <table 
+                datatable
+                [dtOptions]="dtoption"
+                class="table pt-3 table-light px-2"
+                [dtTrigger]="dtTrigger"
+                width="100%"
+                class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Actions</th>
+                     
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let p of publicHolidays ,let i=index">
+                      
+                      <td>{{i}}</td>
+                      <td>{{p.name}}</td>
+                      <td>{{p.data}}</td>
+                      
+                      <td>
+                        <i class="mx-1 bi bi-pencil-square"></i>
+                        <i class="bi text-danger bi-trash3-fill"></i>
+                      </td>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

@@ -13,6 +13,7 @@ import { EmployeeviewComponent } from './Components/Employee/Employee View/emplo
 import { SalaryReportsComponent } from './Components/Salary/salary-reports.component';
 import { AttendanceformComponent } from './Components/Attendance/Attendance Form/attendanceform.component';
 import { AttendanceviewComponent } from './Components/Attendance/Attendance View/attendanceview.component';
+import { PublicholidaysComponent } from './Components/PublicHolidays/publicholidays.component';
 
 @NgModule({
   declarations: [
@@ -25,13 +26,15 @@ import { AttendanceviewComponent } from './Components/Attendance/Attendance View
     SalaryReportsComponent,
     AttendanceformComponent,
     AttendanceviewComponent,
+    PublicholidaysComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     DataTablesModule,
-    HttpClientModule
+    HttpClientModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

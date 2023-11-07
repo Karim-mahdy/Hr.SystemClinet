@@ -1,3 +1,4 @@
+import { PublicholidaysComponent } from './Components/PublicHolidays/publicholidays.component';
 import { DepartmentFormComponent } from './Components/Department/Department Form/department-form.component';
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -26,6 +27,7 @@ const routes: Routes = [
     {path:'Attendance',component:AttendanceviewComponent},
     {path:'Attendance/Add',component:AttendanceformComponent},
     {path:'Attendance/Edit/:id',component:AttendanceformComponent},
+    {path:'PublicHolidays',component:PublicholidaysComponent},
   ]
 
 }

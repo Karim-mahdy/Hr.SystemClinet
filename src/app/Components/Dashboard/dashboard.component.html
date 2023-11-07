@@ -51,10 +51,30 @@
         <span class="text">Salary</span>
       </a>
     </li>
+    <li
+      [routerLink]="['GeneralSetting']"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a>
+        <i class="bx bxs-cog"></i>
+        <span class="text">GeneralSetting</span>
+      </a>
+    </li>
+    <li
+      [routerLink]="['PublicHolidays']"
+      [routerLinkActive]="'active'"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a>
+        <i class="bx bxs-cog"></i>
+        <span class="text">PublicHolidays</span>
+      </a>
+    </li>
   </ul>
 
-  <ul class="ms-4 mt-2 qq">
-    <li id="dropdown">
+  <ul class="ms-4 mt-2 qq" >
+    <li id="dropdown" >
       <a data-bs-toggle="collapse" href="#dropdown-lvl1" class="acc">
         <i class="bx bx-wallet me-2"></i
         ><span class="text"> Account Settings</span

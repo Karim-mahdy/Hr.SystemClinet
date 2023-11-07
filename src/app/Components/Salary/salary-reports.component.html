@@ -1,11 +1,11 @@
-<div class="container py-4 eee">
-    <h1 class="text-center text-primary">Employee Salaries</h1>
-  
-    <div class="container mt-5 mb-5">
-      <div class="row">
-        <div class="col-12">
-          <div class="row">
-            <div class="col-12 col-md-4 col-lg-2 mt-2">
+<div class="container py-4 eee ">
+  <h1 class="text-center text-primary">Employee Salaries</h1>
+
+  <div class="container mt-5 mb-5">
+    <div class="row">
+      <div class="col-12">
+        <div class="row">
+          <!-- <div class="col-12 col-md-4 col-lg-2 mt-2">
               <div class="input-group">
                 <input
                   type="text"
@@ -19,331 +19,126 @@
                   <i class="bi bi-search"></i>
                 </button>
               </div>
-            </div>
-  
+            </div> -->
+          <form
+            class="row"
+            [formGroup]="filtrationForm"
+            (submit)="OnSubmit($event)"
+          > <div
+          *ngIf="ControlsName.year.touched"
+          class="text-danger ms-5 mt-2 mar"
+        >
+          <div *ngIf="ControlsName.year.hasError('pattern')">
+            Invalid Year
+          </div>
+        </div>
             <div class="d-flex col-12 col-lg-3 text-center mt-2">
               <label
-                for="yearSelect"
+                for="year"
                 class="form-label mx-2 text-primary fs-5 col-2 col-md-3"
                 >Year</label
               >
               <input
                 class="form-control"
                 type="number"
-                value="2000"
+                oninput="javascript: if (this.value.length > 4) this.value = this.value.slice(0, 4);"
                 step="1"
                 min="2000"
-                name="Year"
-                formControlName="Year"
+                name="year"
+                formControlName="year"
               />
             </div>
+
             <div class="d-flex col-12 col-lg-3 text-center mt-2">
               <label
-                for="monthSelect"
+                for="month"
                 class="form-label mx-2 text-primary fs-5 col-2 col-md-3"
                 >Month</label
               >
-              <select
-                class="form-select"
-                id="monthSelect"
-                name="selectedMonth"
-                required
-              >
-                <option value="01" disabled selected>January</option>
-                <option value="02">February</option>
-                <option value="03">March</option>
-                <option value="04">April</option>
-                <option value="05">May</option>
-                <option value="06">June</option>
-                <option value="07">July</option>
-                <option value="08">August</option>
-                <option value="09">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
+              <select class="form-select" id="month" name="month" required>
+                <option
+                  value="1"
+                  [selected]="currentMonth === 1"
+               
+                  selected
+                >
+                  January
+                </option>
+                <option value="2" [selected]="currentMonth === 2">
+                  February
+                </option>
+                <option value="3" [selected]="currentMonth === 3">March</option>
+                <option value="4" [selected]="currentMonth === 4">April</option>
+                <option value="5" [selected]="currentMonth === 5">May</option>
+                <option value="6" [selected]="currentMonth === 6">June</option>
+                <option value="7" [selected]="currentMonth === 7">July</option>
+                <option value="8" [selected]="currentMonth === 8">
+                  August
+                </option>
+                <option value="9" [selected]="currentMonth === 9">
+                  September
+                </option>
+                <option value="10" [selected]="currentMonth === 10">
+                  October
+                </option>
+                <option value="11" [selected]="currentMonth === 11">
+                  November
+                </option>
+                <option value="12" [selected]="currentMonth === 12">
+                  December
+                </option>
               </select>
             </div>
             <div
               class="d-flex col-12 col-md-12 col-lg-2 justify-content-center mt-2"
             >
-              <button type="button" class="btn btn-primary w-50">Search</button>
+              <button type="submit" class="btn btn-primary w-50">Search</button>
             </div>
-          </div>
+           
+          </form>
         </div>
       </div>
     </div>
-  
-    <div class="container overflow-auto">
-      <table
-        id="dt-filter-select"
-        datatable
-        class="table pt-3 table-light"
-        cellspacing="0"
-        width="100%"
-      >
-        <thead>
-          <tr>
-            <th class="th-sm">Employee Name</th>
-            <th class="th-sm">Department</th>
-            <th class="th-sm">Basic Salary</th>
-            <th class="th-sm">Attendance Days</th>
-            <th class="th-sm">Absence Days</th>
-            <th class="th-sm">Additional Hours</th>
-            <th class="th-sm">Discount per Hour</th>
-            <th class="th-sm">Total Discount</th>
-            <th class="th-sm">Net Salary</th>
-            <th class="th-sm">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>System </td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>
-              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
-              <i class="bi bi-printer mx-2 text-primary"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-          </tr>
-          
-          
-        </tbody>
-        
-      </table>
-    </div>
   </div>
-  
+
+  <div class="container overflow-auto">
+    <table
+      id="dt-filter-select"
+      datatable
+      [dtOptions]="dtoption"
+      [dtTrigger]="dtTrigger"
+      class="table pt-3 table-light"
+      cellspacing="0"
+      width="100%"
+    >
+      <thead>
+        <tr>
+          <th class="th-sm">Employee Name</th>
+          <th class="th-sm">Department</th>
+          <th class="th-sm">Basic Salary</th>
+          <th class="th-sm">Attendance Days</th>
+          <th class="th-sm">Absence Days</th>
+          <th class="th-sm">Additional Hours</th>
+          <th class="th-sm">Hourly Discount</th>
+          <th class="th-sm">Total Discount</th>
+          <th class="th-sm">Total Additional</th>
+          <th class="th-sm">Net Salary</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of Reports.salaries">
+          <td>{{ employee.name }}</td>
+          <td>{{ employee.department }}</td>
+          <td>{{ employee.baseSalary }}</td>
+          <td>{{ employee.attendanceDays }}</td>
+          <td>{{ employee.absenceDays }}</td>
+          <td>{{ employee.additionalPerHour }}</td>
+          <td>{{ employee.hourlyDiscount }}</td>
+          <td>{{ employee.totalDiscount }}</td>
+          <td>{{ employee.totalAdditional }}</td>
+          <td>{{ employee.netSalary }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

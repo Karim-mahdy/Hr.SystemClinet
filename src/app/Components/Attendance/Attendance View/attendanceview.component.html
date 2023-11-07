@@ -1,24 +1,24 @@
 <div class="container py-4 bg-light">
     <h3 class="text-center text-dark">
-      Employee Attendance and Departure Report
+      Employee Attendance Report
     </h3>
   
     <div class="container mt-5 mb-2">
       <div class="d-flex justify-content-between">
         <div>
           <div class="d-flex">
-            <button type="button" class="btn btn-primary btn-sm">Excel</button>
+            <!-- <button type="button" class="btn btn-primary btn-sm">Excel</button> -->
             <button
               type="button"
-              class="btn btn-primary btn-sm mx-2"
+              class="btn btn-primary btn-sm "
               [routerLink]="['/Dashboard/Attendance/Add']"
             >
-              Add
+              Add Attendance
             </button>
           </div>
         </div>
         <div>
-          <div class="d-flex justify-content-end">
+          <!-- <div class="d-flex justify-content-end">
             <div class="input-group">
               <input
                 type="search"
@@ -30,7 +30,7 @@
                 <i class="bi bi-search"></i>
               </button>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
   
@@ -70,206 +70,48 @@
       </div>
     </div>
     <div class="container overflow-auto">
-      <table
-        id="dt-filter-select"
-        datatable
-        class="table pt-3 table-light"
-        cellspacing="0"
-        width="100%"
-      >
-        <thead>
-          <tr>
-            <th class="th-sm">Department</th>
-            <th class="th-sm">Employee Name</th>
-            <th class="th-sm">Time Attendance</th>
-            <th class="th-sm">Leaving Time</th>
-            <th class="th-sm">Date</th>
-            <th class="th-sm">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr >
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>
-              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
-              <i class="bi bi-printer mx-2 text-primary"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>
-              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
-              <i class="bi bi-printer mx-2 text-primary"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>
-              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
-              <i class="bi bi-printer mx-2 text-primary"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>
-              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
-              <i class="bi bi-printer mx-2 text-primary"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>
-              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
-              <i class="bi bi-printer mx-2 text-primary"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>
-              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
-              <i class="bi bi-printer mx-2 text-primary"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>
-              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
-              <i class="bi bi-printer mx-2 text-primary"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>
-              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
-              <i class="bi bi-printer mx-2 text-primary"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>
-              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
-              <i class="bi bi-printer mx-2 text-primary"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>
-              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
-              <i class="bi bi-printer mx-2 text-primary"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>
-              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
-              <i class="bi bi-printer mx-2 text-primary"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>
-              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
-              <i class="bi bi-printer mx-2 text-primary"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>
-              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
-              <i class="bi bi-printer mx-2 text-primary"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>
-              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
-              <i class="bi bi-printer mx-2 text-primary"></i>
-            </td>
-          </tr>
-          <tr>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-            <td>$320,800</td>
-            <td>2011/04/25</td>
-            <td>
-              <i class="bi bi-pencil-fill mx-2 text-warning"></i>
-              <i class="bi bi-printer mx-2 text-primary"></i>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+
+<!-- table -->
+
+<table
+      id="dt-filter-select"
+      [dtTrigger]="dtTrigger"
+      datatable
+      [dtOptions]="dtoption"
+      class="table pt-3 table-light"
+      cellspacing="0"
+      width="100%"
+    >
+      <thead>
+        <tr>
+          <th class="th-sm"></th>
+          <th class="th-sm">Department</th>
+          <th class="th-sm">Employee Name</th>
+          <th class="th-sm">ArrivalTime</th>
+          <th class="th-sm">LeaveTime</th>
+          <th class="th-sm">Date</th>
+          <th class="th-sm">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let attend of attendanceReport">
+          <td></td>
+          <td>{{ attend.departmentName}}</td>
+          <td>{{ attend.employeeName }}</td>
+          <td>{{ attend.arrivalTime }}</td>
+          <td>{{ attend.leaveTime }}</td>
+          <td>{{ attend.date }}</td>
+          <td class="">
+            <i
+              class="bi bi-pencil-square text-primary mx-2"
+              [routerLink]="['/Dashboard/Attendance/Edit',attend.id]"
+            ></i>
+            <i class="bi bi-trash3 text-danger " (click)="deleteAttendance(attend.id)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
     </div>
   </div>
   

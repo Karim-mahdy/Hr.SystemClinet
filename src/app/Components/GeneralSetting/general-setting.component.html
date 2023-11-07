@@ -1,0 +1,134 @@
+<section class="gradient-custom sec">
+    <div class="container py-5 h-100">
+      <div class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-lg-9 col-xl-7">
+          <div
+            class="card shadow-2-strong card-registration"
+            style="border-radius: 15px"
+          >
+            <div class="card-body p-4 p-md-5">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">
+                General Settings
+              </h3>
+              <form [formGroup]="GeneralSetting" >
+                <div class="row">
+                  <div class="col-md-6 mb-2"  >
+                    <label
+                      for="empid"
+                      class="form-label select-label me-3 d-block"
+                      >Employee Name</label
+                    >
+                    <select
+                   
+                    id="empid"
+                    class="select form-control-lg w-100"
+                    name="empid"
+                    formControlName="empid"
+                    (change)="selectemployee()"
+                  >
+                    <option value="" disabled selected>
+                      Select Employee
+                    </option>
+                    <option [value]="emp.value" *ngFor="let emp of setting.employeeList">
+                      {{ emp.text }}
+                    </option>
+                  </select>
+                    
+                    
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <label class="form-label" for="overtimeHour">Over Time Hour</label>
+                      <input
+                        min="0"
+                        [value]="setting.overtimeHour"
+                        type="number"
+                        id="overtimeHour"
+                        name="overtimeHour"
+                        formControlName="overtimeHour"
+                        class="form-control form-control-lg"
+                      />
+                    </div>
+                    <div *ngIf="ControlName.overtimeHour.touched">
+                      <p *ngIf="ControlName.overtimeHour.hasError('min')" class="text-danger">value cant be less than zero</p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <label class="form-label" for="discountHour">discount Hour</label>
+                      <input
+                        min="0"
+                        [value]="setting.discountHour"
+                        type="number"
+                        id="discountHour"
+                        name="discountHour"
+                        formControlName="discountHour"
+                        class="form-control form-control-lg"
+                      />
+                    </div>
+                    <div *ngIf="ControlName.discountHour.touched">
+                      <p *ngIf="ControlName.discountHour.hasError('min')" class="text-danger"> {{setting.discountHour}}value cant be less than zero</p>
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <label class="form-label" for="discountHour"
+                        >Discount Hour</label
+                      >
+                      <input
+                        min="0"
+                        type="number"
+                        [value]="setting.discountHour"
+                        id="discountHour"
+                        name="discountHour"
+                        formControlName="discountHour"
+                        class="form-control form-control-lg"
+                      />
+                    </div>
+                    <div *ngIf="ControlName.discountHour.touched">
+                      <p *ngIf="ControlName.discountHour.hasError('min')"class="text-danger">value cant be less than zero</p>
+                    </div>
+                  </div> -->
+                </div>
+                <h5 class="pb-2 pb-md-0 mb-md-3">Weak Holiday</h5>
+  
+                <div>
+                  <label class="mb-2 d-block" *ngFor="let e of setting.weekends"
+                    ><input type="checkbox" name="day" [value]="e.isSelected" [checked]="e.isSelected" (change)="updateSelectedDays()"/>
+                    {{e.displayValue}}</label
+                  >
+                  
+                </div>
+  
+                <div class="mt-4 pt-2 d-flex justify-content-end">
+                  
+                  
+                  <button
+                    class="btn btn-md btn-danger me-2 "
+                    type="submit"
+                   
+                  >Delete
+                  </button>
+                  <button
+                    class="btn btn-md btn-warning me-2"
+                    type="submit"
+                   
+                  >Edit
+                  </button>
+                  <button
+                    class="btn btn-md btn-primary "
+                    type="submit"
+                   
+                  >Save
+                  </button>
+                </div>
+               
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

@@ -1,88 +1,108 @@
 <section class="vh-100 gradient-custom sec">
-    <div class="container py-5 h-100 ">
-      <div class="row justify-content-center align-items-center h-100">
-        <div class="col-12 col-lg-9 col-xl-7">
-          <div
-            class="card shadow-2-strong card-registration"
-            style="border-radius: 15px"
-          >
-            <div class="card-body p-4 p-md-5">
-              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">
-                Public Holiday
-              </h3>
-              <form [formGroup]="PublicHolidyFrom" (click)="OnSubmit($event)">
-                <div class="row mb-4 ">
-                  <div class="col-md-5 ">
-                    <div class="form-outline">
-                      <label class="form-label" for="name">Name</label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        class="form-control"
-                        formControlName="name"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <label class="form-label" for="Date"> Date</label>
+  <div class="container py-5 h-100">
+    <div class="row justify-content-center align-items-center h-100">
+      <div class="col-12 col-lg-9 col-xl-7">
+        <div
+          class="card shadow-2-strong card-registration"
+          style="border-radius: 15px"
+        >
+          <div class="card-body p-4 p-md-5">
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">
+              Public Holiday
+            </h3>
+
+            <form [formGroup]="PublicHolidyFrom" (submit)="OnSubmit($event)">
+              <div class="row d-flex mb-4">
+                <div class="col-md-4">
+                  <div class="form-outline">
+                    <label class="form-label" for="name">Name</label>
                     <input
+                      type="text"
+                      id="name"
                       class="form-control"
-                      id="Date"
-                      type="date"
-                      name="date"
-                      formControlName="data"
+                      name="name"
+                      formControlName="name"
                     />
                   </div>
-                  <div class="col-2 mt-4 d-flex">
-                    <button class="btn btn-primary btn-sm me-2" type="submit">{{ publicHolidayId > 0 ? "Edit" : "Add" }}</button>
-                    
-                    <!-- Render the "Cancel" button and add the click event if publicHolidayId > 0 -->
-                    <button *ngIf="publicHolidayId > 0" class="btn btn-danger btn-sm me-2" type="button" (click)="OnReset()">Cancel</button>
-                  </div>
-                  
-                     
-                   
                 </div>
-  
-               
-              </form>
-  
-              <div class="row">
-                <table 
+                <div class="col-md-4">
+                  <label class="form-label" for="date">Date</label>
+                  <input
+                    class="form-control"
+                    id="date"
+                    type="date"
+                    name="date"
+                    formControlName="date"
+                    [min]="minDate()"
+                  />
+                 
+                </div>
+                <div class="col-4 d-flex align-items-end">
+                  <button class="btn btn-primary btn-md me-2" type="submit">
+                    {{ publicHolidayId > 0 ? "Edit" : "Add" }}
+                  </button>
+
+                  <button
+                    *ngIf="publicHolidayId > 0"
+                    class="btn btn-danger btn-md me-2"
+                    type="button"
+                    (click)="OnReset()"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </form>
+            <!-- <div *ngIf="controls.date.touched || submitted">
+              <p
+                *ngIf="controls.date.hasError('required')"
+                class="text-danger"
+              >
+                Date is required
+              </p>
+            </div> -->
+            <div class="row">
+              <table
                 datatable
                 [dtOptions]="dtoption"
                 class="table pt-3 table-light px-2"
                 [dtTrigger]="dtTrigger"
                 width="100%"
-                class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Date</th>
-                      <th scope="col">Actions</th>
-                     
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let p of publicHolidays ,let i=index">
-                      
-                      <td>{{i}}</td>
-                      <td>{{p.name}}</td>
-                      <td>{{p.data}}</td>
-                      
-                      <td>
-                        <i class="mx-1 bi bi-pencil-square" (click)="OnEdit(p.id)"></i>
-                        <i class="bi text-danger bi-trash3-fill " (click)="OnDelete(p.id)"></i>
-                      </td>
-                  </tbody>
-                </table>
-              </div>
+                class="table table-striped"
+               
+              >
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let p of publicHolidays; let i = index">
+                    <td>{{ i }}</td>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.date }}</td>
+
+
+                    <td>
+                      <i
+                        class="mx-1 bi bi-pencil-square"
+                        (click)="OnEdit(p.id)"
+                      ></i>
+                      <i
+                        class="bi text-danger bi-trash3-fill"
+                        (click)="OnDelete(p.id)"
+                      ></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
-  
+  </div>
+</section>

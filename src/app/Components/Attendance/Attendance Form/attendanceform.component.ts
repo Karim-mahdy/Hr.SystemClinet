@@ -36,33 +36,45 @@ export class AttendanceformComponent  implements OnInit {
     selectedEmployee: new FormControl('', [Validators.required])
   });
 
-
-
+ 
 ngOnInit(): void {
    this.activatedRoute.params.subscribe({
     next:()=>{
       this.employeeAttendanceId = this.activatedRoute.snapshot.params['id'];
       if(this.employeeAttendanceId != undefined){
+        
         this.attendanceService.GetAttendanceById(this.employeeAttendanceId).subscribe({
-          next:(Response)=>{
+          next:(Response:any)=>{
+            console.log(Response);
+            
             this.employeeAttendance = Response;
             this.EmployeeAttendanceForm.controls['id'].setValue(this.employeeAttendance.id);
             this.EmployeeAttendanceForm.controls['date'].setValue(this.employeeAttendance.date);
             this.EmployeeAttendanceForm.controls['arrivalTime'].setValue(this.employeeAttendance.arrivalTime);
             this.EmployeeAttendanceForm.controls['leaveTime'].setValue(this.employeeAttendance.leaveTime);
             this.EmployeeAttendanceForm.controls['selectedEmployee'].setValue(this.employeeAttendance.selectedEmployee);
+            this.EmployeeAttendanceForm.get('selectedEmployee')?.disable();
           }
         });
+
+        this.attendanceService.GetEmployeeList().subscribe({
+          next:(Response)=>{
+            this.employeeList = Response;
+          }
+         })
+      }
+      else{
+        this.attendanceService.GetEmployeeListWithoutAttendance().subscribe({
+          next:(Response)=>{
+            this.employeeList = Response;
+          }
+         })
+       
       }
     }
    });
-
-   this.attendanceService.GetEmployeeList().subscribe({
-    next:(Response)=>{
-      this.employeeList = Response;
-    }
-   })
-   console.log(this.currentTime);
+   
+  
   }
 
   get controls() { return this.EmployeeAttendanceForm.controls; }

@@ -23,16 +23,12 @@ export class PublicholidaysComponent implements OnInit {
   publicHolidayId:any;
   ModelState:any ;
   PublicHolidyFrom = new FormGroup({
-    id:new FormControl(0),
-    name: new FormControl('', [
-      Validators.required,
-      Validators.maxLength(30),
-      Validators.minLength(2),]),
-    data: new FormControl('', [
-      Validators.required,
-    ])
+    id: new FormControl(0),
+    name: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]),
+    date: new FormControl('', Validators.required)
   });
-  get controlsname() {
+  
+  get controls() {
     return this.PublicHolidyFrom.controls;
   }
   ngOnInit(): void {
@@ -52,13 +48,13 @@ export class PublicholidaysComponent implements OnInit {
     e.preventDefault();
     this.submitted = true;
     if (this.PublicHolidyFrom.valid) {
-      if (this.publicHolidayId != undefined) {
+      if (this.publicHolidayId > 0) {
         this.publicholidaysService.EditPublicholidy(this.PublicHolidyFrom.value, this.publicHolidayId).subscribe({
           next: (res) => {
             this.publicholidaysService.GetAllPublicholidys().subscribe({
               next: (response) => {
                 this.publicHolidays = response;
-                this.dtTrigger.next(null);
+             
               },
             })
           },
@@ -66,21 +62,26 @@ export class PublicholidaysComponent implements OnInit {
             this.ModelState = error.error;
           }
         });
+        this.OnReset()
+
       }
       else {
+        console.log(this.PublicHolidyFrom.value)
         this.publicholidaysService.AddPublicholidy(this.PublicHolidyFrom.value).subscribe({
           next: () => {
             this.publicholidaysService.GetAllPublicholidys().subscribe({
               next: (response) => {
                 this.publicHolidays = response;
-                this.dtTrigger.next(null);
+                
               },
             })
           },
           error:(error:any)=>{  
             this.ModelState = error.error;
           }
+
         });
+        this.OnReset();
       }
     } 
   }
@@ -92,14 +93,15 @@ export class PublicholidaysComponent implements OnInit {
     this.publicholidaysService.GetPublicholidyId(id).subscribe({
       next: (response:any) => {
         console.log(response);
-       this.PublicHolidyFrom.controls['id'].setValue(response.id);
+        this.PublicHolidyFrom.controls['id'].setValue(response.id);
         this.PublicHolidyFrom.controls['name'].setValue(response.name);
-        this.PublicHolidyFrom.controls['data'].setValue(response.data);
+        this.PublicHolidyFrom.controls['date'].setValue(response.date);
+
       },
      
       
     })
-    console.log( this.PublicHolidyFrom);
+     
   }
 
   OnDelete(id:any){
@@ -118,7 +120,26 @@ export class PublicholidaysComponent implements OnInit {
   OnReset() {
         this.PublicHolidyFrom.controls['id'].setValue(0);
         this.PublicHolidyFrom.controls['name'].setValue('');
-        this.PublicHolidyFrom.controls['data'].setValue('');
+        this.PublicHolidyFrom.controls['date'].setValue('');
+
         this.publicHolidayId = 0;
   }
+
+  minDate(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    let month = (today.getMonth() + 1).toString();
+    let day = (today.getDate()+1).toString();
+  
+    if (month.length === 1) {
+      month = '0' + month; // Add leading zero if needed
+    }
+    if (day.length === 1) {
+      day = '0' + day; // Add leading zero if needed
+    }
+  
+    return `${year}-${month}-${day}`;
+  }
+  
+
 }

@@ -10,6 +10,7 @@ export class AttendanceService {
 
   baseUrl: string = 'https://localhost:44343/api/Attendance';
   EmpsUrl:string= 'https://localhost:44343/api/Attendance/GetEmployeeList';
+  EmpsWithoutAttendanceUrl:string= 'https://localhost:44343/api/Attendance/GetAllEmployeeWithoutAttendance';
 
   GetAllAttendance() {
     return this.http.get(this.baseUrl);
@@ -28,5 +29,8 @@ export class AttendanceService {
   }
   GetEmployeeList(){
     return this.http.get(this.EmpsUrl)
+  }
+  GetEmployeeListWithoutAttendance(){
+    return this.http.get(this.EmpsWithoutAttendanceUrl)
   }
 }

@@ -14,6 +14,7 @@ import { SalaryReportsComponent } from './Components/Salary/salary-reports.compo
 import { AttendanceformComponent } from './Components/Attendance/Attendance Form/attendanceform.component';
 import { AttendanceviewComponent } from './Components/Attendance/Attendance View/attendanceview.component';
 import { PublicholidaysComponent } from './Components/PublicHolidays/publicholidays.component';
+import { GeneralSettingComponent } from './Components/GeneralSetting/general-setting.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { PublicholidaysComponent } from './Components/PublicHolidays/publicholid
     AttendanceformComponent,
     AttendanceviewComponent,
     PublicholidaysComponent,
+    GeneralSettingComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import { EmployeeviewComponent } from './Components/Employee/Employee View/emplo
 import { SalaryReportsComponent } from './Components/Salary/salary-reports.component';
 import { AttendanceviewComponent } from './Components/Attendance/Attendance View/attendanceview.component';
 import { AttendanceformComponent } from './Components/Attendance/Attendance Form/attendanceform.component';
+import { GeneralSettingComponent } from './Components/GeneralSetting/general-setting.component';
 
 const routes: Routes = [
 
@@ -28,6 +29,7 @@ const routes: Routes = [
     {path:'Attendance/Add',component:AttendanceformComponent},
     {path:'Attendance/Edit/:id',component:AttendanceformComponent},
     {path:'PublicHolidays',component:PublicholidaysComponent},
+    {path:'GeneralSettings',component:GeneralSettingComponent},
   ]
 
 }

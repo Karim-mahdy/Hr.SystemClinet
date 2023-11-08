@@ -101,4 +101,20 @@ ngOnInit(): void {
       });
     }
   }
+
+  minDate(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    let month = (today.getMonth() + 1).toString();
+    let day = today.getDate().toString();
+  
+    if (month.length === 1) {
+      month = '0' + month; // Add leading zero if needed
+    }
+    if (day.length === 1) {
+      day = '0' + day; // Add leading zero if needed
+    }
+    return `${year}-${month}-${day}`;
+   
+  }
 }

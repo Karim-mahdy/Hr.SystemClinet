@@ -10,7 +10,8 @@
               <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">
                 General Settings
               </h3>
-              <form [formGroup]="GeneralSetting" >
+              <form [formGroup]="GeneralSetting" (submit)="OnSubmit($event)"  >
+                <input type="hidden" name="id" formControlName="id" />
                 <div class="row">
                   <div class="col-md-6 mb-2"  >
                     <label
@@ -24,7 +25,7 @@
                     class="select form-control-lg w-100"
                     name="empid"
                     formControlName="empid"
-                    (change)="selectemployee()"
+                    (click)="selectemployee()"
                   >
                     <option value="" disabled selected>
                       Select Employee
@@ -72,55 +73,33 @@
                       <p *ngIf="ControlName.discountHour.hasError('min')" class="text-danger"> {{setting.discountHour}}value cant be less than zero</p>
                     </div>
                   </div>
-                  <!-- <div class="col-md-6 mb-4">
-                    <div class="form-outline">
-                      <label class="form-label" for="discountHour"
-                        >Discount Hour</label
-                      >
-                      <input
-                        min="0"
-                        type="number"
-                        [value]="setting.discountHour"
-                        id="discountHour"
-                        name="discountHour"
-                        formControlName="discountHour"
-                        class="form-control form-control-lg"
-                      />
-                    </div>
-                    <div *ngIf="ControlName.discountHour.touched">
-                      <p *ngIf="ControlName.discountHour.hasError('min')"class="text-danger">value cant be less than zero</p>
-                    </div>
-                  </div> -->
                 </div>
                 <h5 class="pb-2 pb-md-0 mb-md-3">Weak Holiday</h5>
   
-                <div>
-                  <label class="mb-2 d-block" *ngFor="let e of setting.weekends"
-                    ><input type="checkbox" name="day" [value]="e.isSelected" [checked]="e.isSelected" (change)="updateSelectedDays()"/>
-                    {{e.displayValue}}</label
-                  >
-                  
+                <div *ngFor="let day of setting.weekends">
+                  <label>
+                    <input type="checkbox" [checked]="day.isSelected" (change)="itemSelectionChanged(day,$event)" />
+                    {{ day.displayValue }}
+                  </label>
                 </div>
-  
+                
+                
                 <div class="mt-4 pt-2 d-flex justify-content-end">
                   
                   
-                  <button
-                    class="btn btn-md btn-danger me-2 "
-                    type="submit"
-                   
+                  <button *ngIf="flag"
+                    class="btn btn-md btn-danger me-2 "                   
+                   (click)="onDelete(this.generalSettingId)"
                   >Delete
                   </button>
-                  <button
+                  <button *ngIf="flag"
                     class="btn btn-md btn-warning me-2"
-                    type="submit"
-                   
+                    (click)="onEdit(this.generalSettingId)"
                   >Edit
                   </button>
                   <button
                     class="btn btn-md btn-primary "
                     type="submit"
-                   
                   >Save
                   </button>
                 </div>

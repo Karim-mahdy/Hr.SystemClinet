@@ -10,6 +10,7 @@ import { SalaryReportsComponent } from './Components/Salary/salary-reports.compo
 import { AttendanceviewComponent } from './Components/Attendance/Attendance View/attendanceview.component';
 import { AttendanceformComponent } from './Components/Attendance/Attendance Form/attendanceform.component';
 import { GeneralSettingComponent } from './Components/GeneralSetting/general-setting.component';
+import { UserManagementComponent } from './Components/Users Mangement/user-management.component';
 
 const routes: Routes = [
 
@@ -30,6 +31,7 @@ const routes: Routes = [
     {path:'Attendance/Edit/:id',component:AttendanceformComponent},
     {path:'PublicHolidays',component:PublicholidaysComponent},
     {path:'GeneralSettings',component:GeneralSettingComponent},
+    {path:'UsersManagement',component:UserManagementComponent},
   ]
 
 }

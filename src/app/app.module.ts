@@ -15,6 +15,7 @@ import { AttendanceformComponent } from './Components/Attendance/Attendance Form
 import { AttendanceviewComponent } from './Components/Attendance/Attendance View/attendanceview.component';
 import { PublicholidaysComponent } from './Components/PublicHolidays/publicholidays.component';
 import { GeneralSettingComponent } from './Components/GeneralSetting/general-setting.component';
+import { UserManagementComponent } from './Components/Users Mangement/user-management.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { GeneralSettingComponent } from './Components/GeneralSetting/general-set
     AttendanceviewComponent,
     PublicholidaysComponent,
     GeneralSettingComponent,
+    UserManagementComponent,
   ],
   imports: [
     BrowserModule,

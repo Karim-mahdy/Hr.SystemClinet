@@ -1,0 +1,208 @@
+<section class="gradient-custom sec">
+    <div class="container py-5 h-100">
+      <div class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-lg-9 col-xl-9">
+          <div
+            class="card shadow-2-strong card-registration"
+            style="border-radius: 15px"
+          >
+            <div class="card-body p-4 p-md-5">
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 text-center">Add New Admin</h3>
+              <form [formGroup]="AddUser" (submit)="OnSubmit($event) " class="my-3">
+                <div class="row">
+                  <div class="col-md-6 mb-2">
+                    <div class="form-outline">
+                      <label class="form-label select-label me-3 d-block"
+                        >Full Name</label
+                      >
+                      <select  [ngClass]="{'disabled-select': flag}"
+                        class="select form-control  w-100"
+                        formControlName="empId"
+                      >
+                        <option value="" disabled>Choose Employee</option>
+                        <option 
+                          [value]="e.value"
+                          *ngFor="let e of employee.employees"
+                        >
+                          {{ e.text }}
+                        </option>
+                      </select>
+                    </div>
+                    <div *ngIf="controls.empId.touched || submitted">
+                      <p
+                        *ngIf="controls.empId.hasError('required')"
+                        class="text-danger"
+                      >
+                        fullName is required
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-2">
+                    <div class="form-outline">
+                      <label class="form-label" for="userName">User Name</label>
+                      <input
+                        type="text"
+                        id="userName"
+                        class="form-control  "
+                        name="userName"
+                        formControlName="userName"
+                      />
+                    </div>
+                    <div *ngIf="controls.userName.touched || submitted">
+                      <p
+                        *ngIf="controls.userName.hasError('required')"
+                        class="text-danger"
+                      >
+                        User Name is required
+                      </p>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="row">
+                  <div class="col-md-6 mb-2">
+                    <div class="form-outline">
+                      <label class="form-label" for="email">Email</label>
+                      <input
+                        type="email"
+                        id="email"
+                        class="form-control   "
+                        name="email"
+                        formControlName="email"
+                      />
+                    </div>
+                    <div *ngIf="controls.email.touched || submitted">
+                      <p
+                        *ngIf="controls.email.hasError('required')"
+                        class="text-danger"
+                      >
+                        Email is required
+                      </p>
+                      <p
+                        *ngIf="controls.email.hasError('email')"
+                        class="text-danger"
+                      >
+                        Enter Valid Email
+                      </p>
+                    </div>
+                  </div>
+  
+                  <div class="col-md-6 mb-2">
+                    <div class="form-outline datepicker w-100">
+                      <label class="form-label" for="password">Password</label>
+                      <input
+                        type="password"
+                        id="password"
+                        class="form-control  "
+                        name="password"
+                        formControlName="password"
+                      />
+                    </div>
+                    <div *ngIf="controls.password.touched || submitted">
+                      <p
+                        *ngIf="controls.password.hasError('required')"
+                        class="text-danger"
+                      >
+                        Password is required
+                      </p>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="row">
+                  <div class="col-12">
+                    <label class="form-label select-label me-3 d-block"
+                      >Rules</label
+                    >
+  
+                    <div class="btn-group w-50 border border-dark">
+                      <button
+                        type="button"
+                        class="btn btn-white dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Select Rules
+                      </button>
+                      <ul class="dropdown-menu w-100">
+                        <div class="ms-3 "   *ngFor="let item of employee.roles">
+                          <label>
+                            <input
+                              type="checkbox"
+                              [checked]="selectedItems.includes(item.value)"
+                              (change)="itemSelectionChanged(item.value)"
+                            />
+                            {{ item.text }}
+                          </label>
+                        </div>
+                      </ul>
+                    </div>
+                  </div>
+                  <div *ngIf="controls.selectRolesIds.touched || submitted">
+                    <p
+                      *ngIf="controls.selectRolesIds.hasError('required')"
+                      class="text-danger"
+                    >
+                      Rules is required
+                    </p>
+                  </div>
+                  <div class="mt-4 pt-2 d-flex justify-content-end">
+                    <button
+                      class="btn btn-lg btn-primary"
+                      type="submit"
+                    >submit</button>
+                  </div>
+                </div>
+  
+               
+              </form>
+  
+              <div class="row">
+                <table
+                  datatable
+                  [dtOptions]="dtoption"
+                  class="table pt-3 table-light px-2"
+                  [dtTrigger]="dtTrigger"
+                  width="100%"
+                  class="table table-striped table-hover"
+                >
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">User Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Password</th>
+                      <th scope="col">Roles</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of data ; let i = index">
+                      <td>{{i+1}}</td>
+                      <td>{{item.fullName}}</td>
+                      <td>{{item.userName}}</td>
+                      <td>{{item.email}}</td>
+                      <td>{{item.password}}</td>
+                      <td>
+                        <ng-container *ngFor="let item of item.roles; let last = last">
+                          {{ item }}
+                          <span *ngIf="!last">, </span>
+                        </ng-container>
+                      </td>
+                      
+                      <td>
+                           
+                        <i class="mx-1 bi bi-pencil-square" (click)="OnEdit(item.id)"></i>
+                        <i class="bi text-danger bi-trash3-fill" (click)="OnDelete(item.id)"></i>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

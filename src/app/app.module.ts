@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DepartmentViewComponent } from './Components/Department/Department View/department-view.component';
 import { DepartmentFormComponent } from './Components/Department/Department Form/department-form.component';
 import { DataTablesModule } from "angular-datatables";
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { EmployeeformComponent } from './Components/Employee/Employee Form/employee-form.component';
 import { EmployeeviewComponent } from './Components/Employee/Employee View/employee-view.component';
 import { SalaryReportsComponent } from './Components/Salary/salary-reports.component';
@@ -18,7 +18,10 @@ import { GeneralSettingComponent } from './Components/GeneralSetting/general-set
 import { UserManagementComponent } from './Components/Users Mangement/user-management.component';
 import { RoleManagementComponent } from './Components/Roles Managment/role-management.component';
 import { SignInComponent } from './Components/Authentication/Sign In/sign-in.component';
+import { JwtModule } from '@auth0/angular-jwt'; // Import JwtModule
+import { TokenInterceptorService } from './Services/token-interceptor.service';
  
+
 
 @NgModule({
   declarations: [
@@ -44,10 +47,24 @@ import { SignInComponent } from './Components/Authentication/Sign In/sign-in.com
     ReactiveFormsModule,
     DataTablesModule,
     HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('jwt'); // Adjust this based on where your token is stored.
+        },
+      },
+    }),
      
-    
+    BrowserModule,
+    HttpClientModule, // Add HttpClientModule to your imports
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

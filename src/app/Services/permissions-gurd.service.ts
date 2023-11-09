@@ -1,17 +1,21 @@
 import { Injectable, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PermissionsGurdService {
+
+export class PermissionsGurdService implements CanActivate{
 
   constructor(private jwtHelper: JwtHelperService, private router: Router) { }
 
+  Permissions: string[] = [];
+
   isAuthenticated(token: string):boolean{
       if(token && token !== "null" && token.length != 0 && !this.jwtHelper.isTokenExpired(token)){
+         
           return true;
       }
 
@@ -20,8 +24,7 @@ export class PermissionsGurdService {
 
   hasRole(token: string, allowedRoles: string[]){
       const decodedToken = this.jwtHelper.decodeToken(token);
-      console.log(decodedToken);
-
+     
       if(allowedRoles === undefined)
         return true;
 
@@ -35,12 +38,13 @@ export class PermissionsGurdService {
 
   hasPermission(token: string, allowedPermissions: string[]){
     const decodedToken = this.jwtHelper.decodeToken(token);
-
+    console.log(decodedToken);
+    console.log(allowedPermissions);
     if(allowedPermissions === undefined)
       return true;
 
     for(let key in decodedToken){
-      if(key.includes("permission")){
+      if(key.includes("Permission")){
           return allowedPermissions.some(permission => decodedToken[key].includes(permission));
       }
     }
@@ -49,23 +53,26 @@ export class PermissionsGurdService {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
       const roles = route.data['allowedRoles'];
-      const permissions = route.data['allowedPermissions'];
-
+       
+      Permissions = route.data['allowedPermissions'];
+       
       const token = localStorage.getItem("jwt") ?? "";
-
+       
       if(!this.isAuthenticated(token)){
-          return this.router.navigate(['login']);
+          return this.router.navigate(['SignIn']);
       }
 
-      if(this.hasRole(token, roles) && this.hasPermission(token, permissions)){
+      if(this.hasRole(token, roles) || this.hasPermission(token, route.data['allowedPermissions'])){
           return true;
       }
 
+    // Access Denied
       return this.router.navigate(['']);
   }
 }
 
 export const AuthGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> => {
+  
   return inject(PermissionsGurdService).canActivate(route, state);
 
 }

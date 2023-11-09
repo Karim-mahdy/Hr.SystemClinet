@@ -13,35 +13,49 @@ import { GeneralSettingComponent } from './Components/GeneralSetting/general-set
 import { UserManagementComponent } from './Components/Users Mangement/user-management.component';
 import { RoleManagementComponent } from './Components/Roles Managment/role-management.component';
 import { SignInComponent } from './Components/Authentication/Sign In/sign-in.component';
-import { data } from 'jquery';
 import { PermissionsGurdService } from './Services/permissions-gurd.service';
 
 const routes: Routes = [
 
 
-  {path: '', redirectTo: 'Dashboard', pathMatch: 'full'},
-  {path: 'Dashboard', component: DashboardComponent,
-  // canActivate: [authenticationGuard],
-  children: [
-    {path:'Depatment',component:DepartmentViewComponent},
-    {path:'Depatment/Add',component:DepartmentFormComponent},
-    {path:'Depatment/Edit/:id',component:DepartmentFormComponent},
-    {path:'Employee',component:EmployeeviewComponent},
-    {path:'Employee/Add',component:EmployeeformComponent},
-    {path:'Employee/Edit/:id',component:EmployeeformComponent},
-    {path:'Salary',component:SalaryReportsComponent},
-    {path:'Attendance',component:AttendanceviewComponent},
-    {path:'Attendance/Add',component:AttendanceformComponent},
-    {path:'Attendance/Edit/:id',component:AttendanceformComponent},
-    {path:'PublicHolidays',component:PublicholidaysComponent},
-    {path:'GeneralSettings',component:GeneralSettingComponent, data:{allowedRoles: ["HumanResource"], allowedPermissions: ["generalsetting.View"]}, canActivate: [PermissionsGurdService]},
-    {path:'UsersManagement',component:UserManagementComponent},
-    {path:'RolesManagement',component:RoleManagementComponent},
-    
-  ],
-   
-},
-{path:'SignIn', component: SignInComponent }
+  { path: '', redirectTo: 'Dashboard', pathMatch: 'full' },
+  {
+    path: 'Dashboard', component: DashboardComponent,
+    canActivate: [PermissionsGurdService],
+    children: [
+      { path: 'Depatment', component: DepartmentViewComponent },
+      { path: 'Depatment/Add', component: DepartmentFormComponent },
+      { path: 'Depatment/Edit/:id', component: DepartmentFormComponent },
+      { path: 'Employee', component: EmployeeviewComponent },
+      { path: 'Employee/Add', component: EmployeeformComponent },
+      { path: 'Employee/Edit/:id', component: EmployeeformComponent },
+      { path: 'Salary', component: SalaryReportsComponent },
+      { path: 'Attendance', component: AttendanceviewComponent },
+      { path: 'Attendance/Add', component: AttendanceformComponent },
+      { path: 'Attendance/Edit/:id', component: AttendanceformComponent },
+      { path: 'PublicHolidays', component: PublicholidaysComponent },
+      {
+        path: 'GeneralSettings',
+        component: GeneralSettingComponent,
+        data: {
+          allowedRoles: ["SuperAdmin"],
+          allowedPermissions: [
+            "Permission.GeneralSetting.View",
+            "Permission.GeneralSetting.Edit",
+            "Permission.GeneralSetting.Add",
+            "Permission.GeneralSetting.Delete"
+          ]
+        },
+        canActivate: [PermissionsGurdService]
+      },
+      
+      { path: 'UsersManagement', component: UserManagementComponent },
+      { path: 'RolesManagement', component: RoleManagementComponent },
+
+    ],
+
+  },
+  { path: 'SignIn', component: SignInComponent },
 ];
 
 @NgModule({

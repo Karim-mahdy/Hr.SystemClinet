@@ -36,7 +36,7 @@ export class AuthenticationService {
 
   login(userData: any): Observable<any> { // Updated userData type to any
     console.log(userData);
-    return this.http.post(this.baseUrl, userData);
+    return this.http.post(`${this.baseUrl}`, userData);
   }
 
   // Removed unused jwtDecode function

@@ -11,13 +11,17 @@ import { AttendanceviewComponent } from './Components/Attendance/Attendance View
 import { AttendanceformComponent } from './Components/Attendance/Attendance Form/attendanceform.component';
 import { GeneralSettingComponent } from './Components/GeneralSetting/general-setting.component';
 import { UserManagementComponent } from './Components/Users Mangement/user-management.component';
+import { RoleManagementComponent } from './Components/Roles Managment/role-management.component';
+import { SignInComponent } from './Components/Authentication/Sign In/sign-in.component';
+import { data } from 'jquery';
+import { PermissionsGurdService } from './Services/permissions-gurd.service';
 
 const routes: Routes = [
 
 
   {path: '', redirectTo: 'Dashboard', pathMatch: 'full'},
   {path: 'Dashboard', component: DashboardComponent,
-
+  // canActivate: [authenticationGuard],
   children: [
     {path:'Depatment',component:DepartmentViewComponent},
     {path:'Depatment/Add',component:DepartmentFormComponent},
@@ -30,12 +34,14 @@ const routes: Routes = [
     {path:'Attendance/Add',component:AttendanceformComponent},
     {path:'Attendance/Edit/:id',component:AttendanceformComponent},
     {path:'PublicHolidays',component:PublicholidaysComponent},
-    {path:'GeneralSettings',component:GeneralSettingComponent},
+    {path:'GeneralSettings',component:GeneralSettingComponent, data:{allowedRoles: ["HumanResource"], allowedPermissions: ["generalsetting.View"]}, canActivate: [PermissionsGurdService]},
     {path:'UsersManagement',component:UserManagementComponent},
-  ]
-
-}
- 
+    {path:'RolesManagement',component:RoleManagementComponent},
+    
+  ],
+   
+},
+{path:'SignIn', component: SignInComponent }
 ];
 
 @NgModule({

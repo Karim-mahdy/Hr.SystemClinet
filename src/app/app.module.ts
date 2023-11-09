@@ -16,6 +16,9 @@ import { AttendanceviewComponent } from './Components/Attendance/Attendance View
 import { PublicholidaysComponent } from './Components/PublicHolidays/publicholidays.component';
 import { GeneralSettingComponent } from './Components/GeneralSetting/general-setting.component';
 import { UserManagementComponent } from './Components/Users Mangement/user-management.component';
+import { RoleManagementComponent } from './Components/Roles Managment/role-management.component';
+import { SignInComponent } from './Components/Authentication/Sign In/sign-in.component';
+ 
 
 @NgModule({
   declarations: [
@@ -31,6 +34,9 @@ import { UserManagementComponent } from './Components/Users Mangement/user-manag
     PublicholidaysComponent,
     GeneralSettingComponent,
     UserManagementComponent,
+    RoleManagementComponent,
+    SignInComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -38,6 +44,7 @@ import { UserManagementComponent } from './Components/Users Mangement/user-manag
     ReactiveFormsModule,
     DataTablesModule,
     HttpClientModule,
+     
     
   ],
   providers: [],

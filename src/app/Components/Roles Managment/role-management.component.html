@@ -1,0 +1,74 @@
+<section class="vh-100 gradient-custom sec">
+  <div class="container py-5 h-100">
+      <div class="row justify-content-center align-items-center h-100">
+          <div class="col-12 col-lg-9 col-xl-8">
+              <div class="card shadow-2-strong card-registration" style="border-radius: 15px">
+                  <div class="card-body p-4 p-md-5">
+                    <div class=" mx-5  d-flex justify-content-center">
+                        
+                        <table class="table table-striped" >
+                            <thead>
+                              <tr>
+                                <th colspan="3" class="text-center">
+                                  <h3>My Roles</h3>
+                                </th>
+                              </tr>
+                              <tr>
+                                <th>#</th>
+                                <th class="text-center">Role</th>
+                                <th class="text-center">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let role of roles ;let i=index"  >
+                                <td>{{i+1}}</td>
+                                <td class="text-center">{{role.name}}</td>
+                                <td class="text-center">
+                                  <i class="bi bi-pencil-square text-primary mx-2" (click)="OnEdit(role.id)"></i>
+                                  <i class="bi bi-trash3 text-danger mx-2" (click)="OnDelete(role.id)"></i>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          
+                    </div>
+                      <h3 class="mb-2 mt-4 pb-2 pb-md-0 mb-md-5 text-center">Add New Admin</h3>
+                      <form [formGroup]="FormRole" (submit)="OnSubmit($event)"> 
+                          <div class="row d-flex justify-content-center mt-4">
+                              <div class="col-md-7">
+                                  <div class="input-group">
+                                      <input type="text" name="roleName" formControlName="roleName" class="form-control" placeholder="Ener Role Name">
+                                      <div class="input-group-append">
+                                          <button type="submit" class="btn btn-primary">{{this.roleId != '' ? "Edit" : "Add"}}</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                          <div>
+                              <div class="col-12 mt-4">
+
+                                  <table class="table table-bordered pt-2 " id="dt-filter-select">
+                                      <thead class="thead-dark">
+                                          <tr>
+                                              <th scope="col">Module</th>
+                                              <th scope="col">View</th>
+                                              <th scope="col">Addition</th>
+                                              <th scope="col">Edit</th>
+                                              <th scope="col">Delete</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                         
+                                      </tbody>
+                                  </table>
+                                  
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>

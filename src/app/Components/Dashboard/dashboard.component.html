@@ -85,13 +85,13 @@
       <div id="dropdown-lvl1" class="panel-collapse collapse">
         <div class="panel-body">
           <ul class="nav navbar-nav side-menu top mt-0">
-            <li
+            <!-- <li
               [routerLink]="['users']"
               [routerLinkActive]="'active'"
               [routerLinkActiveOptions]="{ exact: true }"
             >
               <a><i class="bx bx-group"></i>Users</a>
-            </li>
+            </li> -->
             <li
               [routerLink]="['UsersManagement']"
               [routerLinkActive]="'active'"
@@ -100,13 +100,13 @@
               <a><i class="bx bxs-user-plus"></i>Users Management</a>
             </li>
             <li
-              [routerLink]="['userpermissions']"
+              [routerLink]="['RolesManagement']"
               [routerLinkActive]="'active'"
               [routerLinkActiveOptions]="{ exact: true }"
             >
-              <a><i class="bx bx-group"></i>Rules</a>
+              <a><i class="bx bx-group"></i>Roles Management</a>
             </li>
-            <li
+            <!-- <li
               [routerLink]="['w']"
               [routerLinkActive]="'active'"
               [routerLinkActiveOptions]="{ exact: true }"
@@ -126,7 +126,7 @@
               [routerLinkActiveOptions]="{ exact: true }"
             >
               <a><i class="bx bxs-cog"></i> Vacations</a>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
@@ -169,16 +169,16 @@
     </li>
   </ul> -->
   <ul class="side-menu">
-    <li>
+    <!-- <li>
       <a href="#">
         <i class="bx bxs-cog"></i>
         <span class="text">Settings</span>
       </a>
-    </li>
+    </li> -->
     <li
     
     >
-      <a href="#" class="logout"  >
+      <a href="#" class="logout" (click)="Logout()" >
         <i class="bx bxs-log-out-circle"></i>
         <span class="text" >Logout</span>
       </a>
@@ -232,6 +232,10 @@
   <!-- NAVBAR -->
 
   <router-outlet></router-outlet>
+  <div *ngIf="routeName=='Dashboard'" class="welcome">
+    <img src="assets/Img/Welcome.jpg" />
+  </div>
+  
   <!-- MAIN -->
 </section>
 <!-- CONTENT -->

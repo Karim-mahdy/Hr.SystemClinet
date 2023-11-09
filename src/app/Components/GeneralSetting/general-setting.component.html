@@ -12,32 +12,21 @@
               </h3>
               <form [formGroup]="GeneralSetting" (submit)="OnSubmit($event)"  >
                 <input type="hidden" name="id" formControlName="id" />
-                <div class="row">
-                  <div class="col-md-6 mb-2"  >
-                    <label
-                      for="empid"
-                      class="form-label select-label me-3 d-block"
-                      >Employee Name</label
-                    >
-                    <select
-                   
-                    id="empid"
-                    class="select form-control-lg w-100"
-                    name="empid"
-                    formControlName="empid"
-                    (click)="selectemployee()"
-                  >
-                    <option value="" disabled selected>
-                      Select Employee
-                    </option>
-                    <option [value]="emp.value" *ngFor="let emp of setting.employeeList">
-                      {{ emp.text }}
-                    </option>
-                  </select>
-                    
-                    
+                <div class="row d-flex">
+                  <button class="col-4 btn btn-md" [ngClass]="{'btn-secondary': !show, 'btn-danger': show}" (click)="ShowEmployees()">
+                    {{ show ? 'Cancel' : 'Add Custom Settings' }}
+                  </button>
+                  
+                
+                  <div class="col-6" *ngIf="show">
+                    <select id="empid" class="select form-control-lg w-100" name="empid" formControlName="empid" (click)="selectemployee()">
+                      <option value="" disabled selected>Select Employee</option>
+                      <option *ngFor="let emp of setting.employeeList" [value]="emp.value">{{ emp.text }}</option>
+                    </select>
                   </div>
+                  
                 </div>
+                
                 <div class="row">
                   <div class="col-md-6 mb-4">
                     <div class="form-outline">
@@ -97,7 +86,7 @@
                     (click)="onEdit(this.generalSettingId)"
                   >Edit
                   </button>
-                  <button
+                  <button *ngIf="flag2"
                     class="btn btn-md btn-primary "
                     type="submit"
                   >Save

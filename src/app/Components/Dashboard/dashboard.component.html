@@ -178,7 +178,7 @@
     <li
     
     >
-      <a href="#" class="logout" (click)="Logout()" >
+      <a  class="logout" (click)="Logout()" >
         <i class="bx bxs-log-out-circle"></i>
         <span class="text" >Logout</span>
       </a>
@@ -219,12 +219,11 @@
           data-bs-auto-close="true"
           aria-expanded="false"
         >
-          User Name
+         {{this.name}}
         </button>
         <ul class="dropdown-menu" aria-labelledby="defaultDropdown">
-          <li><a class="dropdown-item p-2" href="#">profile</a></li>
-          <li><a class="dropdown-item p-2" href="#">Settings</a></li>
-          <li><a class="dropdown-item p-2" href="#" >Logout</a></li>
+         
+          <li><a class="dropdown-item p-2"  (click)="Logout()" >Logout</a></li>
         </ul>
       </div>
     </div>
@@ -232,10 +231,10 @@
   <!-- NAVBAR -->
 
   <router-outlet></router-outlet>
-  <div *ngIf="routeName=='Dashboard'" class="welcome">
-    <img src="assets/Img/Welcome.jpg" />
-  </div>
   
+  <div  class="welcome" *ngIf="flag2">
+    <img src="assets/Img/Welcome.jpg" />
+</div> 
   <!-- MAIN -->
 </section>
 <!-- CONTENT -->

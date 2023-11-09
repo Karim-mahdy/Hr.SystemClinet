@@ -61,13 +61,14 @@ export class PermissionsGurdService implements CanActivate{
       if(!this.isAuthenticated(token)){
           return this.router.navigate(['SignIn']);
       }
+      
 
       if(this.hasRole(token, roles) || this.hasPermission(token, route.data['allowedPermissions'])){
           return true;
       }
 
     // Access Denied
-      return this.router.navigate(['']);
+      return this.router.navigate(['/Dashboard/AccessDenied']);
   }
 }
 

@@ -20,7 +20,7 @@ export class AuthenticationService {
   userData = new BehaviorSubject(null);
 
   decodeUserData() {
-    let encodedToken = localStorage.getItem('userToken');
+    let encodedToken = localStorage.getItem('jwt');
     if (encodedToken !== null) {
       let decodedToken: any = jwtDecode(encodedToken);
       this.userData.next(decodedToken);
@@ -29,7 +29,7 @@ export class AuthenticationService {
   }
 
   logout() {
-    localStorage.removeItem('userToken');
+    localStorage.removeItem('jwt');
     this.userData.next(null);
     this.router.navigate(['/SignIn']);
   }

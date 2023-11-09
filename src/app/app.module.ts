@@ -20,6 +20,8 @@ import { RoleManagementComponent } from './Components/Roles Managment/role-manag
 import { SignInComponent } from './Components/Authentication/Sign In/sign-in.component';
 import { JwtModule } from '@auth0/angular-jwt'; // Import JwtModule
 import { TokenInterceptorService } from './Services/token-interceptor.service';
+import { WelcomeComponent } from './Components/Dashboard/Welcome/welcome.component';
+import { AccessDeniedComponent } from './Components/Access denied/access-denied.component';
  
 
 
@@ -39,6 +41,8 @@ import { TokenInterceptorService } from './Services/token-interceptor.service';
     UserManagementComponent,
     RoleManagementComponent,
     SignInComponent,
+    WelcomeComponent,
+    AccessDeniedComponent,
     
   ],
   imports: [

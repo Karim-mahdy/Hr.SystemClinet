@@ -22,7 +22,7 @@ export class GeneralSettingComponent implements OnInit {
   flag:boolean = false;
   generalSettingId:any;
   ModelState: any;
-  
+  flag2:boolean = true;
 
   get ControlName(){
     return this.GeneralSetting.controls
@@ -50,7 +50,10 @@ export class GeneralSettingComponent implements OnInit {
    
   }
  
-
+  show:boolean = false
+  ShowEmployees(){
+    this.show =!this.show
+  }
   selectemployee(){
     this.generalsettings.GetEmployeeGeneralSettingById(this.ControlName.empid.value).subscribe({
       next:(response:any)=>{
@@ -58,9 +61,11 @@ export class GeneralSettingComponent implements OnInit {
        
         if(response.id == 0){
           this.flag = false
+          this.flag2 =true
         }
         else{
           this.flag = true
+          this.flag2 =false
         }
         this.generalSettingId = response.id;
         this.setting=response

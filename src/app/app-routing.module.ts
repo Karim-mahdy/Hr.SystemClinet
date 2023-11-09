@@ -1,3 +1,4 @@
+import { AccessDeniedComponent } from './Components/Access denied/access-denied.component';
 import { PublicholidaysComponent } from './Components/PublicHolidays/publicholidays.component';
 import { DepartmentFormComponent } from './Components/Department/Department Form/department-form.component';
 import { NgModule, Component } from '@angular/core';
@@ -14,6 +15,7 @@ import { UserManagementComponent } from './Components/Users Mangement/user-manag
 import { RoleManagementComponent } from './Components/Roles Managment/role-management.component';
 import { SignInComponent } from './Components/Authentication/Sign In/sign-in.component';
 import { PermissionsGurdService } from './Services/permissions-gurd.service';
+import { WelcomeComponent } from './Components/Dashboard/Welcome/welcome.component';
 
 const routes: Routes = [
 
@@ -23,6 +25,7 @@ const routes: Routes = [
     path: 'Dashboard', component: DashboardComponent,
     canActivate: [PermissionsGurdService],
     children: [
+      { path: 'Welcome', component: WelcomeComponent },
       { path: 'Depatment', component: DepartmentViewComponent },
       { path: 'Depatment/Add', component: DepartmentFormComponent },
       { path: 'Depatment/Edit/:id', component: DepartmentFormComponent },
@@ -51,6 +54,7 @@ const routes: Routes = [
       
       { path: 'UsersManagement', component: UserManagementComponent },
       { path: 'RolesManagement', component: RoleManagementComponent },
+      { path: 'AccessDenied', component: AccessDeniedComponent },
 
     ],
 

@@ -53,7 +53,8 @@ ngOnInit(): void {
             this.EmployeeAttendanceForm.controls['arrivalTime'].setValue(this.employeeAttendance.arrivalTime);
             this.EmployeeAttendanceForm.controls['leaveTime'].setValue(this.employeeAttendance.leaveTime);
             this.EmployeeAttendanceForm.controls['selectedEmployee'].setValue(this.employeeAttendance.selectedEmployee);
-            this.EmployeeAttendanceForm.get('selectedEmployee')?.disable();
+          //  this.EmployeeAttendanceForm.get('selectedEmployee')?.disable().;
+            console.log(this.EmployeeAttendanceForm.value);
           }
         });
 
@@ -81,6 +82,7 @@ ngOnInit(): void {
 
   OnSubmit() {
     this.submitted = true;
+    console.log(this.EmployeeAttendanceForm.value);
     if (this.employeeAttendanceId != undefined) {
       this.attendanceService.EditAttendance(this.EmployeeAttendanceForm.value, this.employeeAttendanceId).subscribe({
         next: () => {

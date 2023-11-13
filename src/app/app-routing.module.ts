@@ -26,8 +26,17 @@ const routes: Routes = [
     canActivate: [PermissionsGurdService],
     children: [
       { path: 'Welcome', component: WelcomeComponent },
-      { path: 'Depatment', component: DepartmentViewComponent },
-      { path: 'Depatment/Add', component: DepartmentFormComponent },
+      { path: 'Depatment', component: DepartmentViewComponent 
+     
+    },
+      { path: 'Depatment/Add', component: DepartmentFormComponent  ,
+      data: {
+        allowedRoles: ["SuperAdmin"],
+        allowedPermissions: [
+          "Permission.Department.View",
+        ]
+      },
+      canActivate: [PermissionsGurdService]},
       { path: 'Depatment/Edit/:id', component: DepartmentFormComponent },
       { path: 'Employee', component: EmployeeviewComponent },
       { path: 'Employee/Add', component: EmployeeformComponent },

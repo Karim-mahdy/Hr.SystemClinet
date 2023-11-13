@@ -9,18 +9,18 @@ import { GeneralsettingService } from 'src/app/Services/general-settings.service
 })
 export class GeneralSettingComponent implements OnInit {
   GeneralSetting = new FormGroup({
-    overtimeHour: new FormControl(null,[Validators.required, Validators.min(0)]),
-    discountHour: new FormControl(null,[Validators.required, Validators.min(0)]),
+    overtimeHour: new FormControl(0,[Validators.required, Validators.min(0)]),
+    discountHour: new FormControl(0,[Validators.required, Validators.min(0)]),
     
     id: new FormControl(0),
-    empid: new FormControl(''),
+    empid: new FormControl(),
     weekends: new FormControl(),
   });
  
   setting:any
   formBuilder: any;
   flag:boolean = false;
-  generalSettingId:any;
+  generalSettingId:number =0;
   ModelState: any;
   flag2:boolean = true;
 
@@ -36,12 +36,23 @@ export class GeneralSettingComponent implements OnInit {
    this.generalsettings.GetAllGeneralSetting().subscribe({
     next:(response:any)=>{
      
-      if(response!=null){
+      if(response.id!=0){
+        console.log(response);
+        
         this.generalSettingId = response.id;
         this.setting=response
         this.GeneralSetting.controls['id'].setValue(this.setting.id);
         this.GeneralSetting.controls['overtimeHour'].setValue(this.setting.overtimeHour);
         this.GeneralSetting.controls['discountHour'].setValue(this.setting.discountHour);
+        this.flag2 =false
+        this.flag=true
+        
+      }
+      else{
+         console.log(response);
+         this.setting=response
+        this.flag2 =true
+        this.flag=false
         
       }
     }
@@ -53,6 +64,8 @@ export class GeneralSettingComponent implements OnInit {
   show:boolean = false
   ShowEmployees(){
     this.show =!this.show
+   
+     
   }
   selectemployee(){
     this.generalsettings.GetEmployeeGeneralSettingById(this.ControlName.empid.value).subscribe({
@@ -85,31 +98,68 @@ export class GeneralSettingComponent implements OnInit {
   }
 
   OnSubmit(e: Event) {
-    e.preventDefault();
+  
     console.log(this.GeneralSetting.value);
+    console.log(this.generalSettingId);
+    e.preventDefault();
+     
     
     this.generalsettings.AddGeneralSetting(this.GeneralSetting.value).subscribe({
-      next:()=>{
+      next:(response:any)=>{
+        console.log(response);
+        if(response.empid!=null){
+            this.generalsettings.GetEmployeeGeneralSettingById(this.ControlName.empid.value).subscribe({
+              next:(response:any)=>{
+                 
+               
+                if(response.id == 0){
+                  this.flag = false
+                  this.flag2 =true
+                }
+                else{
+                  this.flag = true
+                  this.flag2 =false
+                }
+              //  this.generalSettingId = response.id;
+                this.setting=response
+                this.FillFormWithData()
+              }
+              
+            })
+           
+        }else{
         this.generalsettings.GetAllGeneralSetting().subscribe({
           next:(response:any)=>{
             this.setting=response
+            this.generalSettingId = response.id;
+            if(response.id!=0 &&response.empid==null){
+              this.flag2=false
+              this.flag=true
+            }
           }
-        })
+        })}
       },
       error:(error:any)=>{  
         this.ModelState = error.error;
       }
-     
     })
+    
     this.ResetFormWithData();
   }
   
-  onDelete(id:any){
+  onDelete(id:number){
+    console.log(id);
    this.generalsettings.DeleteGeneralSetting(id).subscribe({
      next:()=>{
       this.generalsettings.GetAllGeneralSetting().subscribe({
         next:(response:any)=>{
           this.setting=response
+          console.log(response);
+          if(response.id==0 &&response.empid==null){
+            this.flag2=true
+            this.flag=false
+            this.ResetFormWithData();
+          }
         }
       })
      },
@@ -117,12 +167,12 @@ export class GeneralSettingComponent implements OnInit {
       this.ModelState = error.error;
     }
    })
-   
+  
    
   }
-  onEdit(id:any){
+  onEdit(id:number){
     console.log(id);
-    this.generalsettings.EditGeneralSetting(this.GeneralSetting.value).subscribe({
+    this.generalsettings.EditGeneralSetting(this.GeneralSetting.value,id).subscribe({
       next: (response:any) => {
         console.log(response);
         this.GeneralSetting.controls['id'].setValue(response.id);
@@ -137,10 +187,11 @@ export class GeneralSettingComponent implements OnInit {
   }
   ResetFormWithData(){
     
-    this.GeneralSetting.controls['id'].setValue(null);
-    this.GeneralSetting.controls['empid'].setValue(null);
-    this.GeneralSetting.controls['overtimeHour'].setValue(null);
-    this.GeneralSetting.controls['discountHour'].setValue(null);
+    this.GeneralSetting.controls['id'].setValue(0);
+    this.GeneralSetting.controls['empid'].setValue(0);
+    this.GeneralSetting.controls['overtimeHour'].setValue(0);
+    this.GeneralSetting.controls['discountHour'].setValue(0);
+    this.generalSettingId = 0;
   }
 
   array: { displayValue: string; isSelected: boolean }[] = [];

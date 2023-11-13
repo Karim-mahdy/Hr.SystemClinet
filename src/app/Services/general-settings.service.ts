@@ -13,17 +13,17 @@ export class GeneralsettingService {
   GetAllGeneralSetting(){
     return this.http.get(this.baseUrl)
   }
-  GetEmployeeGeneralSettingById(Id:any){
+  GetEmployeeGeneralSettingById(Id:number){
     return this.http.get(`${this.baseUrl}/${Id}`)
   }
   
   AddGeneralSetting(data:any) {
     return this.http.post(this.baseUrl,data);
   }
-  EditGeneralSetting(data: any){
-   return this.http.put(`${this.baseUrl}`, data );
+  EditGeneralSetting(data: any,id :number){
+   return this.http.put(`${this.baseUrl}/${id}`, data );
   }
-  DeleteGeneralSetting(id: any):Observable<any> {
+  DeleteGeneralSetting(id: number):Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
 }

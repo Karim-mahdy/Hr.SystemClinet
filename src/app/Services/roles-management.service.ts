@@ -20,6 +20,7 @@ export class RolesManagementService {
   GetRoleById(id: any){
     return this.http.get(`${this.baseUrl}/GetRole?roleId=${id}`);
   }
+  
   EditRole(data: any,id: any){
     return this.http.put(`${this.baseUrl}/${id}`,data);
   }

@@ -1,3 +1,7 @@
 .eee{
     background-color: #eee !important;
 }
+#dt-filter-select thead th {
+    font-size: 12px; /* Adjust the font size as needed */
+    padding: 5px; /* Adjust the padding as needed */
+  }

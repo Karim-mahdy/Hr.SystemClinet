@@ -22,6 +22,7 @@ import { JwtModule } from '@auth0/angular-jwt'; // Import JwtModule
 import { TokenInterceptorService } from './Services/token-interceptor.service';
 import { WelcomeComponent } from './Components/Dashboard/Welcome/welcome.component';
 import { AccessDeniedComponent } from './Components/Access denied/access-denied.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  
 
 
@@ -60,7 +61,8 @@ import { AccessDeniedComponent } from './Components/Access denied/access-denied.
     }),
      
     BrowserModule,
-    HttpClientModule, // Add HttpClientModule to your imports
+    HttpClientModule,
+    BrowserAnimationsModule, // Add HttpClientModule to your imports
   ],
   providers: [
     {

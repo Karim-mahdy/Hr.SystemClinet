@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { data } from 'jquery';
 import { Subject } from 'rxjs';
 import { SalaryReportService } from 'src/app/Services/salary-report.service';
 
@@ -37,24 +36,32 @@ export class SalaryReportsComponent implements OnInit {
     ]),
   });
 
+  
   get ControlsName() {
     return this.filtrationForm.controls;
   }
 
-  OnSubmit(e: Event) {
-    console.log( this.filtrationForm.value);
-    e.preventDefault();
-    if (this.filtrationForm.valid) {
-      this.SalaryService.FilterSalaryReport(
-        this.filtrationForm.value
-      ).subscribe({
+  OnSubmit() {
+    if (this.filtrationForm && this.filtrationForm.valid) {
+      const formData = {
+        month: this.filtrationForm.value.month?.toString(),
+        year: this.filtrationForm.value.year?.toString(), // Convert to string
+      };
+  console.log(formData)
+      this.SalaryService.FilterSalaryReport(formData).subscribe({
         next: (response) => {
           this.Reports = response;
-          console.log(Response);
+          console.log(response);
+        },
+        error: (error) => {
+          console.error('Error:', error);
+          // Handle the error (e.g., show a message to the user)
         },
       });
     }
   }
+  
+  
 
 
   

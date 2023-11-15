@@ -11,6 +11,7 @@ export class AttendanceService {
   baseUrl: string = 'https://localhost:44343/api/Attendance';
   EmpsUrl:string= 'https://localhost:44343/api/Attendance/GetEmployeeList';
   EmpsWithoutAttendanceUrl:string= 'https://localhost:44343/api/Attendance/GetAllEmployeeWithoutAttendance';
+ 
 
   GetAllAttendance() {
     return this.http.get(this.baseUrl);
@@ -33,4 +34,9 @@ export class AttendanceService {
   GetEmployeeListWithoutAttendance(){
     return this.http.get(this.EmpsWithoutAttendanceUrl)
   }
-}
+  Filter(data:any){
+    return this.http.post(`${this.baseUrl}/FilterAttendances`, data);
+  }
+
+  }
+

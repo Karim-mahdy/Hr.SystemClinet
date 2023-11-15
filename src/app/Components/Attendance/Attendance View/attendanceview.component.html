@@ -1,117 +1,84 @@
-<div class="container py-4 bg-light">
-    <h3 class="text-center text-dark">
-      Employee Attendance Report
-    </h3>
-  
-    <div class="container mt-5 mb-2">
-      <div class="d-flex justify-content-between">
+<div class="container my-5 ">
+  <div class="card shadow">
+    <div class="card-header bg-gradient-primary text-dark">
+      <div class="d-flex justify-content-between align-items-center">
         <div>
-          <div class="d-flex">
-            <!-- <button type="button" class="btn btn-primary btn-sm">Excel</button> -->
-            <button
-              type="button"
-              class="btn btn-primary btn-sm "
-              [routerLink]="['/Dashboard/Attendance/Add']"
-            >
-              Add Attendance
-            </button>
-          </div>
+          <h1 class="card-title display-6 text-uppercase mb-2 p-4">Employee Attendance Report</h1>
         </div>
-        <div>
-          <!-- <div class="d-flex justify-content-end">
-            <div class="input-group">
-              <input
-                type="search"
-                id="searchInput"
-                placeholder="Search"
-                class="form-control form-control-sm"
-              />
-              <button type="button" class="btn btn-primary">
-                <i class="bi bi-search"></i>
-              </button>
-            </div>
-          </div> -->
+        <div class="d-none d-md-block">
+          <!-- You can add your logo here -->
+          <!-- <img src="your-logo-path.jpg" alt="Your Logo" class="img-fluid" style="max-height: 100px;" /> -->
         </div>
       </div>
-  
-      <div class="row mt-2">
-        <div class="col-md-6">
-          <form>
-            <div class="d-flex">
-              <button type="button" class="btn btn-primary btn-sm me-2">
-                From
-              </button>
-              <input
-                class="form-control form-control-sm me-2"
-                type="date"
-                name="date"
-              />
-              <button type="button" class="btn btn-primary btn-sm me-2">
-                To
-              </button>
-              <input
-                class="form-control form-control-sm me-2"
-                type="date"
-                name="date"
-              />
-              <button type="button" class="btn btn-primary btn-sm me-2">
-                Show
-              </button>
-            </div>
+    </div>
+ 
+    <div class="card-body">
+      
+      <div class="d-flex flex-row align-items-center my-3">
+        <button type="button" class="btn btn-success px-3 " [routerLink]="['/Dashboard/Attendance/Add']">
+          <i class="bi bi-plus"></i> Add Attendance
+        </button>
+        <div class="col-md-6 mx-2 ms-auto">
+          <form (ngSubmit)="onSubmit()" [formGroup]="FormFilter" class="d-flex align-items-center">
+            <label for="from" class="mx-2 mb-0">
+              From
+            </label>
+            <input class="form-control form-control-sm me-2" type="date" formControlName="from" />
+            <label for="to" class="mx-2 mb-0">
+              To
+            </label>
+            <input class="form-control form-control-sm me-2" type="date" formControlName="to" />
+            <button type="submit" class="btn btn-primary btn-sm me-2 mx-2 px-3">
+              Show
+            </button>
           </form>
         </div>
-  
-        <div class="col-md-4">
-          <div class="d-flex justify-content-end">
+      
+        <div class="col-md-2 ms-auto">
+          <div class="d-flex justify-content-end align-items-center">
             <i class="bi bi-file-earmark-pdf h3 mx-2 text-danger"></i>
             <i class="bi bi-printer h3 text-primary"></i>
           </div>
         </div>
       </div>
+      
+
+
+      <div class="table-responsive">
+
+
+        <!-- table -->
+
+        <table id="dt-filter-select" [dtTrigger]="dtTrigger" datatable [dtOptions]="dtoption"
+          class="table pt-3 table-light" cellspacing="0" width="100%">
+          <thead class="thead-light">
+            <tr  >
+              <th>#</th>
+              <th>Department</th>
+              <th>Employee Name</th>
+              <th>Arrival Time</th>
+              <th>Leave Time</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let attend of attendanceReport; let i = index" class="table-row-hover">
+              <td>{{i+1}}</td>
+              <td>{{ attend.departmentName}}</td>
+              <td>{{ attend.employeeName }}</td>
+              <td>{{ attend.arrivalTime }}</td>
+              <td>{{ attend.leaveTime }}</td>
+              <td>{{ attend.date | date:'mediumDate'}}</td>
+              <td class="table-action-icons">
+                <i class="bi bi-pencil-square text-primary mx-2"
+                  [routerLink]="['/Dashboard/Attendance/Edit',attend.id]"></i>
+                <i class="bi bi-trash3 text-danger " (click)="deleteAttendance(attend.id)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="container overflow-auto">
 
-
-<!-- table -->
-
-<table
-      id="dt-filter-select"
-      [dtTrigger]="dtTrigger"
-      datatable
-      [dtOptions]="dtoption"
-      class="table pt-3 table-light"
-      cellspacing="0"
-      width="100%"
-    >
-      <thead>
-        <tr>
-          <th class="th-sm"></th>
-          <th class="th-sm">Department</th>
-          <th class="th-sm">Employee Name</th>
-          <th class="th-sm">ArrivalTime</th>
-          <th class="th-sm">LeaveTime</th>
-          <th class="th-sm">Date</th>
-          <th class="th-sm">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let attend of attendanceReport">
-          <td></td>
-          <td>{{ attend.departmentName}}</td>
-          <td>{{ attend.employeeName }}</td>
-          <td>{{ attend.arrivalTime }}</td>
-          <td>{{ attend.leaveTime }}</td>
-          <td>{{ attend.date }}</td>
-          <td class="">
-            <i
-              class="bi bi-pencil-square text-primary mx-2"
-              [routerLink]="['/Dashboard/Attendance/Edit',attend.id]"
-            ></i>
-            <i class="bi bi-trash3 text-danger " (click)="deleteAttendance(attend.id)"></i>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    </div>
   </div>
-  

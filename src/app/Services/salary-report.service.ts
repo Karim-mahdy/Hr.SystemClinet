@@ -8,13 +8,13 @@ export class SalaryReportService {
 
   constructor(private http:HttpClient) { }
   BaseUrl:string="https://localhost:44343/api/SalaryReport/CalculateSalaryReports"
-  SecondUrl:string="https://localhost:44343/api/SalaryRepor"
+  FilterUrl:string="https://localhost:44343/api/SalaryReport"
 
   GetAllSalaryReport(){
     return this.http.get(this.BaseUrl)
   }
 
   FilterSalaryReport(data:any){
-    return this.http.post(this.SecondUrl,data)
+    return this.http.post(this.FilterUrl,data)
   }
 }

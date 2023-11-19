@@ -4,7 +4,7 @@
   }
   
   .container {
-    width: 100%;
+    width: 90%;
     padding-right: 1%;
     padding-left: 1%;
     margin-right: auto;
@@ -44,10 +44,7 @@
     display: none !important;
   }
   
-  .img-fluid {
-    max-width: 100% !important; /* Adjust as needed */
-    height: auto !important;
-  }
+   
   
   table {
     margin-top: 20px !important;
@@ -79,9 +76,6 @@
     .d-flex {
       flex-direction: row !important; /* Change back to row for larger screens */
     }
-  
-    .img-fluid {
-      max-width: 80px !important; /* Adjust as needed */
-    }
+   
   }
 

@@ -1,85 +1,84 @@
 .hide-row {
-    display: none;
-  }
-  /* Add these styles to your existing CSS file */
+  display: none;
+}
+/* Add these styles to your existing CSS file */
 
 #dt-department thead th {
-  font-size: 15px;
-  text-align: center;
+font-size: 15px;
+text-align: center;
 }
 
 .card {
-  border: none !important;
-  border-radius: 15px !important;
-  overflow: hidden !important;
+border: none !important;
+border-radius: 15px !important;
+overflow: hidden !important;
 }
 
 .card-header {
-  background: linear-gradient(to right, #3498db, #2c3e50) !important;
-  color: white !important;
-  padding: 20px !important;
-  border-bottom: none !important;
+background: linear-gradient(to right, #3498db, #2c3e50) !important;
+color: white !important;
+padding: 20px !important;
+border-bottom: none !important;
 }
 
 .card-title {
-  font-size: 2.5rem !important;
-  margin-bottom: 0 !important;
+font-size: 2.5rem !important;
+margin-bottom: 0 !important;
 }
 
 .lead {
-  font-size: 1.2rem !important;
+font-size: 1.2rem !important;
 }
 
 .d-flex {
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: center !important;
+flex-direction: column !important;
+justify-content: center !important;
+align-items: center !important;
 }
 
 .d-none {
-  display: none !important;
+display: none !important;
 }
 
-.img-fluid {
-  max-width: 100% !important;
-  height: auto !important;
-}
-.table-responsive {
-  width: 70% !important;
-  margin: 0 auto;  
-}
 
 /* Adjustments for the DataTables */
 
 table {
-  width: 100% !important;
-  margin-top: 20px !important;
-  border-collapse: collapse !important;
-  background-color: #fff !important;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+width: 100% !important;
+margin-top: 20px !important;
+border-collapse: collapse !important;
+background-color: #fff !important;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
 }
 
 th, td {
-  padding: 10px !important;
-  text-align: center !important;
+padding: 10px !important;
+text-align: center !important;
 }
 
 th {
-  background-color: #99999977 !important;
-  color: rgb(0, 0, 0) !important;
+background-color: #99999977 !important;
+color: rgb(0, 0, 0) !important;
 }
 
 td {
-  border-bottom: 1px solid #ecf0f1 !important;
+border-bottom: 1px solid #ecf0f1 !important;
 }
 
 /* Responsive styles for smaller screens */
 @media (min-width: 768px) {
-  .d-flex {
-    flex-direction: row !important;
-  }
+.d-flex {
+  flex-direction: row !important;
+}
 
-  .img-fluid {
-    max-width: 80px !important;
-  }
+.img-fluid {
+  max-width: 80px !important;
+}
+}
+
+
+
+.err{
+margin-left: 360px;
+margin-top: -12px;
 }

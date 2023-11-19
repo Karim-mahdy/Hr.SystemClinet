@@ -1,124 +1,83 @@
-<div class="container py-4 eee ">
-  <h1 class="text-center text-primary">Employee Salaries</h1>
-
-  <div class="container mt-5 mb-5">
-    <div class="row">
-      <div class="col-12">
-        <div class="row">
-          <!-- <div class="col-12 col-md-4 col-lg-2 mt-2">
-              <div class="input-group">
-                <input
-                  type="text"
-                  id="searchInput"
-                  placeholder="Search"
-                  class="form-control"
-                  name="Search"
-                  required
-                />
-                <button type="button" class="btn btn-primary">
-                  <i class="bi bi-search"></i>
-                </button>
-              </div>
-            </div> -->
-          <form
-            class="row"
-            [formGroup]="filtrationForm"
-            (submit)="OnSubmit()"
-          > <div
-          *ngIf="ControlsName.year.touched"
-          class="text-danger ms-5 mt-2 mar"
-        >
-          <div *ngIf="ControlsName.year.hasError('pattern')">
-            Invalid Year
-          </div>
+<div class="container my-5 ">
+  <div class="card shadow">
+    <div class="card-header bg-gradient-primary text-dark">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h1 class="card-title display-6 text-uppercase mb-2 p-4">Employee Salaries REPORT</h1>
         </div>
-            <div class="d-flex col-12 col-lg-3 text-center mt-2">
-              <label
-                for="year"
-                class="form-label mx-2 text-primary fs-5 col-2 col-md-3"
-                >Year</label
-              >
-              <input
-                class="form-control"
-                type="number"
-                oninput="javascript: if (this.value.length > 4) this.value = this.value.slice(0, 4);"
-                step="1"
-                min="2000"
-                name="year"
-                formControlName="year"
-                [value]="filtrationForm.get('year')?.value"
-              />
-            </div>
-
-            <div class="d-flex col-12 col-lg-3 text-center mt-2">
-              <label for="month" class="form-label mx-2 text-primary fs-5 col-2 col-md-3">Month</label>
-              <select class="form-select" id="month" name="month" formControlName="month" required>
-                <option [value]="1" [selected]="ControlsName.month.value === 1">January</option>
-                <option [value]="2" [selected]="ControlsName.month.value === 2">February</option>
-                <option [value]="3" [selected]="ControlsName.month.value === 3">March</option>
-                <option [value]="4" [selected]="ControlsName.month.value === 4">April</option>
-                <option [value]="5" [selected]="ControlsName.month.value === 5">May</option>
-                <option [value]="6" [selected]="ControlsName.month.value === 6">June</option>
-                <option [value]="7" [selected]="ControlsName.month.value === 7">July</option>
-                <option [value]="8" [selected]="ControlsName.month.value === 8">August</option>
-                <option [value]="9" [selected]="ControlsName.month.value === 9">September</option>
-                <option [value]="10" [selected]="ControlsName.month.value === 10">October</option>
-                <option [value]="11" [selected]="ControlsName.month.value === 11">November</option>
-                <option [value]="12" [selected]="ControlsName.month.value === 12">December</option>
-              </select>
-            </div>
-            
-            <div
-              class="d-flex col-12 col-md-12 col-lg-2 justify-content-center mt-2"
-            >
-              <button type="submit" class="btn btn-primary w-50">Search</button>
-            </div>
-           
-          </form>
-        </div>
+        
       </div>
     </div>
-  </div>
 
-  <div class="container overflow-auto">
-    <table
-      id="dt-filter-select"
-      datatable
-      [dtOptions]="dtoption"
-      [dtTrigger]="dtTrigger"
-      class="table pt-3 table-light"
-      cellspacing="0"
-      width="100%"
-      id="dt-filter-select"
-    >
-      <thead>
-        <tr>
-          <th class="th-sm">Employee Name</th>
-          <th class="th-sm">Department</th>
-          <th class="th-sm">Basic Salary</th>
-          <th class="th-sm">Attendance Days</th>
-          <th class="th-sm">Absence Days</th>
-          <th class="th-sm">Additional Hours</th>
-          <th class="th-sm">Hourly Discount</th>
-          <th class="th-sm">Total Discount</th>
-          <th class="th-sm">Total Additional</th>
-          <th class="th-sm">Net Salary</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let employee of Reports.salaries">
-          <td>{{ employee.name }}</td>
-          <td>{{ employee.department }}</td>
-          <td>{{ employee.baseSalary }}</td>
-          <td>{{ employee.attendanceDays }}</td>
-          <td>{{ employee.absenceDays }}</td>
-          <td>{{ employee.additionalPerHour }}</td>
-          <td>{{ employee.hourlyDiscount }}</td>
-          <td>{{ employee.totalDiscount }}</td>
-          <td>{{ employee.totalAdditional }}</td>
-          <td>{{ employee.netSalary }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="card-body my-2">
+      <div class="d-flex flex-row align-items-center justify-content-center my-3">
+        <div class="col-md-6">
+          <form [formGroup]="filtrationForm" (submit)="OnSubmit()" class="d-flex align-items-center">
+            <label for="year" class="mx-2 mb-0 text-primary">Year</label>
+            <input class="form-control form-control-sm me-2" type="number" oninput="javascript: if (this.value.length > 4) this.value = this.value.slice(0, 4);" step="1" min="2000" name="year" formControlName="year" [value]="filtrationForm.get('year')?.value" />
+      
+            <label for="month" class="mx-2 mb-0 text-primary">Month</label>
+            <select class="form-control form-control-sm me-2" id="month" name="month" formControlName="month" required>
+              <option [value]="1" [selected]="ControlsName.month.value === 1">January</option>
+              <option [value]="2" [selected]="ControlsName.month.value === 2">February</option>
+              <option [value]="3" [selected]="ControlsName.month.value === 3">March</option>
+              <option [value]="4" [selected]="ControlsName.month.value === 4">April</option>
+              <option [value]="5" [selected]="ControlsName.month.value === 5">May</option>
+              <option [value]="6" [selected]="ControlsName.month.value === 6">June</option>
+              <option [value]="7" [selected]="ControlsName.month.value === 7">July</option>
+              <option [value]="8" [selected]="ControlsName.month.value === 8">August</option>
+              <option [value]="9" [selected]="ControlsName.month.value === 9">September</option>
+              <option [value]="10" [selected]="ControlsName.month.value === 10">October</option>
+              <option [value]="11" [selected]="ControlsName.month.value === 11">November</option>
+              <option [value]="12" [selected]="ControlsName.month.value === 12">December</option>
+            </select>
+      
+            <button type="submit" class="btn btn-primary btn-sm me-2 px-3">Search</button>
+          </form>
+        </div>
+      
+        <div class="col-md-2">
+          <div class="d-flex justify-content-end align-items-center">
+            <i class="bi bi-file-earmark-pdf h3 mx-2 text-danger"></i>
+            <i class="bi bi-printer h3 text-primary"></i>
+          </div>
+        </div>
+      </div>
+      
+
+      <div class="table-responsive">
+        <!-- table -->
+        <table id="dt-filter-select" datatable [dtOptions]="dtoption" [dtTrigger]="dtTrigger" class="table  table-bordered" cellspacing="0" width="100%">
+          <thead  class="thead-light">
+            <tr>
+              <th >Name</th>
+              <th >Department</th>
+              <th >Salary</th>
+              <th >Attendance Days</th>
+              <th >Absence Days</th>
+              <th >Additional Hours</th>
+              <th >Hourly Discount</th>
+              <th >Total Discount</th>
+              <th >Total Additional</th>
+              <th >Net Salary</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let employee of Reports.salaries " class="table-row-hover">
+              <td>{{ employee.name }}</td>
+              <td>{{ employee.department }}</td>
+              <td>{{ employee.baseSalary }}</td>
+              <td>{{ employee.attendanceDays }}</td>
+              <td>{{ employee.absenceDays }}</td>
+              <td>{{ employee.additionalPerHour| currency:'USD':'symbol':'1.2-2'  }}</td>
+              <td>{{ employee.hourlyDiscount | currency:'USD':'symbol':'1.2-2' }}</td>
+              <td>{{ employee.totalDiscount | currency:'USD':'symbol':'1.2-2' }}</td>
+              <td>{{ employee.totalAdditional | currency:'USD':'symbol':'1.2-2' }}</td>
+              <td>{{ employee.netSalary | currency:'USD':'symbol':'1.2-2' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,20 +1,16 @@
 <div class="container  my-5 ">
   <div class="card shadow">
     <div class="card-header bg-gradient-primary text-dark">
-      <div class="d-flex justify-content-between align-items-center">
+      <div class="d-flex justify-content-center align-items-center">
         <div>
           <h1 class="card-title display-6 text-uppercase mb-2 p-4">Employee Management</h1>
         </div>
-        <div class="d-none d-md-block">
-          <img src="assets/Img/Welcome.jpg" alt="Your Logo" class="img-fluid" style="max-height: 100px;" />
-        </div>
+       
       </div>
     </div>
     
-    
-
-    <div class="card-body">
-      <button class="btn btn-success mb-4" [routerLink]="['/Dashboard/Employee/Add']">
+    <div class="card-body mb-4">
+      <button class="btn btn-primary my-3" [routerLink]="['/Dashboard/Employee/Add']">
         <i class="bi bi-plus"></i> Add New Employee
       </button>
 
@@ -30,14 +26,14 @@
         >
           <thead class="thead-light">
             <tr>
-              <th>Employee Name</th>
+              <th>Name</th>
               <th>Department</th>
               <th>Salary</th>
               <th>National Id</th>
-              <th>Arrival Time</th>
-              <th>Leave Time</th>
+              <th>Arrival</th>
+              <th>Leave</th>
               <th>Hire Date</th>
-              <th>Birthdate</th>
+              <th>Birth date</th>
               <th>Gender</th>
               <th>Country</th>
              

@@ -16,6 +16,7 @@ export class RoleManagementComponent implements OnInit {
     "Attendance",
     "Permission",
   ];
+  flag:boolean=true;
   roleClaims: any[] = [];
   roles: any[] = [];
   roleId: string = '';
@@ -38,21 +39,21 @@ export class RoleManagementComponent implements OnInit {
       this.roles = response;
 
     })
+    this.flag=false;
   }
 
   OnSubmit(e: Event) {
     e.preventDefault();
     if (this.roleId != '') {
       console.log(this.roleId)
+      console.log(this.FormRole.value);
       this.rolesService.EditRole(this.FormRole.value, this.roleId).subscribe((response: any) => {
         this.rolesService.GetDataToCreate().subscribe((response: any) => {
           this.roleClaims = response.roleClaims;
           this.rolesService.GetAllRoles().subscribe((response: any) => {
             this.roles = response;
           })
-          this.FormRole.reset();
-          this.Reset();
-
+        
         });
       });
     }
@@ -66,6 +67,7 @@ export class RoleManagementComponent implements OnInit {
           })
           this.FormRole.reset();
           this.Reset();
+          this.flag=false;
         });
 
       });
@@ -76,19 +78,15 @@ export class RoleManagementComponent implements OnInit {
   OnEdit(id: any) {
     this.rolesService.GetRoleById(id).subscribe((response: any) => {
       this.roleId = id;
-      console.log(this.roleId)
-
-      this.FormRole.setValue({
-        roleName: response.roleName,
-        roleClaims: response.roleClaims
-      });
-      console.log(this.FormRole.value);
-      this.roleClaims = response.roleClaims;
-
+      this.FormRole.controls['roleName'].setValue(response.roleName);
+      this.FormRole.controls['roleClaims'].setValue(response.roleClaims);
+      this.roleClaims =response.roleClaims
+      this.updatedRoleClaims = JSON.parse(JSON.stringify(this.roleClaims));
+      this.populateTable();
       this.Reset();
+      this.flag=true;
     });
   }
-
 
   OnDelete(id: any) {
     if (confirm("Are you sure you want to delete this role?")) {
@@ -99,6 +97,8 @@ export class RoleManagementComponent implements OnInit {
             this.roles = response;
           })
           this.Reset();
+          this.OnCancel();
+          this.flag=false;
         });
       })
     }
@@ -144,21 +144,35 @@ export class RoleManagementComponent implements OnInit {
             });
             this.FormRole.controls['roleClaims'].setValue(this.updatedRoleClaims);
           });
-
+        
         }
-
+        
+          
       });
     });
+    console.log(this.updatedRoleClaims);
   }
 
   Reset() {
-    
     const table = this.elementRef.nativeElement.querySelector('#dt-filter-select');
-    while (table.rows.length > 0) {
-      table.deleteRow(0);
+  
+    // Start the loop from index 1 to skip the first row
+    for (let i = table.rows.length - 1; i > 0; i--) {
+      table.deleteRow(i);
     }
-
-    // Redraw the table with the updated data
+    console.log('............');
+    // Populate the table after deleting rows
     this.populateTable();
+  }
+  
+  OnCancel(){
+    this.roleId = '';
+    this.FormRole.reset();
+    this.rolesService.GetDataToCreate().subscribe((response: any) => {
+      this.roleClaims = response.roleClaims;
+      this.updatedRoleClaims = JSON.parse(JSON.stringify(this.roleClaims));
+      this.Reset();
+      this.flag=false;
+    })
   }
 }

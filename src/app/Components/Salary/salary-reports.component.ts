@@ -22,7 +22,7 @@ export class SalaryReportsComponent implements OnInit {
     };
     this.SalaryService.GetAllSalaryReport().subscribe({
       next: (Response) => {
-       
+        console.log(Response);
         this.Reports = Response;
         this.dtTrigger.next(null);
       },
@@ -50,7 +50,7 @@ export class SalaryReportsComponent implements OnInit {
   console.log(formData)
       this.SalaryService.FilterSalaryReport(formData).subscribe({
         next: (response) => {
-          this.Reports = response;
+          this.Reports = response; 
           console.log(response);
         },
         error: (error) => {

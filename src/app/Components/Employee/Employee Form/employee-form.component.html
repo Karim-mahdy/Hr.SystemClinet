@@ -332,11 +332,25 @@
                 {{ d.name }}
               </option>
             </select>
+            <div *ngIf="controls.departmentId.touched || submitted">
+              <p
+                *ngIf="controls.departmentId.hasError('required')"
+                class="text-danger"
+              >
+              Department is required
+              </p>
+            </div>
           </div>
           <div class=" col-9 d-flex justify-content-end align-items-end" >
             <button class="btn h-50 btn-primary mb-2 px-3" type="submit">
               {{ employeeId >= 0 ?  "Edit":"Add"  }}
             </button>
+            <a
+            class="btn btn-secondary btn-md ms-4 mb-2 px-3"
+            [routerLink]= "['/Dashboard/Employee']"
+          >
+            Back
+          </a>
           </div>
         </div>
       </form>

@@ -26,43 +26,92 @@ const routes: Routes = [
     canActivate: [PermissionsGurdService],
     children: [
       { path: 'Welcome', component: WelcomeComponent },
-      { path: 'Depatment', component: DepartmentViewComponent 
+      {
+        path: 'Depatment', component: DepartmentViewComponent,
+        data: {
+          allowedRoles:["SuperAdmin"],
+          allowedPermissions: ["Permission.Department.View"],
+        },
+        canActivate: [PermissionsGurdService]
+      },
      
-    },
-      { path: 'Depatment/Add', component: DepartmentFormComponent  ,
+      { path: 'Employee', component: EmployeeviewComponent ,
       data: {
-        allowedRoles: ["SuperAdmin"],
-        allowedPermissions: [
-          "Permission.Department.View",
-        ]
+        allowedRoles:["SuperAdmin"],
+        allowedPermissions: ["Permission.Employee.View"],
       },
       canActivate: [PermissionsGurdService]},
-      { path: 'Depatment/Edit/:id', component: DepartmentFormComponent },
-      { path: 'Employee', component: EmployeeviewComponent },
-      { path: 'Employee/Add', component: EmployeeformComponent },
-      { path: 'Employee/Edit/:id', component: EmployeeformComponent },
-      { path: 'Salary', component: SalaryReportsComponent },
-      { path: 'Attendance', component: AttendanceviewComponent },
-      { path: 'Attendance/Add', component: AttendanceformComponent },
-      { path: 'Attendance/Edit/:id', component: AttendanceformComponent },
-      { path: 'PublicHolidays', component: PublicholidaysComponent },
+
+
+      { path: 'Employee/Add', component: EmployeeformComponent ,
+      data: {
+        allowedRoles:["SuperAdmin"],
+        allowedPermissions: ["Permission.Employee.Create"],
+      },
+      canActivate: [PermissionsGurdService]},
+
+
+      { path: 'Employee/Edit/:id', component: EmployeeformComponent ,
+      data: {
+        allowedRoles:["SuperAdmin"],
+        allowedPermissions: ["Permission.Employee.Edit"],
+      },
+      canActivate: [PermissionsGurdService]},
+
+
+      { path: 'Salary', component: SalaryReportsComponent ,
+      data: {
+        allowedRoles:["SuperAdmin"],
+        allowedPermissions: ["Permission.Salary.View"],
+      },
+      canActivate: [PermissionsGurdService]},
+
+
+      { path: 'Attendance', component: AttendanceviewComponent ,
+      data: {
+        allowedRoles:["SuperAdmin"],
+        allowedPermissions: ["Permission.Attendance.View"],
+      },
+      canActivate: [PermissionsGurdService]},
+     
+
+      { path: 'PublicHolidays', component: PublicholidaysComponent  ,
+      data: {
+        allowedRoles:["SuperAdmin"],
+        allowedPermissions: ["Permission.GeneralSetting.View"],
+      },
+      canActivate: [PermissionsGurdService]},
+
+
       {
         path: 'GeneralSettings',
         component: GeneralSettingComponent,
         data: {
           allowedRoles: ["SuperAdmin"],
           allowedPermissions: [
-            "Permission.GeneralSetting.View",
-            "Permission.GeneralSetting.Edit",
-            "Permission.GeneralSetting.Add",
-            "Permission.GeneralSetting.Delete"
+            "Permission.GeneralSetting.View"
           ]
         },
         canActivate: [PermissionsGurdService]
       },
-      
-      { path: 'UsersManagement', component: UserManagementComponent },
-      { path: 'RolesManagement', component: RoleManagementComponent },
+
+
+      { path: 'UsersManagement', component: UserManagementComponent  ,
+      data: {
+        allowedRoles:["SuperAdmin"],
+        allowedPermissions: ["Permission.Permission.View"],
+      },
+      canActivate: [PermissionsGurdService]},
+
+
+      { path: 'RolesManagement', component: RoleManagementComponent  ,
+      data: {
+        allowedRoles:["SuperAdmin"],
+        allowedPermissions: ["Permission.Permission.View"],
+      },
+      canActivate: [PermissionsGurdService]},
+
+
       { path: 'AccessDenied', component: AccessDeniedComponent },
 
     ],

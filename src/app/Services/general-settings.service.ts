@@ -1,29 +1,69 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { PermissionsGurdService } from './permissions-gurd.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GeneralsettingService {
 
-  constructor(private http:HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private permissionsGuardService: PermissionsGurdService
+  ) {}
   baseUrl:string="https://localhost:44343/api/GeneralSettings"
+  checkPermission(requiredServicePermission: string): boolean {
+    const token = localStorage.getItem("jwt") ?? "";
+    if (this.permissionsGuardService.hasRole(token, ['SuperAdmin'])) {
+      return true;
+    }
+    if (this.permissionsGuardService.hasPermission(token, [requiredServicePermission])) {
+      return true
+    }
+    this.router.navigate(['/Dashboard/AccessDenied']);
+    return false;
+  }
+ 
+  GetAllGeneralSetting(): Observable<any> {
+    if (this.checkPermission('Permission.GeneralSetting.View')) {
+      return this.http.get(this.baseUrl);
+    } else {
+      return of([]);
+    }
+  }
 
-  GetAllGeneralSetting(){
-    return this.http.get(this.baseUrl)
+  GetEmployeeGeneralSettingById(id: number): Observable<any> {
+    if (this.checkPermission('Permission.GeneralSetting.Edit')) {
+      return this.http.get(`${this.baseUrl}/${id}`);
+    } else {
+      return of([]);
+    }
   }
-  GetEmployeeGeneralSettingById(Id:number){
-    return this.http.get(`${this.baseUrl}/${Id}`)
+
+  AddGeneralSetting(data: any): Observable<any> {
+    if (this.checkPermission('Permission.GeneralSetting.Create')) {
+      return this.http.post(this.baseUrl, data);
+    } else {
+      return of([]);
+    }
   }
-  
-  AddGeneralSetting(data:any) {
-    return this.http.post(this.baseUrl,data);
+
+  EditGeneralSetting(data: any, id: number): Observable<any> {
+    if (this.checkPermission('Permission.GeneralSetting.Edit')) {
+      return this.http.put(`${this.baseUrl}/${id}`, data);
+    } else {
+      return of([]);
+    }
   }
-  EditGeneralSetting(data: any,id :number){
-   return this.http.put(`${this.baseUrl}/${id}`, data );
-  }
-  DeleteGeneralSetting(id: number):Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+
+  DeleteGeneralSetting(id: number): Observable<any> {
+    if (this.checkPermission('Permission.GeneralSetting.Delete')) {
+      return this.http.delete(`${this.baseUrl}/${id}`);
+    } else {
+      return of([]);
+    }
   }
 }

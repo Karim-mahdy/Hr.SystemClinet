@@ -1,28 +1,68 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { PermissionsGurdService } from './permissions-gurd.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private permissionsGuardService: PermissionsGurdService
+  ) {}
 
   baseUrl: string = 'https://localhost:44343/api/Employee';
+  checkPermission(requiredServicePermission: string): boolean {
+    const token = localStorage.getItem('jwt') ?? '';
+    if (this.permissionsGuardService.hasRole(token, ['SuperAdmin'])) {
+      return true;
+    }
+    if (this.permissionsGuardService.hasPermission(token, [requiredServicePermission])) {
+      return true;
+    }
+    this.router.navigate(['/Dashboard/AccessDenied']);
+    return false;
+  }
+  GetAllEmployee(): Observable<any> {
+    if (this.checkPermission('Permission.Employee.View')) {
+      return this.http.get(this.baseUrl);
+    } else {
+      return of([]);
+    }
+  }
 
-  GetAllEmployee() {
-    return this.http.get(this.baseUrl);
+  GetEmployeeById(employeeId: number): Observable<any> {
+    if (this.checkPermission('Permission.Employee.Edit')) {
+      return this.http.get(`${this.baseUrl}/${employeeId}`);
+    } else {
+      return of([]);
+    }
   }
-  GetEmployeeById(employeeId: number) {
-    return this.http.get(`${this.baseUrl}/${employeeId}`);
+
+  AddEmployee(employee: any): Observable<any> {
+    if (this.checkPermission('Permission.Employee.Create')) {
+      return this.http.post(this.baseUrl, employee);
+    } else {
+      return of([]);
+    }
   }
-  AddEmployee(employee: any) {
-    return this.http.post(this.baseUrl, employee);
+
+  EditEmployee(employee: any, employeeid: number): Observable<any> {
+    if (this.checkPermission('Permission.Employee.Edit')) {
+      return this.http.put(`${this.baseUrl}/${employeeid}`,employee);
+        } else {
+      return of([]);
+    }
   }
-  EditEmployee(employee: any,employeeid:number) : Observable<any>{
-    return this.http.put(`${this.baseUrl}/${employeeid}`,employee);
-  }
-  DeleteEmployee(employeeid:number){
-    return this.http.delete(`${this.baseUrl}/${employeeid}`)
+
+  DeleteEmployee(employeeid: number): Observable<any> {
+    if (this.checkPermission('Permission.Employee.Delete')) {
+      return this.http.delete(`${this.baseUrl}/${employeeid}`);
+    } else {
+      return of([]);
+    }
   }
 }

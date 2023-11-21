@@ -16,7 +16,7 @@ export class GeneralSettingComponent implements OnInit {
     discountHour: new FormControl(0, [Validators.required, Validators.min(0)]),
     weekends: new FormControl(),
   });
-
+  serverErrors: string[] = [];
   setting: any
   flag: boolean = false;
   generalSettingId: number = 0;
@@ -41,6 +41,7 @@ export class GeneralSettingComponent implements OnInit {
     return this.GeneralSetting.controls
   }
   constructor(private generalsettings: GeneralsettingService) { }
+  propertiesToPush: string[] = ['Days', 'CustomeSettings', 'GeneralSettings','WeekendDay'];
 
   ngOnInit(): void {
 
@@ -131,7 +132,6 @@ export class GeneralSettingComponent implements OnInit {
               this.setting.weekends = null;
               this.setting.weekends = response.weekends;
               console.log(this.setting);
-
             }
           });
         }
@@ -152,9 +152,18 @@ export class GeneralSettingComponent implements OnInit {
           });
         }
       },
-      error: (error: any) => {
-        this.ModelState = error.error;
-      }
+      error:(error:any)=>{  
+       
+       this.clearServerErrors();
+        for (const key of this.propertiesToPush) {
+          if (error.error[key] && Array.isArray(error.error[key]))  {
+            this.serverErrors.push(...error.error[key]);
+            console.log(this.serverErrors);
+          }
+        }
+      
+
+        }
     });
 
     this.ResetFormWithData();
@@ -183,10 +192,20 @@ export class GeneralSettingComponent implements OnInit {
         this.GeneralSetting.controls['overtimeHour'].setValue(response.overtimeHour);
         this.GeneralSetting.controls['discountHour'].setValue(response.discountHour);
       },
+      error:(error:any)=>{  
+        console.log(error);
+        console.log(error.error);
+       
+       this.clearServerErrors();
+        for (const key of this.propertiesToPush) {
+          if (error.error[key] && Array.isArray(error.error[key]))  {
+            this.serverErrors.push(...error.error[key]);
+            console.log(this.serverErrors);
+          }
+        }
+        console.log(this.serverErrors);
 
-      error: (error) => {
-        console.error('Error:', error); // Handle error response if needed
-      }
+        }
 
     })
   }
@@ -194,12 +213,17 @@ export class GeneralSettingComponent implements OnInit {
   onDelete(id: number ) {
      
     this.generalsettings.DeleteGeneralSetting(id).subscribe({
-      next: () => {
+      next: (res:any) => {
+ 
+        console.log(res);
+        
           this.resetDataForSpcial();
           this.flag2 = true
          
       },
       error: (error: any) => {
+        console.log(error);
+        
         this.ModelState = error.error;
       }
     })
@@ -232,8 +256,9 @@ export class GeneralSettingComponent implements OnInit {
     console.log('Form value:', this.GeneralSetting.value);
   }
 
-  ResetFormWithData() {
-    this.GeneralSetting.controls['id'].setValue(0);
+  ResetFormWithData(source = '') {
+    if (source === 'cancel') {
+      this.GeneralSetting.controls['id'].setValue(0);
     this.GeneralSetting.controls['empid'].setValue(0);
     this.GeneralSetting.controls['overtimeHour'].setValue(0);
     this.GeneralSetting.controls['discountHour'].setValue(0);
@@ -244,6 +269,13 @@ export class GeneralSettingComponent implements OnInit {
 
     // Update the 'weekends' control in the form
     this.GeneralSetting.controls['weekends'].setValue(this.array);
+  } else {
+      // Do something else when called from another source
+      this.clearServerErrors();
+
+      console.log('Reset called from another source');
+  }
+   
   }
 
   resetFormAndShowEmployees() {
@@ -268,6 +300,7 @@ export class GeneralSettingComponent implements OnInit {
       { displayValue: 'Friday', isSelected: false }
     ];
     this.flag = false;
+    this.clearServerErrors();
 
   }
   cancelAddCustomSettings() {
@@ -285,6 +318,7 @@ export class GeneralSettingComponent implements OnInit {
           this.flag2 = false;
           this.flag = true;
           this.show = false;
+          this.clearServerErrors();
         }
         else {
           this.resetDataForSpcial()
@@ -297,6 +331,9 @@ export class GeneralSettingComponent implements OnInit {
     });
 
 
+  }
+  clearServerErrors() {
+    this.serverErrors = [];
   }
 
 }

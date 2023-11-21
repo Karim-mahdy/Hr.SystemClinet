@@ -32,6 +32,7 @@ export class AttendanceviewComponent implements OnInit {
       .padStart(2, '0');
     this.currentTime = `${currentHours}:${currentMinutes}`;
   }
+  serverErrors: string[] = [];
   Show: boolean = false;
   employeeAttendanceId: number = 0;
   employeeList: any;
@@ -85,6 +86,7 @@ export class AttendanceviewComponent implements OnInit {
       }
     })
   }
+  propertiesToPush: string[] = ['Exists', 'Date', 'ArrivalTime','Error'];
 
   // Filter 
   Submit() {
@@ -122,28 +124,57 @@ export class AttendanceviewComponent implements OnInit {
               }
             })
           },
-          error: (error) => {
-            console.error('Error:', error);
-          },
+          error:(error:any)=>{  
+            console.log(error);
+            console.log(error.error);
+           // this.Show=true;
+           this.clearServerErrors();
+            for (const key of this.propertiesToPush) {
+              if (error.error[key] && Array.isArray(error.error[key]))  {
+                this.serverErrors.push(...error.error[key]);
+                 this.Show=true;
+                 this.submitted=false;
+                console.log(this.serverErrors);
+              }
+            }
+            console.log(this.serverErrors);
+  
+            }
         });
-      this.OnReset();
-    } else {
-      console.log("aaaaaaaaaa");
+        this.Show=false;
+        this.OnReset();
+      // console.log(this.OnReset());
 
+    } 
+    else {
+      
+      //this.Show=true;
       this.attendanceService
         .AddAttendance(this.EmployeeAttendanceForm.value)
         .subscribe({
           next: () => {
             this.attendanceService.GetAllAttendance().subscribe({
-
               next: (Response: any) => {
                 this.attendanceReport = Response;
               }
             })
           },
-          error: (error) => {
-            console.error('Error:', error);
-          },
+          error:(error:any)=>{  
+            console.log(error);
+            console.log(error.error);
+            this.Show=true;
+           this.clearServerErrors();
+            for (const key of this.propertiesToPush) {
+              if (error.error[key] && Array.isArray(error.error[key]))  {
+                this.serverErrors.push(...error.error[key]);
+                this.Show=true;
+                this.submitted=false;
+                console.log(this.serverErrors);
+              }
+            }
+            console.log(this.serverErrors);
+  
+            }
         });
       this.OnReset();
     }
@@ -152,6 +183,7 @@ export class AttendanceviewComponent implements OnInit {
   Toggle() {
     this.Show = true
     this.flag=false
+    
   }
 
   Edit(id: any) {
@@ -184,16 +216,31 @@ export class AttendanceviewComponent implements OnInit {
     }
   }
 
-  OnReset() {
-    this.EmployeeAttendanceForm.controls['id'].setValue(0);
-    this.EmployeeAttendanceForm.controls['arrivalTime'].setValue(this.currentTime);
-    this.EmployeeAttendanceForm.controls['leaveTime'].setValue('');
-    this.EmployeeAttendanceForm.controls['date'].setValue(this.minDate());
-    this.EmployeeAttendanceForm.controls['selectedEmployee'].setValue(0);
+  OnReset(source: string = '') {
+    if (source === 'cancel') {
+      // Do something specific when called from the "Cancel" button
+      this.EmployeeAttendanceForm.controls['id'].setValue(0);
+      this.EmployeeAttendanceForm.controls['arrivalTime'].setValue(this.currentTime);
+      this.EmployeeAttendanceForm.controls['leaveTime'].setValue('');
+      this.EmployeeAttendanceForm.controls['date'].setValue(this.minDate());
+      this.EmployeeAttendanceForm.controls['selectedEmployee'].setValue(0);
+  
+      this.Show = !this.Show
+      this.employeeAttendanceId = 0;
+      this.clearServerErrors();
+      console.log(this.Show);
+      
+      console.log(this.employeeAttendanceId)
+      console.log(this.EmployeeAttendanceForm.value);
+      console.log('Reset called from Cancel button');
+  } else {
+      // Do something else when called from another source
+      this.clearServerErrors();
 
-    this.Show = !this.Show
-    this.employeeAttendanceId = 0;
-    console.log(this.employeeAttendanceId)
-    console.log(this.EmployeeAttendanceForm.value);
+      console.log('Reset called from another source');
+  }
+  }
+  clearServerErrors() {
+    this.serverErrors = [];
   }
 }

@@ -19,20 +19,28 @@
                 <input type="text" id="name" class="form-control" name="name" formControlName="name" />
               </div>
             </div>
+             
             <div class="col-md-4">
               <label class="form-label" for="date">Date</label>
               <input class="form-control" id="date" type="date" name="date" formControlName="date" [min]="minDate()" />
             </div>
+
+           
             <div class="col-2 d-flex align-items-end ">
               <button class="btn btn-primary btn-md me-2" type="submit">
                 {{ publicHolidayId > 0 ? "Edit" : "Add" }}
               </button>
-              <button *ngIf="publicHolidayId > 0" class="btn btn-danger btn-md me-2" type="button" (click)="OnReset()">
+              <button *ngIf="publicHolidayId > 0" class="btn btn-danger btn-md me-2" type="button" (click)="OnReset('cancel')">
                 Cancel
               </button>
             </div>
           </div>
         </form>
+        <div class="row">
+          <div *ngIf="(serverErrors.length > 0)">
+            <p class="text-danger" *ngFor="let error of serverErrors">{{ error }}</p>
+          </div>
+        </div>
         <div class="row">
           <table datatable [dtOptions]="dtoption" class="table pt-3 table-light px-2" [dtTrigger]="dtTrigger" id="dt-publicholdiy"
             width="100%" class="table table-striped">

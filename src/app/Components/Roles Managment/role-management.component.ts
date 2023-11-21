@@ -16,6 +16,7 @@ export class RoleManagementComponent implements OnInit {
     "Attendance",
     "Permission",
   ];
+  serverErrors: string[] = [];
   flag:boolean=true;
   roleClaims: any[] = [];
   roles: any[] = [];
@@ -41,6 +42,7 @@ export class RoleManagementComponent implements OnInit {
     })
     this.flag=false;
   }
+  propertiesToPush: string[] = ['RoleClaims', 'RoleName'];
 
   OnSubmit(e: Event) {
     e.preventDefault();
@@ -55,7 +57,22 @@ export class RoleManagementComponent implements OnInit {
           })
         
         });
-      });
+      },
+      (error:any)=>{  
+        console.log(error);
+        console.log(error.error);
+       
+       this.clearServerErrors();
+        for (const key of this.propertiesToPush) {
+          if (error.error[key] && Array.isArray(error.error[key]))  {
+            this.serverErrors.push(...error.error[key]);
+            console.log(this.serverErrors);
+          }
+        }
+        console.log(this.serverErrors);
+
+        }
+      );
     }
     else {
       console.log(this.FormRole.value);
@@ -70,7 +87,23 @@ export class RoleManagementComponent implements OnInit {
           this.flag=false;
         });
 
-      });
+      },
+      (error:any) => {  
+     
+        console.log(error.error.RoleClaims[0]);
+      
+      // this.clearServerErrors();
+        for (const key of this.propertiesToPush) {
+          if (error.error[key] && Array.isArray(error.error[key]))  {
+            this.serverErrors.push(...error.error[key]);
+            
+          }
+        }
+        console.log(this.serverErrors);
+
+        }
+      
+      );
     }
 
   }
@@ -152,6 +185,9 @@ export class RoleManagementComponent implements OnInit {
     });
     console.log(this.updatedRoleClaims);
   }
+  get ControlName() {
+    return this.FormRole.controls
+  }
 
   Reset() {
     const table = this.elementRef.nativeElement.querySelector('#dt-filter-select');
@@ -174,5 +210,8 @@ export class RoleManagementComponent implements OnInit {
       this.Reset();
       this.flag=false;
     })
+  }
+  clearServerErrors() {
+    this.serverErrors = [];
   }
 }

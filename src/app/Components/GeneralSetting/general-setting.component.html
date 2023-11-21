@@ -44,8 +44,8 @@
                   />
               </div>
               <div *ngIf="ControlName.overtimeHour.touched">
-                <p *ngIf="ControlName.overtimeHour.hasError('min')" class="text-danger">value cant be less than zero
-                </p>
+                <p *ngIf="ControlName.overtimeHour.hasError('min')" class="text-danger">Value can't be less than zero</p>
+                <p *ngIf="ControlName.overtimeHour.hasError('required')" class="text-danger">Over Time Hour is required</p>
               </div>
             </div>
             <div class="col-md-4 mb-4">
@@ -57,8 +57,8 @@
                   />
               </div>
               <div *ngIf="ControlName.discountHour.touched">
-                <p *ngIf="ControlName.discountHour.hasError('min')" class="text-danger">
-                  {{setting.discountHour}}value cant be less than zero</p>
+                <p *ngIf="ControlName.discountHour.hasError('min')" class="text-danger">Value can't be less than zero</p>
+                <p *ngIf="ControlName.discountHour.hasError('required')" class="text-danger">Discount Hour is required</p>
               </div>
             </div>
           </div>
@@ -68,7 +68,7 @@
                 <div class="custom-checkboxes my-3">
                     <div *ngFor="let day of setting.weekends.slice(0, 4)" class="checkbox-item">
                         <label class="checkbox-label">
-                            <input type="checkbox" class="custom-checkbox" [checked]="day.isSelected" (change)="itemSelectionChanged(day,$event)" />
+                            <input type="checkbox" class="custom-checkbox" required [checked]="day.isSelected" (change)="itemSelectionChanged(day,$event)" />
                             <span>{{ day.displayValue }}</span>
                         </label>
                     </div>
@@ -78,14 +78,18 @@
                 <div class="custom-checkboxes">
                     <div *ngFor="let day of setting.weekends.slice(4)" class="checkbox-item">
                         <label class="checkbox-label">
-                            <input type="checkbox" class="custom-checkbox" [checked]="day.isSelected" (change)="itemSelectionChanged(day,$event)" />
+                            <input type="checkbox" class="custom-checkbox" required [checked]="day.isSelected" (change)="itemSelectionChanged(day,$event)" />
                             <span>{{ day.displayValue }}</span>
                         </label>
                     </div>
                 </div>
             </div>
         </div>
-        
+        <div class="row">
+          <div class="mb-2 mt-3 d-flex justify-content-center" *ngIf="serverErrors.length > 0">
+            <p class="text-danger" *ngFor="let error of serverErrors">{{ error }}</p>
+          </div>
+        </div>
 
           <div class="mt-1 pt-2 d-flex justify-content-end  ms-auto">
 

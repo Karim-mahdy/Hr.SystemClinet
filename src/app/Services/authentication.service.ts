@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
 
@@ -16,7 +16,8 @@ export class AuthenticationService {
     }
   }
 
-  baseUrl: string = 'https://localhost:44343/api/Authentication/Login';
+  baseUrl: string = 'https://localhost:7146/api/Authentication/Login';
+  refershtoken: string='https://localhost:7146/api/Authentication'
   userData = new BehaviorSubject(null);
 
   decodeUserData() {
@@ -27,6 +28,24 @@ export class AuthenticationService {
      
     }
   }
+
+  refreshToken(): Observable<any> {
+    console.log('Refreshing token...');
+    return this.http.post(`${this.refershtoken}`, null).pipe(
+      tap(
+        (response: any) => {
+          console.log('Token refreshed successfully.');
+          const newToken = response.token;
+          localStorage.setItem('jwt', newToken);
+        },
+        (error) => {
+          console.error('Token refresh failed:', error);
+        }
+      )
+    );
+  }
+  
+  
 
   logout() {
     localStorage.removeItem('jwt');

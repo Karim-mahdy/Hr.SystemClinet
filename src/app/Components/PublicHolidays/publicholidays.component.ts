@@ -17,7 +17,7 @@ export class PublicholidaysComponent implements OnInit {
    
     
   ){}
- 
+  serverErrors: string[] = [];
   submitted: boolean = false;
   publicHolidays:any;
   publicHolidayId:any;
@@ -27,6 +27,7 @@ export class PublicholidaysComponent implements OnInit {
     name: new FormControl('', [Validators.required, Validators.maxLength(30), Validators.minLength(2)]),
     date: new FormControl('', Validators.required)
   });
+  propertiesToPush: string[] = ['Name', 'Date'];
   
   get controls() {
     return this.PublicHolidyFrom.controls;
@@ -59,8 +60,23 @@ export class PublicholidaysComponent implements OnInit {
             })
           },
           error:(error:any)=>{  
-            this.ModelState = error.error;
-          }
+            //console.log(error);
+            console.log(error.error);
+            this.clearServerErrors();
+            for (const key of this.propertiesToPush) {
+           
+              
+              if (error.error[key] && Array.isArray(error.error[key])) {
+                this.serverErrors.push(...error.error[key]);
+                console.log(this.serverErrors);
+                
+              }
+
+            }
+            console.log(this.serverErrors);
+
+            }
+
         });
         this.OnReset()
 
@@ -77,8 +93,22 @@ export class PublicholidaysComponent implements OnInit {
             })
           },
           error:(error:any)=>{  
-            this.ModelState = error.error;
-          }
+            //console.log(error);
+            console.log(error.error);
+            this.clearServerErrors();
+            for (const key of this.propertiesToPush) {
+           
+              
+              if (error.error[key] && Array.isArray(error.error[key])) {
+                this.serverErrors.push(...error.error[key]);
+                console.log(this.serverErrors);
+                
+              }
+
+            }
+            console.log(this.serverErrors);
+
+            }
 
         });
         this.OnReset();
@@ -117,12 +147,20 @@ export class PublicholidaysComponent implements OnInit {
     })
   }
 
-  OnReset() {
-        this.PublicHolidyFrom.controls['id'].setValue(0);
+  OnReset(source = '') {
+       
+        if (source === 'cancel') {
+          this.PublicHolidyFrom.controls['id'].setValue(0);
         this.PublicHolidyFrom.controls['name'].setValue('');
         this.PublicHolidyFrom.controls['date'].setValue('');
 
         this.publicHolidayId = 0;
+      } else {
+          // Do something else when called from another source
+          this.clearServerErrors();
+    
+          console.log('Reset called from another source');
+      }
   }
 
   minDate(): string {
@@ -141,5 +179,7 @@ export class PublicholidaysComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
   
-
+  clearServerErrors() {
+    this.serverErrors = [];
+  }
 }

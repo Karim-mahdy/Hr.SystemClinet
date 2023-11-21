@@ -10,6 +10,7 @@ import { DepartmentService } from 'src/app/Services/department.service';
   styleUrls: ['./department-view.component.css'],
 })
 export class DepartmentViewComponent implements OnInit {
+  serverErrors: string[] = [];
   departments: any;
   dtoption: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
@@ -82,11 +83,27 @@ export class DepartmentViewComponent implements OnInit {
     });
   }
 
-  OnReset() {
-    this.formadd.controls['id'].setValue(0);
-    this.formadd.controls['name'].setValue('');
-    this.Show=!this.Show
-    this.deptid = 0;
+  OnReset(source = '') {
+ 
+    if (source == 'cancel') {
+      // Do something specific when called from the "Cancel" button
+      this.formadd.controls['id'].setValue(0);
+      this.formadd.controls['name'].setValue('');
+      this.Show=!this.Show
+      this.deptid = 0;
+      this.clearServerErrors();
+
+  } else {
+
+      // Do something else when called from another source
+      this.clearServerErrors();
+      this.formadd.controls['id'].setValue(0);
+      this.formadd.controls['name'].setValue('');
+      this.Show=!this.Show
+      this.deptid = 0;
+
+      console.log('Reset called from another source');
+  }
   }
 
   OnSubmit(e: Event) {
@@ -106,8 +123,14 @@ export class DepartmentViewComponent implements OnInit {
               });
             },
             error: (error: any) => {
-              this.ModelState = error.error;
-            },
+              //console.log(error.error.DeptName[0]);
+              console.log(error.error.DeptName[0]);
+      
+              this.clearServerErrors();
+              this.serverErrors.push(error.error.DeptName[0]);
+              //this.serverErrors.push(error.message);
+              console.log(this.serverErrors);
+          },
           });
         this.OnReset();
       } else {
@@ -117,11 +140,27 @@ export class DepartmentViewComponent implements OnInit {
               next: (response) => {
                 this.departments = response;
               },
+              error: (error: any) => {
+                this.clearServerErrors();
+                
+                this.serverErrors.push(error.error.DeptName[0]);
+                console.log(this.serverErrors);
+            }
             });
-          },
+          }, 
+          error: (error: any) => {
+            this.clearServerErrors();
+            
+            this.serverErrors.push(error.error.DeptName[0]);
+            console.log(this.serverErrors);
+        }
         });
         this.OnReset();
       }
     }
   }
+  clearServerErrors() {
+    this.serverErrors = [];
+  }
+
 }

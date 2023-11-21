@@ -10,6 +10,7 @@ import { EmployeeService } from 'src/app/Services/employee.service';
   styleUrls: ['./employee-form.component.css']
 })
 export class EmployeeformComponent implements OnInit {
+  serverErrors: string[] = [];
   submitted = false;
   AddEmployee = new FormGroup({
     id: new FormControl(0),
@@ -44,6 +45,8 @@ export class EmployeeformComponent implements OnInit {
   departments: any;
   employeeId: any;
   employee: any;
+  propertiesToPush: string[] = ['FirstName', 'LastName', 'BirthDate', 'HireDate','LeaveTime','ArrivalTime'];
+ 
   
   ngOnInit(): void {
     this.activatedRoute.params.subscribe({
@@ -77,6 +80,14 @@ export class EmployeeformComponent implements OnInit {
             this.AddEmployee.controls['leaveTime'].setValue(this.employee.leaveTime);
             this.AddEmployee.controls['departmentId'].setValue(this.employee.departmentId);
           }, 
+          error:(error:any)=>{  
+            this.clearServerErrors();
+            for (const key of this.propertiesToPush) {
+              if (error.error[key] && Array.isArray(error.error[key])) {
+                this.serverErrors.push(...error.error[key]);
+              }
+            }
+            }
         });
       }
       },
@@ -85,6 +96,19 @@ export class EmployeeformComponent implements OnInit {
       next: (Response) => {
         this.departments = Response;
       },
+      error:(error:any)=>{  
+        this.clearServerErrors();
+        for (const key of this.propertiesToPush) {
+          console.log(key);
+          
+          if (error.error[key] && Array.isArray(error.error[key])) {
+            this.serverErrors.push(...error.error[key]);
+          }
+        }
+        console.log(this.serverErrors);
+        
+
+        }
     });
   }
 
@@ -100,9 +124,17 @@ export class EmployeeformComponent implements OnInit {
             console.log(response.message);
             this.router.navigate(['/Dashboard/Employee']);
           },
-          error: (error) => {
-            console.error('Error:', error); // Handle error response if needed
-          }
+          error:(error:any)=>{  
+            
+            this.clearServerErrors();
+            for (const key of this.propertiesToPush) {
+              if (error.error[key] && Array.isArray(error.error[key])) {
+                this.serverErrors.push(...error.error[key]);
+              }
+            }
+            console.log(this.serverErrors);
+
+            }
         });
       } 
       else {
@@ -113,14 +145,30 @@ export class EmployeeformComponent implements OnInit {
             console.log(response.message);
             this.router.navigate(['/Dashboard/Employee']);
           },
-          error: (error) => {
-            console.error('Error:', error); // Handle error response if needed
-          }
+          error:(error:any)=>{  
+            //console.log(error);
+            console.log(error.error);
+            this.clearServerErrors();
+            for (const key of this.propertiesToPush) {
+           
+              
+              if (error.error[key] && Array.isArray(error.error[key])) {
+                this.serverErrors.push(...error.error[key]);
+                console.log(this.serverErrors);
+                
+              }
+
+            }
+            console.log(this.serverErrors);
+
+            }
         });
       }
     
   }
 
-
+  clearServerErrors() {
+    this.serverErrors = [];
+  }
   
 }

@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, catchError, of, tap } from 'rxjs';
 import { PermissionsGurdService } from './permissions-gurd.service';
 import { Router } from '@angular/router';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,11 @@ export class RolesManagementService {
 
   constructor(private http: HttpClient,
     private router: Router,
-    private permissionsGuardService: PermissionsGurdService
+    private permissionsGuardService: PermissionsGurdService,
+    private authservice: AuthenticationService
     ) { }
-  baseUrl= 'https://localhost:44343/api/RoleManager';
-  secondUrl='https://localhost:44343/api/RoleManager/Create';
+  baseUrl= 'https://localhost:7146/api/RoleManager';
+  secondUrl='https://localhost:7146/api/RoleManager/Create';
   checkPermission(requiredServicePermission: string): boolean {
     const token = localStorage.getItem('jwt') ?? '';
     if (this.permissionsGuardService.hasRole(token, ['SuperAdmin'])) {
@@ -26,6 +28,8 @@ export class RolesManagementService {
     this.router.navigate(['/Dashboard/AccessDenied']);
     return false;
   }
+
+ 
   
   GetAllRoles(): Observable<any> {
     if (this.checkPermission('Permission.Permission.View')) {
@@ -61,7 +65,15 @@ export class RolesManagementService {
 
   EditRole(role: any, roleId: any): Observable<any> {
     if (this.checkPermission('Permission.Permission.Edit')) {
-      return this.http.put(`${this.baseUrl}/${roleId}`, role);
+      console.log(role);
+      console.log(roleId);
+      
+      
+      return this.http.put(`${this.baseUrl}/${roleId}`, role).pipe(
+        tap(() =>  this.authservice.refreshToken()), // Tap into the observable and refresh the token
+        catchError(() => of([]))
+        
+      );
     } else {
       return of([]);
     }

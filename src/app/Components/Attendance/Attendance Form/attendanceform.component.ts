@@ -22,6 +22,7 @@ export class AttendanceformComponent  implements OnInit {
       const currentMinutes = this.currentDate.getMinutes().toString().padStart(2, '0')
       this.currentTime = `${currentHours}:${currentMinutes}`;
     } 
+    serverErrors: string[] = [];
   employeeAttendance :any;
   employeeAttendanceId:any;
   employeeList: any;
@@ -35,6 +36,7 @@ export class AttendanceformComponent  implements OnInit {
     leaveTime: new FormControl(),
     selectedEmployee: new FormControl('', [Validators.required])
   });
+  propertiesToPush: string[] = ['Exists', 'Date', 'ArrivalTime'];
 
  
 ngOnInit(): void {
@@ -97,9 +99,24 @@ ngOnInit(): void {
         next: () => {
           this.router.navigate(['/Dashboard/Attendance']);
         },
-        error: (error) => {
-          console.error('Error:', error);
-        }
+        error:(error:any)=>{  
+          console.log(error);
+          console.log(error.error);
+          
+         // this.clearServerErrors();
+          // for (const key of this.propertiesToPush) {
+         
+            
+          //   if (error.error[key]) {
+          //     this.serverErrors.push(...error.error[key]);
+          //     console.log(this.serverErrors);
+              
+          //   }
+
+          // }
+          console.log(this.serverErrors);
+
+          }
       });
     }
   }
@@ -118,5 +135,8 @@ ngOnInit(): void {
     }
     return `${year}-${month}-${day}`;
    
+  }
+  clearServerErrors() {
+    this.serverErrors = [];
   }
 }

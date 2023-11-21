@@ -17,6 +17,7 @@ export class UserManagementComponent implements OnInit {
   data: any;
   userId: string = '';
   flag: boolean = false;
+  serverErrors: string[] = [];
 
   AddUser = new FormGroup({
     empId: new FormControl('', [Validators.required]),
@@ -32,6 +33,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   constructor(private userService: UsersManagmentService) {}
+  propertiesToPush: string[] = ['UserName', 'Email'];
 
   ngOnInit(): void {
     this.dtoption = {
@@ -72,6 +74,20 @@ export class UserManagementComponent implements OnInit {
               },
             });
           },
+          error:(error:any)=>{  
+            console.log(error);
+            console.log(error.error);
+           this.clearServerErrors();
+            for (const key of this.propertiesToPush) {
+              if (error.error[key] && Array.isArray(error.error[key]))  {
+                this.serverErrors.push(...error.error[key]);
+                
+                console.log(this.serverErrors);
+              }
+            }
+            console.log(this.serverErrors);
+  
+            }
         });
       } else {
         console.log(this.userId);
@@ -86,6 +102,19 @@ export class UserManagementComponent implements OnInit {
               },
             });
           },
+          error:(error:any)=>{  
+            console.log(error);
+            console.log(error.error);
+           this.clearServerErrors();
+            for (const key of this.propertiesToPush) {
+              if (error.error[key] && Array.isArray(error.error[key]))  {
+                this.serverErrors.push(...error.error[key]);
+                console.log(this.serverErrors);
+              }
+            }
+            console.log(this.serverErrors);
+  
+            }
         });
       }
     }
@@ -158,6 +187,9 @@ this.AddUser.markAsUntouched();
   this.userId = '';
   this.flag = false;
  
+}
+clearServerErrors() {
+  this.serverErrors = [];
 }
 
 }

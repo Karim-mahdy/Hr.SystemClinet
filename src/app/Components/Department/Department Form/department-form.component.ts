@@ -9,6 +9,7 @@ import { DepartmentService } from 'src/app/Services/department.service';
   styleUrls: ['./department-form.component.css']
 })
 export class DepartmentFormComponent {
+  serverErrors: string[] = [];
   submitted: boolean = false;
   deptid: any;
   department: any;
@@ -59,9 +60,11 @@ export class DepartmentFormComponent {
             console.log(res);
             this.Route.navigate(['/Dashboard/Depatment']);
           },
-          error:(error:any)=>{  
-            this.ModelState = error.error;
-          }
+          error:(error:any)=>{          
+            this.clearServerErrors();
+                this.serverErrors.push(error.error.DeptName[0]);
+                console.log(this.serverErrors);
+               }
         });
       }
       else {
@@ -69,9 +72,22 @@ export class DepartmentFormComponent {
           next: () => {
             this.Route.navigate(['/Dashboard/Depatment']);
           },
+          error: (error: any) => {
+            //console.log(error.error.DeptName[0]);
+            console.log(error.error.DeptName[0]);
+    
+            this.clearServerErrors();
+            this.serverErrors.push(error.error.DeptName[0]);
+            //this.serverErrors.push(error.message);
+            console.log(this.serverErrors);
+        }
         });
       }
     } 
+  }
+
+  clearServerErrors() {
+    this.serverErrors = [];
   }
 
 }

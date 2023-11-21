@@ -313,6 +313,8 @@
         </div>
         <div class="row ">
           <div class="col-md-3 mb-2">
+
+           
             <label
               for="gender"
               class="form-label select-label me-3 d-block"
@@ -341,7 +343,10 @@
               </p>
             </div>
           </div>
-          <div class=" col-9 d-flex justify-content-end align-items-end" >
+          <div class="col-md-4 mb-2 mt-3" *ngIf="serverErrors.length > 0">
+            <p class="btn btn-danger" *ngFor="let error of serverErrors">{{ error }}</p>
+          </div>
+          <div class=" col-md-5 d-flex justify-content-end align-items-end" >
             <button class="btn h-50 btn-primary mb-2 px-3" type="submit">
               {{ employeeId >= 0 ?  "Edit":"Add"  }}
             </button>

@@ -3,6 +3,7 @@
   rel="stylesheet"
 />
 <!-- SIDEBAR -->
+ 
 <section id="sidebar" [ngClass]="{ hide: flag }">
   <a href="#" class="brand">
     <i class="fa-solid fa-users mx-3"></i>
@@ -165,6 +166,10 @@
   <div class="welcome d-flex justify-content-center align-items-center" *ngIf="flag2">
     <img src="assets/Img/Welcome.jpg" />
   </div>
+ 
   <!-- MAIN -->
+  <div class="card flex justify-content-center gap-2">
+    <p-toast  [style]="{ marginTop: '30px' }"></p-toast>
+  </div>
 </section>
 <!-- CONTENT -->

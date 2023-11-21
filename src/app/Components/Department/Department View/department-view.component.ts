@@ -1,24 +1,28 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { DepartmentService } from 'src/app/Services/department.service';
+import { MessageService } from 'primeng/api';
+import { ToastService } from 'src/app/Services/toast.service';
 
 @Component({
   selector: 'app-department-view',
   templateUrl: './department-view.component.html',
   styleUrls: ['./department-view.component.css'],
+  providers: [MessageService], // <-- Add this line
 })
 export class DepartmentViewComponent implements OnInit {
   departments: any;
   dtoption: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
-
   constructor(
     public deptservice: DepartmentService,
     public Route: Router,
-    public getid: ActivatedRoute
-  ) {}
+    public getid: ActivatedRoute,
+
+    private toastService: ToastService
+  ) { }
 
   public ngOnInit(): void {
     this.deptservice.GetAllDepartment().subscribe({
@@ -42,13 +46,20 @@ export class DepartmentViewComponent implements OnInit {
           this.departments = this.departments.filter(
             (dept: any) => dept.id !== departmentId
           );
+
+          // Show toast for delete action (success)
+          this.toastService.showToast('success', 'Done', 'Delete Department done');
         },
         error: (error) => {
           console.error('Error:', error); // Handle error response if needed
+
+          // Show toast for delete action with error
+          this.toastService.showToast('error', 'Error', 'Delete Department failed');
         },
       });
     }
   }
+
 
   submitted: boolean = false;
   deptid: any;
@@ -63,29 +74,30 @@ export class DepartmentViewComponent implements OnInit {
     ]),
   });
 
-  Toggle(){
-    this.Show=true
+  Toggle() {
+    this.Show = true
   }
 
   get controlsname() {
     return this.formadd.controls;
   }
   Edit(deparmentId: any) {
-    this.Show=true
-    
+    this.Show = true
+
     this.deptid = deparmentId;
     this.deptservice.GetDepartmentById(deparmentId).subscribe({
       next: (response: any) => {
         this.formadd.controls['id'].setValue(response.id);
         this.formadd.controls['name'].setValue(response.name);
       },
+      
     });
   }
 
   OnReset() {
     this.formadd.controls['id'].setValue(0);
     this.formadd.controls['name'].setValue('');
-    this.Show=!this.Show
+    this.Show = !this.Show
     this.deptid = 0;
   }
 
@@ -93,7 +105,7 @@ export class DepartmentViewComponent implements OnInit {
     e.preventDefault();
     this.submitted = true;
     if (this.formadd.valid) {
-      
+
       if (this.deptid > 0) {
         this.deptservice
           .EditDepartment(this.formadd.value, this.deptid)
@@ -102,11 +114,14 @@ export class DepartmentViewComponent implements OnInit {
               this.deptservice.GetAllDepartment().subscribe({
                 next: (response: any) => {
                   this.departments = response;
+                  this.toastService.showToast('success', 'Done', 'Edit Department done');
                 },
               });
             },
             error: (error: any) => {
+              
               this.ModelState = error.error;
+              this.toastService.showToast('error', 'Error', 'Edit Department failed');
             },
           });
         this.OnReset();
@@ -116,7 +131,13 @@ export class DepartmentViewComponent implements OnInit {
             this.deptservice.GetAllDepartment().subscribe({
               next: (response) => {
                 this.departments = response;
+                this.toastService.showToast('success', 'Done', 'Add Department done');
               },
+              error: (error) => {
+
+                this.ModelState = error.error;
+                this.toastService.showToast('error', 'Error', 'Add Department failed');
+              }
             });
           },
         });

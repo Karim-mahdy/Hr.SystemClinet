@@ -1,3 +1,4 @@
+import { ToastModule } from 'primeng/toast';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,7 +24,8 @@ import { TokenInterceptorService } from './Services/token-interceptor.service';
 import { WelcomeComponent } from './Components/Dashboard/Welcome/welcome.component';
 import { AccessDeniedComponent } from './Components/Access denied/access-denied.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
- 
+import { MessageService } from 'primeng/api';
+
 
 
 @NgModule({
@@ -63,13 +65,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule, // Add HttpClientModule to your imports
+    ToastModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true,
+      
     },
+    MessageService, // Add this line to provide MessageService
   ],
   bootstrap: [AppComponent]
 })

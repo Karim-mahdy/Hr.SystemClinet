@@ -1,7 +1,7 @@
-.hide-row {
-  display: none;
+:host ::ng-deep .ui-toast {
+  z-index: 10000; /* or any other high value */
+  
 }
-/* Add these styles to your existing CSS file */
 
 #dt-department thead th {
 font-size: 15px;

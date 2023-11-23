@@ -2,6 +2,9 @@ import { UsersManagmentService } from './../../Services/users-managment.service'
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { DialogComponent } from '../dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ToastService } from 'src/app/Services/toast.service';
 
 
 @Component({
@@ -32,7 +35,10 @@ export class UserManagementComponent implements OnInit {
     return this.AddUser.controls;
   }
 
-  constructor(private userService: UsersManagmentService) {}
+  constructor(private userService: UsersManagmentService,
+    public dialog: MatDialog,
+    private toastService: ToastService
+    ) {}
   propertiesToPush: string[] = ['UserName', 'Email'];
 
   ngOnInit(): void {
@@ -67,6 +73,7 @@ export class UserManagementComponent implements OnInit {
         console.log(this.AddUser.value);
         this.userService.EditUser(this.AddUser.value, this.userId).subscribe({
           next: (Response) => {
+            this.toastService.showToast('success', 'Done', 'Edit User successfully');
             this.userService.GetAllUsers().subscribe({
               next: (response: any) => {
                 this.data = response;
@@ -86,7 +93,7 @@ export class UserManagementComponent implements OnInit {
               }
             }
             console.log(this.serverErrors);
-  
+            this.toastService.showToast('error', 'Error', 'Edit User Failed');
             }
         });
       } else {
@@ -94,6 +101,7 @@ export class UserManagementComponent implements OnInit {
         console.log(this.AddUser.value);
         this.userService.AddNewUser(this.AddUser.value).subscribe({
           next: (Response) => {
+            this.toastService.showToast('success', 'Done', 'Add User successfully');
             this.userService.GetAllUsers().subscribe({
               next: (response: any) => {
                 this.data = response;
@@ -113,7 +121,7 @@ export class UserManagementComponent implements OnInit {
               }
             }
             console.log(this.serverErrors);
-  
+            this.toastService.showToast('error', 'Error', 'Add User Failed');
             }
         });
       }
@@ -143,15 +151,27 @@ export class UserManagementComponent implements OnInit {
   OnDelete(userId: string) {
     console.log(userId);
 
-    this.userService.DeleteUser(userId).subscribe({
-      next: (Response) => {
-        this.userService.GetAllUsers().subscribe({
-          next: (response) => {
-            this.data = response;
-            this.OnReset();
+
+    const dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.userService.DeleteUser(userId).subscribe({
+
+          next: (Response) => {
+            this.toastService.showToast('success', 'Done', 'Delete User successfully');
+            this.userService.GetAllUsers().subscribe({
+              next: (response) => {
+                this.data = response;
+                this.OnReset();
+              },
+              error:(erorr)=>{
+                console.log(erorr);
+                this.toastService.showToast('error', 'Error', 'Delete User Failed');
+              }
+            });
           },
         });
-      },
+      }
     });
   }
 

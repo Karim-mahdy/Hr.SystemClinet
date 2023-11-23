@@ -8,6 +8,7 @@
 #dt-filter-select thead th {
     font-size: 12px;
     text-align: center;
+    
   }
   
   .card {
@@ -42,10 +43,6 @@
     display: none !important;
   }
   
-  .img-fluid {
-    max-width: 100% !important;
-    height: auto !important;
-  }
   
   /* Adjustments for the DataTables */
   
@@ -55,19 +52,27 @@
     border-collapse: collapse !important;
     background-color: #fff !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+   
   }
   
-  tbody tr td {
+  #dt-filter-select tbody tr td {
     padding: 10px !important;
     text-align: center !important;
+    font-size: 14px !important;
+    white-space: nowrap; /* This prevents text from wrapping to the next line */
+    overflow: hidden;   /* This hides the overflowed text */
+    text-overflow: ellipsis; /* This displays an ellipsis (...) when text overflows */
+    vertical-align: middle !important; /* Vertically center the text */
   }
   
   thead th {
-    background-color: #99999977 !important;
-    /* Header background color */
-    color: rgb(0, 0, 0) !important;
+    background-color: #89888871 !important;
+    color: #1563b0 !important;
+    text-align: center !important;
+    vertical-align: middle !important; /* Vertically center the text */
   }
   
+
 
   
   /* Responsive styles for smaller screens */
@@ -76,10 +81,6 @@
       flex-direction: row !important;
       /* Change back to row for larger screens */
     }
-  
-    .img-fluid {
-      max-width: 80px !important;
-      /* Adjust as needed */
-    }
+   
   }
   

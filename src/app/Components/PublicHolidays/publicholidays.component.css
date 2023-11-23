@@ -64,15 +64,25 @@
   th, td {
   padding: 10px !important;
   text-align: center !important;
+  white-space: nowrap; /* This prevents text from wrapping to the next line */
+  overflow: hidden;   /* This hides the overflowed text */
+  text-overflow: ellipsis; /* This displays an ellipsis (...) when text overflows */
+  vertical-align: middle !important; /* Vertically center the text */
   }
   
   th {
-  background-color: #99999977 !important;
-  color: rgb(0, 0, 0) !important;
+    background-color: #89888871 !important; /* Header background color */
+    color: #1563b0 !important;
+    text-align: center !important;
+    vertical-align: middle !important; /* Vertically center the text */
   }
   
-  td {
-  border-bottom: 1px solid #ecf0f1 !important;
+  
+  
+  tr .bi {
+    font-size: 20px !important;   
+    margin: 0 8px !important;
+    cursor: pointer !important;
   }
   
   /* Responsive styles for smaller screens */

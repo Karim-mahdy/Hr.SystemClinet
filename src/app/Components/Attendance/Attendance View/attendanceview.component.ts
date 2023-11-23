@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { AttendanceService } from 'src/app/Services/attendance.service';
 import { data } from 'jquery';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../../dialog/dialog.component';
+import { ToastService } from 'src/app/Services/toast.service';
 
 @Component({
   selector: 'app-attendanceview',
@@ -20,7 +23,8 @@ export class AttendanceviewComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   constructor(
     private attendanceService: AttendanceService,
-
+    public dialog: MatDialog,
+    private toastService: ToastService
   ) {
     const currentHours = this.currentDate
       .getHours()
@@ -98,6 +102,7 @@ export class AttendanceviewComponent implements OnInit {
           this.attendanceReport = Response;
         },
         error: (error) => {
+          
           console.error('Error filtering attendance:', error);
         },
       });
@@ -116,7 +121,7 @@ export class AttendanceviewComponent implements OnInit {
       console.log(this.employeeAttendanceId)
       this.attendanceService.EditAttendance(this.EmployeeAttendanceForm.value,this.employeeAttendanceId).subscribe({
           next: () => {
-            console.log('aaa')
+            this.toastService.showToast('success', 'Done', 'Edit Attendance Successfully');
             this.attendanceService.GetAllAttendance().subscribe({
 
               next: (Response: any) => {
@@ -127,18 +132,18 @@ export class AttendanceviewComponent implements OnInit {
           error:(error:any)=>{  
             console.log(error);
             console.log(error.error);
-           // this.Show=true;
-           this.clearServerErrors();
+            // this.Show=true;
+            this.clearServerErrors();
             for (const key of this.propertiesToPush) {
               if (error.error[key] && Array.isArray(error.error[key]))  {
                 this.serverErrors.push(...error.error[key]);
-                 this.Show=true;
-                 this.submitted=false;
+                this.Show=true;
+                this.submitted=false;
                 console.log(this.serverErrors);
               }
             }
             console.log(this.serverErrors);
-  
+            this.toastService.showToast('error', 'Error', 'Edit Attendance Failed');
             }
         });
         this.Show=false;
@@ -156,6 +161,7 @@ export class AttendanceviewComponent implements OnInit {
             this.attendanceService.GetAllAttendance().subscribe({
               next: (Response: any) => {
                 this.attendanceReport = Response;
+                this.toastService.showToast('success', 'Done', 'Add Attendance Successfully');
               }
             })
           },
@@ -173,7 +179,7 @@ export class AttendanceviewComponent implements OnInit {
               }
             }
             console.log(this.serverErrors);
-  
+            this.toastService.showToast('error', 'Error', 'Add Attendance Failed');
             }
         });
       this.OnReset();
@@ -205,15 +211,25 @@ export class AttendanceviewComponent implements OnInit {
   }
 
   deleteAttendance(attendancId: number) {
-    if (confirm('Are you sure to delete record')) {
-      this.attendanceService.DeleteAttendance(attendancId).subscribe({
-        next: () => {
-          this.attendanceReport = this.attendanceReport.filter(
-            (attend: any) => attend.id != attendancId
-          );
-        },
-      });
-    }
+    const dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.attendanceService.DeleteAttendance(attendancId).subscribe({
+          next: () => {
+            this.attendanceReport = this.attendanceReport.filter(
+              (attend: any) => attend.id != attendancId
+
+            );
+            this.toastService.showToast('warn', 'Delete', 'Delete Attendance Successfully');
+          },
+          error: (error) => {
+            console.error('Error:', error); // Handle error response if needed
+            this.toastService.showToast('error', 'Error', 'Delete Attendance failed');
+          }
+        });
+      } 
+    });
+
   }
 
   OnReset(source: string = '') {
@@ -236,7 +252,8 @@ export class AttendanceviewComponent implements OnInit {
   } else {
       // Do something else when called from another source
       this.clearServerErrors();
-
+      this.Show = !this.Show
+      this.employeeAttendanceId = 0;
       console.log('Reset called from another source');
   }
   }

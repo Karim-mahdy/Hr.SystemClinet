@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { PermissionsGurdService } from './permissions-gurd.service';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,9 @@ export class EmployeeService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private permissionsGuardService: PermissionsGurdService
+    private permissionsGuardService: PermissionsGurdService,
+    private toastService: ToastService
+
   ) {}
 
   baseUrl: string = 'https://localhost:44343/api/Employee';
@@ -23,14 +26,14 @@ export class EmployeeService {
     if (this.permissionsGuardService.hasPermission(token, [requiredServicePermission])) {
       return true;
     }
-    this.router.navigate(['/Dashboard/AccessDenied']);
+    this.toastService.showToast('error', 'Access Denied', "You don't have permission");
     return false;
   }
   GetAllEmployee(): Observable<any> {
     if (this.checkPermission('Permission.Employee.View')) {
       return this.http.get(this.baseUrl);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -38,7 +41,7 @@ export class EmployeeService {
     if (this.checkPermission('Permission.Employee.Edit')) {
       return this.http.get(`${this.baseUrl}/${employeeId}`);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -46,7 +49,7 @@ export class EmployeeService {
     if (this.checkPermission('Permission.Employee.Create')) {
       return this.http.post(this.baseUrl, employee);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -54,7 +57,7 @@ export class EmployeeService {
     if (this.checkPermission('Permission.Employee.Edit')) {
       return this.http.put(`${this.baseUrl}/${employeeid}`,employee);
         } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -62,7 +65,7 @@ export class EmployeeService {
     if (this.checkPermission('Permission.Employee.Delete')) {
       return this.http.delete(`${this.baseUrl}/${employeeid}`);
     } else {
-      return of([]);
+      return of();
     }
   }
 }

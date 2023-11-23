@@ -3,6 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PublicholidaysService } from 'src/app/Services/publicholidays.service';
 
 import { Subject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
+import { ToastService } from 'src/app/Services/toast.service';
 
 @Component({
   selector: 'app-publicholidays',
@@ -14,7 +17,8 @@ export class PublicholidaysComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   constructor(
     public publicholidaysService: PublicholidaysService,
-   
+    public dialog: MatDialog,
+    private toastService: ToastService
     
   ){}
   serverErrors: string[] = [];
@@ -52,6 +56,7 @@ export class PublicholidaysComponent implements OnInit {
       if (this.publicHolidayId > 0) {
         this.publicholidaysService.EditPublicholidy(this.PublicHolidyFrom.value, this.publicHolidayId).subscribe({
           next: (res) => {
+            this.toastService.showToast('success', 'Done', 'Edit Public Holiday Successfully');
             this.publicholidaysService.GetAllPublicholidys().subscribe({
               next: (response) => {
                 this.publicHolidays = response;
@@ -74,7 +79,7 @@ export class PublicholidaysComponent implements OnInit {
 
             }
             console.log(this.serverErrors);
-
+            this.toastService.showToast('error', 'Error', 'Edit Public Holiday Failed');
             }
 
         });
@@ -85,6 +90,7 @@ export class PublicholidaysComponent implements OnInit {
         console.log(this.PublicHolidyFrom.value)
         this.publicholidaysService.AddPublicholidy(this.PublicHolidyFrom.value).subscribe({
           next: () => {
+            this.toastService.showToast('success', 'Done', 'Add Public Holiday Successfully');
             this.publicholidaysService.GetAllPublicholidys().subscribe({
               next: (response) => {
                 this.publicHolidays = response;
@@ -107,7 +113,7 @@ export class PublicholidaysComponent implements OnInit {
 
             }
             console.log(this.serverErrors);
-
+            this.toastService.showToast('error', 'Error', 'Add Public Holiday Failed');
             }
 
         });
@@ -135,18 +141,29 @@ export class PublicholidaysComponent implements OnInit {
   }
 
   OnDelete(id:any){
-    this.publicholidaysService.DeletePublicholidy(id).subscribe({
-      next: () => {
-        this.publicholidaysService.GetAllPublicholidys().subscribe({
-          next: (response) => {
-            this.publicHolidays = response;
-            
+
+
+    const dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.publicholidaysService.DeletePublicholidy(id).subscribe({
+          next: () => {
+            this.toastService.showToast('success', 'Done', 'Delete Public Holiday Successfully');
+            this.publicholidaysService.GetAllPublicholidys().subscribe({
+              next: (response) => {
+                this.publicHolidays = response;
+
+              },
+              error: (err) => {
+                console.log(err);
+                this.toastService.showToast('error', 'Error', 'Delete Public Holiday Failed');
+              },
+            })
           },
         })
-      },
-    })
+      }
+    });
   }
-
   OnReset(source = '') {
        
         if (source === 'cancel') {

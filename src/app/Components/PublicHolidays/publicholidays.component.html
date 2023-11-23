@@ -43,8 +43,8 @@
         </div>
         <div class="row">
           <table datatable [dtOptions]="dtoption" class="table pt-3 table-light px-2" [dtTrigger]="dtTrigger" id="dt-publicholdiy"
-            width="100%" class="table table-striped">
-            <thead>
+            width="100%" class="table table-light table-striped table-hover text-center table-bordered">
+            <thead class="thead-light  text-center">
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
@@ -58,7 +58,7 @@
                 <td>{{ p.name }}</td>
                 <td>{{ p.date }}</td>
                 <td>
-                  <i class="mx-1 bi bi-pencil-square" (click)="OnEdit(p.id)"></i>
+                  <i class="mx-1 bi bi-pencil-square text-warning" (click)="OnEdit(p.id)"></i>
                   <i class="bi text-danger bi-trash3-fill" (click)="OnDelete(p.id)"></i>
                 </td>
               </tr>

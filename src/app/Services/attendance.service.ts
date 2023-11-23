@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { PermissionsGurdService } from './permissions-gurd.service';
 import { Router } from '@angular/router';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,9 @@ export class AttendanceService {
 
   constructor(private http: HttpClient ,
     private router: Router,
-    private permissionsGuardService: PermissionsGurdService) {}
+    private permissionsGuardService: PermissionsGurdService,
+    private toastService: ToastService
+    ) {}
 
   baseUrl: string = 'https://localhost:44343/api/Attendance';
   EmpsUrl:string= 'https://localhost:44343/api/Attendance/GetEmployeeList';
@@ -25,14 +28,15 @@ export class AttendanceService {
     if (this.permissionsGuardService.hasPermission(token, [requiredServicePermission])) {
       return true;
     }
-    this.router.navigate(['/Dashboard/AccessDenied']);
+    this.toastService.showToast('error', 'Access Denied', "You don't have permission");
+       
     return false;
   }
   GetAllAttendance(): Observable<any> {
     if (this.checkPermission('Permission.Attendance.View')) {
       return this.http.get(this.baseUrl);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -40,7 +44,7 @@ export class AttendanceService {
     if (this.checkPermission('Permission.Attendance.Edit')) {
       return this.http.get(`${this.baseUrl}/${attendanceid}`);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -48,7 +52,7 @@ export class AttendanceService {
     if (this.checkPermission('Permission.Attendance.Create')) {
       return this.http.post(this.baseUrl, attendance);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -56,7 +60,7 @@ export class AttendanceService {
     if (this.checkPermission('Permission.Attendance.Edit')) {
       return this.http.put(`${this.baseUrl}/${attendanceid}`, attendance);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -64,7 +68,7 @@ export class AttendanceService {
     if (this.checkPermission('Permission.Attendance.Delete')) {
       return this.http.delete(`${this.baseUrl}/${attendanceid}`);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -72,7 +76,7 @@ export class AttendanceService {
     if (this.checkPermission('Permission.Attendance.View')) {
       return this.http.get(this.EmpsUrl);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -80,7 +84,7 @@ export class AttendanceService {
     if (this.checkPermission('Permission.Attendance.View')) {
       return this.http.get(this.EmpsWithoutAttendanceUrl);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -88,7 +92,7 @@ export class AttendanceService {
     if (this.checkPermission('Permission.Attendance.View')) {
       return this.http.post(`${this.baseUrl}/FilterAttendances`, data);
     } else {
-      return of([]);
+      return of();
     }
   }
 

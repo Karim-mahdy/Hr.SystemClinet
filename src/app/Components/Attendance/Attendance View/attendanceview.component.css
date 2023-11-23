@@ -79,8 +79,8 @@
   }
   
   thead th {
-    background-color: #99999971 !important; /* Header background color */
-    color: rgb(0, 0, 0) !important;
+    background-color: #89888871 !important; /* Header background color */
+    color: #1563b0 !important;
   }
   
   
@@ -98,7 +98,13 @@
       max-width: 80px !important; /* Adjust as needed */
     }
   }
- 
+  
+  .table-action-icons .bi {
+  font-size: 20px !important;   
+  margin: 0 8px !important;
+  cursor: pointer !important;
+}
+
   
   /* select [readonly]:not([disabled]) {
   font-size: 1rem;

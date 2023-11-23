@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { PermissionsGurdService } from './permissions-gurd.service';
 import { Observable, of } from 'rxjs';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,9 @@ export class SalaryReportService {
  
   constructor(private http: HttpClient,
     private router: Router,
-    private permissionsGuardService: PermissionsGurdService
+    private permissionsGuardService: PermissionsGurdService,
+    private toastService: ToastService
+
     ) { }
 
     BaseUrl:string="https://localhost:44343/api/SalaryReport/CalculateSalaryReports"
@@ -25,7 +28,7 @@ export class SalaryReportService {
     if (this.permissionsGuardService.hasPermission(token, [requiredServicePermission])) {
       return true;
     }
-    this.router.navigate(['/Dashboard/AccessDenied']);
+    this.toastService.showToast('error', 'Access Denied', "You don't have permission");
     return false;
   }
    

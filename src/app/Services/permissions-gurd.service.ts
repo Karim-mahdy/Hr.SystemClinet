@@ -2,7 +2,10 @@ import { Injectable, inject } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ToastService } from './toast.service';
+import { Observable, catchError, map, of, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +13,10 @@ import { Observable } from 'rxjs';
 
 export class PermissionsGurdService implements CanActivate {
 
-  constructor(private jwtHelper: JwtHelperService, private router: Router) { }
+  constructor(private jwtHelper: JwtHelperService, private router: Router,
+    private toastService:ToastService,
+    private http: HttpClient,private authService: AuthenticationService
+    ) { }
 
   Permissions: string[] = [];
 
@@ -23,6 +29,28 @@ export class PermissionsGurdService implements CanActivate {
     return false;
   }
 
+  // checkTokenVersion(token: string){
+  //   const decodedToken = this.jwtHelper.decodeToken(token);
+  //   console.log(decodedToken);
+  
+    
+  //   const tokenVersion = localStorage.getItem("tokenVersion") ?? "";
+  //   console.log(tokenVersion);
+    
+  //   const currentTokenVersion = decodedToken['token_version'];
+
+  //   console.log(currentTokenVersion);
+  //    const versionFromServer = tokenVersion
+  //       console.log(versionFromServer);
+  //       if (currentTokenVersion === versionFromServer) {
+  //        return true
+  //       } else {
+  //         return false
+  //       }
+  //   }
+        
+
+  
   hasRole(token: string, allowedRoles: string[]) {
     const decodedToken = this.jwtHelper.decodeToken(token);
 
@@ -99,19 +127,20 @@ export class PermissionsGurdService implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
     
-    const roles = route.data['allowedRoles'];
+      const roles = route.data['allowedRoles'];
        console.log(route.data['allowedRoles']);
        console.log(route.data['allowedPermissions']);
       const token = localStorage.getItem("jwt") ?? "";
       if(!this.isAuthenticated(token)){
-          return this.router.navigate(['SignIn']);
+                return this.router.navigate(['SignIn']);
       }
       if(this.hasRole(token, roles) || this.hasPermission(token, route.data['allowedPermissions'])){
           console.log('Access Granted');
           return true;
       }
        // Access Denied
-       return this.router.navigate(['/Dashboard/AccessDenied']);
+       this.toastService.showToast('error', 'Access Denied', "You don't have permission");
+       return false
   }
 
   // checkPermission(permission: string[], observable: Observable<any>): Observable<any> {

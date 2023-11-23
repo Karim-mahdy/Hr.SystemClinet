@@ -4,7 +4,7 @@
 />
 <!-- SIDEBAR -->
  
-<section id="sidebar" [ngClass]="{ hide: flag }">
+<section id="sidebar" [ngClass]="{ hide: flag } ">
   <a href="#" class="brand">
     <i class="fa-solid fa-users mx-3"></i>
     <span class="text">Hr System</span>
@@ -125,9 +125,9 @@
 <!-- SIDEBAR -->
 
 <!-- CONTENT -->
-<section id="content">
+<section  id="content">
   <!-- NAVBAR -->
-  <nav>
+  <nav [style]="{ 'margin-left': '-30px' }">
     <i class="bx bx-menu fs-4" (click)="ToggleSidebar()"></i>
 
     <form action="#" >
@@ -168,8 +168,8 @@
   </div>
  
   <!-- MAIN -->
-  <div class="card flex justify-content-center gap-2">
+  <ng-container class="card flex justify-content-center gap-2">
     <p-toast  [style]="{ marginTop: '30px' }"></p-toast>
-  </div>
+  </ng-container>
 </section>
 <!-- CONTENT -->

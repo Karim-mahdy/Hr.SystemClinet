@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { PermissionsGurdService } from './permissions-gurd.service';
 import { Observable, of } from 'rxjs';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,9 @@ import { Observable, of } from 'rxjs';
 export class UsersManagmentService {
 
   constructor(private http: HttpClient, private router: Router, 
-    private permissionsGuardService: PermissionsGurdService) { }
+    private permissionsGuardService: PermissionsGurdService,
+    private toastService: ToastService
+    ) { }
    secondUrl: string = 'https://localhost:44343/api/User/GetToCreate';
   baseUrl: string = 'https://localhost:44343/api/User';
 
@@ -22,7 +25,7 @@ export class UsersManagmentService {
     if (this.permissionsGuardService.hasPermission(token, [requiredServicePermission])) {
       return true;
     }
-    this.router.navigate(['/Dashboard/AccessDenied']);
+    this.toastService.showToast('error', 'Access Denied', "You don't have permission");
     return false;
   }
 
@@ -30,14 +33,14 @@ export class UsersManagmentService {
     if (this.checkPermission('Permission.Permission.View')) {
       return this.http.get(this.secondUrl);
     } else {
-      return of([]);
+      return of();
     }
   }
   GetAllUsers(): Observable<any> {
     if (this.checkPermission('Permission.Permission.View')) {
       return this.http.get(this.baseUrl);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -45,7 +48,7 @@ export class UsersManagmentService {
     if (this.checkPermission('Permission.Permission.Create')) {
       return this.http.post(this.baseUrl, user);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -53,7 +56,7 @@ export class UsersManagmentService {
     if (this.checkPermission('Permission.Permission.Edit')) {
       return this.http.get(`${this.baseUrl}/GetUserById?userId=${id}`);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -61,7 +64,7 @@ export class UsersManagmentService {
     if (this.checkPermission('Permission.Permission.Edit')) {
       return this.http.put(`${this.baseUrl}/${id}`, user);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -69,7 +72,7 @@ export class UsersManagmentService {
     if (this.checkPermission('Permission.Permission.Delete')) {
       return this.http.delete(`${this.baseUrl}/RemoveUser?userId=${id}`);
     } else {
-      return of([]);
+      return of();
     }
   }
 }

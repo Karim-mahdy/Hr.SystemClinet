@@ -1,6 +1,9 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { RolesManagementService } from 'src/app/Services/roles-management.service';
+import { DialogComponent } from '../dialog/dialog.component';
+import { ToastService } from 'src/app/Services/toast.service';
 
 @Component({
   selector: 'app-role-management',
@@ -10,10 +13,10 @@ import { RolesManagementService } from 'src/app/Services/roles-management.servic
 export class RoleManagementComponent implements OnInit {
   modules = [
     "Employee",
-    "GeneralSetting",
     "Department",
-    "Salary",
     "Attendance",
+    "Salary",
+    "GeneralSetting",
     "Permission",
   ];
   serverErrors: string[] = [];
@@ -27,7 +30,10 @@ export class RoleManagementComponent implements OnInit {
     roleClaims: new FormControl(),
   })
 
-  constructor(private rolesService: RolesManagementService, private elementRef: ElementRef) { }
+  constructor(private rolesService: RolesManagementService, private elementRef: ElementRef,
+    public dialog: MatDialog,
+    private toastService :ToastService
+    ) { }
   ngOnInit(): void {
 
     this.rolesService.GetDataToCreate().subscribe((response: any) => {
@@ -46,68 +52,72 @@ export class RoleManagementComponent implements OnInit {
 
   OnSubmit(e: Event) {
     e.preventDefault();
-    if (this.roleId != '') {
-      console.log(this.roleId)
+  
+    if (this.roleId !== '') {
+      console.log(this.roleId);
       console.log(this.FormRole.value);
-      this.rolesService.EditRole(this.FormRole.value, this.roleId).subscribe((response: any) => {
-        this.rolesService.GetDataToCreate().subscribe((response: any) => {
-          this.roleClaims = response.roleClaims;
-          this.rolesService.GetAllRoles().subscribe((response: any) => {
-            this.roles = response;
-          })
-        
-        });
-      },
-      (error:any)=>{  
-        console.log(error);
-        console.log(error.error);
-       
-       this.clearServerErrors();
-        for (const key of this.propertiesToPush) {
-          if (error.error[key] && Array.isArray(error.error[key]))  {
-            this.serverErrors.push(...error.error[key]);
-            console.log(this.serverErrors);
+  
+      this.rolesService.EditRole(this.FormRole.value, this.roleId).subscribe({
+        next: () => {
+          this.toastService.showToast('success', 'Done', 'Edit Role successfully');
+          this.rolesService.GetDataToCreate().subscribe((response: any) => {
+            this.roleClaims = response.roleClaims;
+            this.rolesService.GetAllRoles().subscribe((response: any) => {
+              this.roles = response;
+            });
+          });
+        },
+        error: (error: any) => {
+          console.log(error);
+          console.log(error.error);
+  
+          this.clearServerErrors();
+  
+          for (const key of this.propertiesToPush) {
+            if (error.error[key] && Array.isArray(error.error[key])) {
+              this.serverErrors.push(...error.error[key]);
+              console.log(this.serverErrors);
+            }
           }
+  
+          console.log(this.serverErrors);
+          this.toastService.showToast('error', 'Error', 'Edit Role Failed');
         }
-        console.log(this.serverErrors);
-
-        }
-      );
-    }
-    else {
+      });
+    } else {
       console.log(this.FormRole.value);
-      this.rolesService.AddRole(this.FormRole.value).subscribe((response: any) => {
-        this.rolesService.GetDataToCreate().subscribe((response: any) => {
-          this.roleClaims = response.roleClaims;
-          this.rolesService.GetAllRoles().subscribe((response: any) => {
-            this.roles = response;
-          })
-          this.FormRole.reset();
-          this.Reset();
-          this.flag=false;
-        });
-
-      },
-      (error:any) => {  
-     
-        console.log(error.error.RoleClaims[0]);
-      
-      // this.clearServerErrors();
-        for (const key of this.propertiesToPush) {
-          if (error.error[key] && Array.isArray(error.error[key]))  {
-            this.serverErrors.push(...error.error[key]);
-            
+  
+      this.rolesService.AddRole(this.FormRole.value).subscribe({
+        next: () => {
+          this.toastService.showToast('success', 'Done', 'Add Role successfully');
+          this.rolesService.GetDataToCreate().subscribe((response: any) => {
+            this.roleClaims = response.roleClaims;
+            this.rolesService.GetAllRoles().subscribe((response: any) => {
+              this.roles = response;
+            });
+  
+            this.FormRole.reset();
+            this.Reset();
+            this.flag = false;
+          });
+        },
+        error: (error: any) => {
+          console.log(error.error.RoleClaims[0]);
+  
+          // this.clearServerErrors();
+          for (const key of this.propertiesToPush) {
+            if (error.error[key] && Array.isArray(error.error[key])) {
+              this.serverErrors.push(...error.error[key]);
+            }
           }
+  
+          console.log(this.serverErrors);
+          this.toastService.showToast('error', 'Error', 'Add Role Failed');
         }
-        console.log(this.serverErrors);
-
-        }
-      
-      );
+      });
     }
-
   }
-
+  
   OnEdit(id: any) {
     this.rolesService.GetRoleById(id).subscribe((response: any) => {
       this.roleId = id;
@@ -122,21 +132,32 @@ export class RoleManagementComponent implements OnInit {
   }
 
   OnDelete(id: any) {
-    if (confirm("Are you sure you want to delete this role?")) {
-      this.rolesService.DeleteRole(id).subscribe((response: any) => {
-        this.rolesService.GetDataToCreate().subscribe((response: any) => {
-          this.roleClaims = response.roleClaims;
-          this.rolesService.GetAllRoles().subscribe((response: any) => {
-            this.roles = response;
-          })
-          this.Reset();
-          this.OnCancel();
-          this.flag=false;
-        });
-      })
-    }
-  }
 
+
+    const dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.rolesService.DeleteRole(id).subscribe({
+          next:()=>{
+            this.toastService.showToast('success', 'Done', 'Delete Role successfully');
+            this.rolesService.GetDataToCreate().subscribe((response: any) => {
+              this.roleClaims = response.roleClaims;
+              this.rolesService.GetAllRoles().subscribe((response: any) => {
+                this.roles = response;
+              })
+              this.Reset();
+              this.OnCancel();
+              this.flag=false;
+            });
+          },
+        error:(error)=>{
+          console.log(error);
+          this.toastService.showToast('error', 'Error', 'Delete Role Failed');
+        }  
+        })
+      }
+    });
+  }
 
   populateTable() {
 

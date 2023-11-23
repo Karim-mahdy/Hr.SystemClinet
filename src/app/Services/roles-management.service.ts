@@ -4,6 +4,7 @@ import { Observable, catchError, of, tap } from 'rxjs';
 import { PermissionsGurdService } from './permissions-gurd.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,12 @@ export class RolesManagementService {
   constructor(private http: HttpClient,
     private router: Router,
     private permissionsGuardService: PermissionsGurdService,
-    private authservice: AuthenticationService
+    private authservice: AuthenticationService,
+    private toastService: ToastService
+
     ) { }
-  baseUrl= 'https://localhost:7146/api/RoleManager';
-  secondUrl='https://localhost:7146/api/RoleManager/Create';
+  baseUrl= 'https://localhost:44343/api/RoleManager';
+  secondUrl='https://localhost:44343/api/RoleManager/Create';
   checkPermission(requiredServicePermission: string): boolean {
     const token = localStorage.getItem('jwt') ?? '';
     if (this.permissionsGuardService.hasRole(token, ['SuperAdmin'])) {
@@ -25,7 +28,7 @@ export class RolesManagementService {
     if (this.permissionsGuardService.hasPermission(token, [requiredServicePermission])) {
       return true;
     }
-    this.router.navigate(['/Dashboard/AccessDenied']);
+    this.toastService.showToast('error', 'Access Denied', "You don't have permission");
     return false;
   }
 
@@ -35,7 +38,7 @@ export class RolesManagementService {
     if (this.checkPermission('Permission.Permission.View')) {
       return this.http.get(this.baseUrl);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -43,7 +46,7 @@ export class RolesManagementService {
     if (this.checkPermission('Permission.Permission.Edit')) {
       return this.http.get(`${this.baseUrl}/GetRole?roleId=${roleId}`);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -51,7 +54,7 @@ export class RolesManagementService {
     if (this.checkPermission('Permission.Permission.View')) {
       return this.http.get(this.secondUrl);
     } else {
-      return of([]);
+      return of();
     };
   }
 
@@ -59,7 +62,7 @@ export class RolesManagementService {
     if (this.checkPermission('Permission.Permission.Create')) {
       return this.http.post(this.baseUrl, role);
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -71,11 +74,13 @@ export class RolesManagementService {
       
       return this.http.put(`${this.baseUrl}/${roleId}`, role).pipe(
         tap(() =>  this.authservice.refreshToken()), // Tap into the observable and refresh the token
+        
+        
         catchError(() => of([]))
         
       );
     } else {
-      return of([]);
+      return of();
     }
   }
 
@@ -83,7 +88,7 @@ export class RolesManagementService {
     if (this.checkPermission('Permission.Permission.Delete')) {
       return this.http.delete(`${this.baseUrl}/${roleId}`);
     } else {
-      return of([]);
+      return of();
     }
   }
 }

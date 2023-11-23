@@ -88,10 +88,10 @@
           id="dt-department"
           [dtOptions]="dtoption"
           datatable
-          class="table pt-3 table-light"
+          class="table pt-3 table-light table-striped table-hover text-center table-bordered "
           [dtTrigger]="dtTrigger"
         >
-          <thead>
+          <thead class=" text-uppercase">
             <tr>
               <th class="th-sm">#</th>
               <th class="th-sm">Name</th>
@@ -104,7 +104,7 @@
               <td>{{ department.name }}</td>
               <td>
                 <i
-                  class="bi bi-pencil-square text-primary mx-2"
+                  class=" bi bi-pencil-square text-warning mx-2"
                   (click)="Edit(department.id)"
                 ></i>
                 <i

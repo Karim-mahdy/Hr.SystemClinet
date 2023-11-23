@@ -20,11 +20,11 @@
           [dtTrigger]="dtTrigger"
           datatable
           [dtOptions]="dtoption"
-          class="table table-bordered"
+          class="table table-bordered table-striped table-hover text-center table-row-hover"
           cellspacing="0"
           width="100%"
         >
-          <thead class="thead-light">
+          <thead class="thead-light   text-center ">
             <tr>
               <th>Name</th>
               <th>Department</th>
@@ -54,7 +54,7 @@
               <td>{{ e.country }}</td>
               
               <td class="table-action-icons">
-                <i class="bi bi-pencil-square text-primary mx-2" [routerLink]="['/Dashboard/Employee/Edit',e.id]"></i>
+                <i class="bi bi-pencil-square text-warning mx-2" [routerLink]="['/Dashboard/Employee/Edit',e.id]"></i>
                 <i class="bi bi-trash3 text-danger" (click)="deletemp(e.id)"></i>
               </td>
             </tr>

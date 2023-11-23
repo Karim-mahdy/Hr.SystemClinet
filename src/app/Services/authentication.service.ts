@@ -7,6 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
+  
 })
 export class AuthenticationService {
 
@@ -16,8 +17,9 @@ export class AuthenticationService {
     }
   }
 
-  baseUrl: string = 'https://localhost:7146/api/Authentication/Login';
-  refershtoken: string='https://localhost:7146/api/Authentication'
+  baseUrl: string = 'https://localhost:44343/api/Authentication/Login';
+  refershtoken: string='https://localhost:44343/api/Authentication/RefreshToken'
+  tokenVersionUrl: string='https://localhost:44343/api/Authentication/GetTokenVersion'
   userData = new BehaviorSubject(null);
 
   decodeUserData() {
@@ -31,21 +33,35 @@ export class AuthenticationService {
 
   refreshToken(): Observable<any> {
     console.log('Refreshing token...');
-    return this.http.post(`${this.refershtoken}`, null).pipe(
-      tap(
-        (response: any) => {
+    return this.http.post<any>(this.refershtoken, null).pipe(
+      tap({
+        next: (response: any) => {
           console.log('Token refreshed successfully.');
           const newToken = response.token;
           localStorage.setItem('jwt', newToken);
         },
-        (error) => {
+        error: (error) => {
           console.error('Token refresh failed:', error);
         }
-      )
+      })
     );
   }
   
-  
+  getTokenVersion(): Observable<any> {
+    return this.http.get(this.tokenVersionUrl).pipe(
+      tap({
+        next: (response: any) => {
+          console.log('Token version retrieved successfully.');
+          const tokenVersion = response;
+          localStorage.setItem('tokenVersion', tokenVersion);
+        },
+        error: (error) => {
+          console.error('Token version retrieval failed:', error);
+        }
+      })
+    );
+  }
+
 
   logout() {
     localStorage.removeItem('jwt');
@@ -55,6 +71,7 @@ export class AuthenticationService {
 
   login(userData: any): Observable<any> { // Updated userData type to any
     console.log(userData);
+    
     return this.http.post(`${this.baseUrl}`, userData);
   }
 

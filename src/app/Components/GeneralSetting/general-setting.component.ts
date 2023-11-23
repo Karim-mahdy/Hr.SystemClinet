@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GeneralsettingService } from 'src/app/Services/general-settings.service';
+import { DialogComponent } from '../dialog/dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ToastService } from 'src/app/Services/toast.service';
 
 @Component({
   selector: 'app-general-setting',
@@ -40,7 +43,10 @@ export class GeneralSettingComponent implements OnInit {
   get ControlName() {
     return this.GeneralSetting.controls
   }
-  constructor(private generalsettings: GeneralsettingService) { }
+  constructor(private generalsettings: GeneralsettingService,
+    public dialog: MatDialog ,
+    private toastService: ToastService
+    ) { }
   propertiesToPush: string[] = ['Days', 'CustomeSettings', 'GeneralSettings','WeekendDay'];
 
   ngOnInit(): void {
@@ -104,8 +110,6 @@ export class GeneralSettingComponent implements OnInit {
 
   }
 
-
-
   OnSubmit(e: Event) {
     console.log(this.GeneralSetting.value);
     console.log(this.generalSettingId);
@@ -113,6 +117,7 @@ export class GeneralSettingComponent implements OnInit {
 
     this.generalsettings.AddGeneralSetting(this.GeneralSetting.value).subscribe({
       next: (response: any) => {
+        this.toastService.showToast('success', 'Done', 'Add General Setting Successfully');
         console.log(response);
         if (response.empid != 0) {
           this.generalsettings.GetEmployeeGeneralSettingById(response.empid).subscribe({
@@ -161,8 +166,8 @@ export class GeneralSettingComponent implements OnInit {
             console.log(this.serverErrors);
           }
         }
+        this.toastService.showToast('error', 'Error', 'Add General Setting Failed');
       
-
         }
     });
 
@@ -186,6 +191,7 @@ export class GeneralSettingComponent implements OnInit {
     console.log(this.GeneralSetting.value);
     this.generalsettings.EditGeneralSetting(this.GeneralSetting.value, id).subscribe({
       next: (response: any) => {
+        this.toastService.showToast('success', 'Done', 'Edit General Setting Successfully');
         console.log(response);
         this.GeneralSetting.controls['id'].setValue(response.id);
         this.GeneralSetting.controls['empid'].setValue(response.empid);
@@ -204,29 +210,34 @@ export class GeneralSettingComponent implements OnInit {
           }
         }
         console.log(this.serverErrors);
-
+        this.toastService.showToast('error', 'Error', 'Edit General Setting Failed');
         }
 
     })
   }
 
   onDelete(id: number ) {
-     
-    this.generalsettings.DeleteGeneralSetting(id).subscribe({
-      next: (res:any) => {
- 
-        console.log(res);
-        
-          this.resetDataForSpcial();
-          this.flag2 = true
-         
-      },
-      error: (error: any) => {
-        console.log(error);
-        
-        this.ModelState = error.error;
+
+
+    const dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.generalsettings.DeleteGeneralSetting(id).subscribe({
+
+          next: () => {
+            this.toastService.showToast('warn', 'Done', 'Delete General Setting Successfully');
+              this.resetDataForSpcial();
+              this.flag2 = true
+
+          },
+          error: (error: any) => {
+            this.ModelState = error.error;
+            this.toastService.showToast('error', 'Error', 'Delete General Setting Failed');
+          }
+        })
       }
-    })
+    });
+
 
   }
 

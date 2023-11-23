@@ -1,4 +1,4 @@
-<div class="container my-5">
+<div class="container my-5  ">
   <div class="card shadow ">
     <div class="card-header bg-gradient-primary text-dark">
       <div class="d-flex justify-content-center align-items-center">
@@ -15,7 +15,7 @@
       <div class="d-flex flex-row align-items-center my-3">
         <button
           type="button"
-          class="btn btn-primary px-3"
+          class="btn btn-primary px-3 "
           (click)="Toggle()"
           [ngClass]="{'disabled': Show}"
         >
@@ -186,11 +186,11 @@
           [dtTrigger]="dtTrigger"
           datatable
           [dtOptions]="dtoption"
-          class="table pt-3 table-light"
+          class="table pt-3 table-light table-striped table-hover text-center table-bordered "
           cellspacing="0"
           width="100%"
         >
-          <thead class="thead-light">
+          <thead class="thead-light text-uppercase text-center ">
             <tr>
               <th>#</th>
               <th>Department</th>
@@ -214,7 +214,7 @@
               <td>{{ attend.date | date : "mediumDate" }}</td>
               <td class="table-action-icons">
                 <i
-                  class="bi bi-pencil-square text-primary mx-2"
+                  class="bi bi-pencil-square text-warning mx-2"
                   (click)="Edit(attend.id)"
                 ></i>
                 <i

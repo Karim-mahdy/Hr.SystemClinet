@@ -56,14 +56,12 @@ body {
 	color: #CFE8FF;
 }
 
-
-
 /* SIDEBAR */
 #sidebar {
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 280px;
+	width: 250px;
 	height: 100%;
 	background: rgb(42, 63, 84);
 	z-index: 2000;
@@ -97,6 +95,7 @@ body {
 	min-width: 60px;
 	display: flex;
 	justify-content: center;
+
 }
 #sidebar .side-menu {
 	width: 100%;
@@ -223,6 +222,12 @@ body {
 	cursor: pointer;
 	color: #342E37;
 }
+#content nav .bx.bx-menu::after {
+	cursor: pointer;
+	color: #342E37;
+	margin-left: 30px;
+
+}
 #content nav .nav-link {
 	font-size: 16px;
 	transition: .3s ease;
@@ -231,7 +236,7 @@ body {
 	color: #3C91E6;
 }
 #content nav form {
-	max-width: 400px;
+	max-width: 300px;
 	width: 100%;
 	margin-right: auto;
 }
@@ -265,26 +270,7 @@ body {
 	border-radius: 0 36px 36px 0;
 	cursor: pointer;
 }
-#content nav .notification {
-	font-size: 20px;
-	position: relative;
-}
-#content nav .notification .num {
-	position: absolute;
-	top: -6px;
-	right: -6px;
-	width: 20px;
-	height: 20px;
-	border-radius: 50%;
-	border: 2px solid #F9F9F9;
-	background: #DB504A;
-	color: #F9F9F9;
-	font-weight: 700;
-	font-size: 12px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
+ 
 #content nav .profile img {
 	width: 36px;
 	height: 36px;

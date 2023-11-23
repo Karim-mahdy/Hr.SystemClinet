@@ -25,6 +25,11 @@ import { WelcomeComponent } from './Components/Dashboard/Welcome/welcome.compone
 import { AccessDeniedComponent } from './Components/Access denied/access-denied.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessageService } from 'primeng/api';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { DialogComponent } from './Components/dialog/dialog.component';
+import { ForbiddenInterceptor } from './Services/forbidden-interceptor.service';
+ 
 
 
 
@@ -46,6 +51,7 @@ import { MessageService } from 'primeng/api';
     SignInComponent,
     WelcomeComponent,
     AccessDeniedComponent,
+    DialogComponent,
     
   ],
   imports: [
@@ -61,7 +67,9 @@ import { MessageService } from 'primeng/api';
         },
       },
     }),
-     
+    MatDialogModule,
+    MatButtonModule,
+
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule, // Add HttpClientModule to your imports
@@ -71,8 +79,14 @@ import { MessageService } from 'primeng/api';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
+      
       multi: true,
       
+    },
+    {
+      provide: HTTP_INTERCEPTORS, // Add this to register the ForbiddenInterceptor
+      useClass: ForbiddenInterceptor,
+      multi: true,
     },
     MessageService, // Add this line to provide MessageService
   ],

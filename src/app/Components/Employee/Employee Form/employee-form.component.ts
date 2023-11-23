@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { DepartmentService } from 'src/app/Services/department.service';
 import { EmployeeService } from 'src/app/Services/employee.service';
+import { ToastService } from 'src/app/Services/toast.service';
 
 @Component({
   selector: 'app-employee-form',
@@ -40,7 +42,8 @@ export class EmployeeformComponent implements OnInit {
     private departmentService: DepartmentService,
     private eployeeService: EmployeeService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private toastService: ToastService
   ) {}
   departments: any;
   employeeId: any;
@@ -120,8 +123,7 @@ export class EmployeeformComponent implements OnInit {
         console.log(this.AddEmployee.valid);
         this.eployeeService.EditEmployee(this.AddEmployee.value, this.employeeId).subscribe({
           next: (response:any) => {
-             console.log(response);
-            console.log(response.message);
+           this.toastService.showToast('success', 'Done', 'Edit Employee Successfully');
             this.router.navigate(['/Dashboard/Employee']);
           },
           error:(error:any)=>{  
@@ -133,7 +135,7 @@ export class EmployeeformComponent implements OnInit {
               }
             }
             console.log(this.serverErrors);
-
+                this.toastService.showToast('error', 'Error', 'Edit Employee Failed');
             }
         });
       } 
@@ -141,6 +143,7 @@ export class EmployeeformComponent implements OnInit {
        
         this.eployeeService.AddEmployee(this.AddEmployee.value).subscribe({
           next: (response:any) => {
+            this.toastService.showToast('success', 'Done', 'Add Employee Successfully');
             console.log(response);
             console.log(response.message);
             this.router.navigate(['/Dashboard/Employee']);
@@ -160,7 +163,7 @@ export class EmployeeformComponent implements OnInit {
 
             }
             console.log(this.serverErrors);
-
+            this.toastService.showToast('error', 'Error', 'Add Employee Failed');
             }
         });
       }

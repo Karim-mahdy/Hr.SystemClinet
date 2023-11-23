@@ -3,13 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { PermissionsGurdService } from './permissions-gurd.service';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DepartmentService {
 
-  constructor(private http: HttpClient, private router: Router, private permissionsGuardService: PermissionsGurdService) { }
+  constructor(private http: HttpClient, private router: Router, 
+    private permissionsGuardService: PermissionsGurdService,
+    private toastService: ToastService
+    ) { }
 
   baseUrl: string = 'https://localhost:44343/api/Department';
 
@@ -21,7 +25,7 @@ export class DepartmentService {
     if (this.permissionsGuardService.hasPermission(token, [requiredServicePermission])) {
       return true
     }
-    this.router.navigate(['/Dashboard/AccessDenied']);
+    this.toastService.showToast('error', 'Access Denied', "You don't have permission");
     return false;
   }
 
@@ -29,36 +33,40 @@ export class DepartmentService {
     if (this.checkPermission('Permission.Department.View')) {
       return this.http.get(this.baseUrl);
     } else {
-      return of([]);
+      return of();
     }
   }
   GetDepartmentById(departmentId: any): Observable<any> {
     if (this.checkPermission('Permission.Department.Edit')) {
       return this.http.get(`${this.baseUrl}/${departmentId}`);
     } else {
-      return of([]);
+      return of();
     }
   }
   AddDepartment(department: any): Observable<any> {
     if (this.checkPermission('Permission.Department.Create')) {
+      
       return this.http.post(this.baseUrl, department);
     } else {
-      return of([]);
+
+      return of();
     }
   }
   EditDepartment(department: any, departmentId: any): Observable<any> {
     if (this.checkPermission('Permission.Department.Edit')) {
       return this.http.put(`${this.baseUrl}/${departmentId}`, department);
     } else {
-      return of([]);
+      return of();
     }
   }
 
   DeleteDepartment(departmentId: any): Observable<any> {
     if (this.checkPermission('Permission.Department.Delete')) {
+      
       return this.http.delete(`${this.baseUrl}/${departmentId}`);
+      
     } else {
-      return of([]);
+      return of();
     }
   }
 

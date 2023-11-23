@@ -114,9 +114,9 @@
         </form>
 
         <div class="row">
-          <table datatable [dtOptions]="dtoption" class="table pt-3 table-light px-2" [dtTrigger]="dtTrigger" id="dt-users"
-            width="100%" class="table table-striped table-hover">
-            <thead>
+          <table datatable [dtOptions]="dtoption"  class="pt-3  px-2 table table-light table-striped table-hover text-center table-bordered" [dtTrigger]="dtTrigger" id="dt-users"
+            width="100%"  >
+            <thead class="thead-light text-uppercase text-center">
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
@@ -141,7 +141,7 @@
                   </ng-container>
                 </td>
                 <td>
-                  <i class="mx-1 bi bi-pencil-square" (click)="OnEdit(item.id)"></i>
+                  <i class="mx-1 bi bi-pencil-square text-warning" (click)="OnEdit(item.id)"></i>
                   <i class="bi text-danger bi-trash3-fill" (click)="OnDelete(item.id)"></i>
                 </td>
               </tr>

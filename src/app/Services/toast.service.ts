@@ -10,5 +10,6 @@ export class ToastService {
 
   showToast(severity: string, summary: string, detail: string): void {
     this.messageService.add({ severity, summary, detail });
+    
   }
 }

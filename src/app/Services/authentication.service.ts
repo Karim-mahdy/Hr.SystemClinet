@@ -31,36 +31,36 @@ export class AuthenticationService {
     }
   }
 
-  refreshToken(): Observable<any> {
-    console.log('Refreshing token...');
-    return this.http.post<any>(this.refershtoken, null).pipe(
-      tap({
-        next: (response: any) => {
-          console.log('Token refreshed successfully.');
-          const newToken = response.token;
-          localStorage.setItem('jwt', newToken);
-        },
-        error: (error) => {
-          console.error('Token refresh failed:', error);
-        }
-      })
-    );
-  }
+  // refreshToken(): Observable<any> {
+  //   console.log('Refreshing token...');
+  //   return this.http.post<any>(this.refershtoken, null).pipe(
+  //     tap({
+  //       next: (response: any) => {
+  //         console.log('Token refreshed successfully.');
+  //         const newToken = response.token;
+  //         localStorage.setItem('jwt', newToken);
+  //       },
+  //       error: (error) => {
+  //         console.error('Token refresh failed:', error);
+  //       }
+  //     })
+  //   );
+  // }
   
-  getTokenVersion(): Observable<any> {
-    return this.http.get(this.tokenVersionUrl).pipe(
-      tap({
-        next: (response: any) => {
-          console.log('Token version retrieved successfully.');
-          const tokenVersion = response;
-          localStorage.setItem('tokenVersion', tokenVersion);
-        },
-        error: (error) => {
-          console.error('Token version retrieval failed:', error);
-        }
-      })
-    );
-  }
+  // getTokenVersion(): Observable<any> {
+  //   return this.http.get(this.tokenVersionUrl).pipe(
+  //     tap({
+  //       next: (response: any) => {
+  //         console.log('Token version retrieved successfully.');
+  //         const tokenVersion = response;
+  //         localStorage.setItem('tokenVersion', tokenVersion);
+  //       },
+  //       error: (error) => {
+  //         console.error('Token version retrieval failed:', error);
+  //       }
+  //     })
+  //   );
+  // }
 
 
   logout() {

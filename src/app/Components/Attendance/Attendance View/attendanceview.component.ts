@@ -115,75 +115,79 @@ export class AttendanceviewComponent implements OnInit {
   OnSubmit(e: Event) {
     e.preventDefault();
     this.submitted = true;
-    console.log(this.EmployeeAttendanceForm.value);
-    console.log(this.employeeAttendanceId)
-    if (this.employeeAttendanceId > 0) {
-      console.log(this.employeeAttendanceId)
-      this.attendanceService.EditAttendance(this.EmployeeAttendanceForm.value,this.employeeAttendanceId).subscribe({
-          next: () => {
-            this.toastService.showToast('success', 'Done', 'Edit Attendance Successfully');
-            this.attendanceService.GetAllAttendance().subscribe({
-
-              next: (Response: any) => {
-                this.attendanceReport = Response;
-              }
-            })
-          },
-          error:(error:any)=>{  
-            console.log(error);
-            console.log(error.error);
-            // this.Show=true;
-            this.clearServerErrors();
-            for (const key of this.propertiesToPush) {
-              if (error.error[key] && Array.isArray(error.error[key]))  {
-                this.serverErrors.push(...error.error[key]);
-                this.Show=true;
-                this.submitted=false;
+      if (this.EmployeeAttendanceForm.valid) {
+        console.log(this.EmployeeAttendanceForm.value);
+        console.log(this.employeeAttendanceId)
+        if (this.employeeAttendanceId > 0) {
+          console.log(this.employeeAttendanceId)
+          this.attendanceService.EditAttendance(this.EmployeeAttendanceForm.value,this.employeeAttendanceId).subscribe({
+              next: () => {
+                this.OnReset();
+                this.toastService.showToast('success', 'Done', 'Edit Attendance Successfully');
+                this.attendanceService.GetAllAttendance().subscribe({
+    
+                  next: (Response: any) => {
+                    this.attendanceReport = Response;
+                  }
+                })
+              },
+              error:(error:any)=>{  
+                console.log(error);
+                console.log(error.error);
+                // this.Show=true;
+                this.clearServerErrors();
+                for (const key of this.propertiesToPush) {
+                  if (error.error[key] && Array.isArray(error.error[key]))  {
+                    this.serverErrors.push(...error.error[key]);
+                     this.Show=true;
+                    // this.submitted=false;
+                    console.log(this.serverErrors);
+                  }
+                }
                 console.log(this.serverErrors);
-              }
-            }
-            console.log(this.serverErrors);
-            this.toastService.showToast('error', 'Error', 'Edit Attendance Failed');
-            }
-        });
-        this.Show=false;
-        this.OnReset();
-      // console.log(this.OnReset());
-
-    } 
-    else {
-      
-      //this.Show=true;
-      this.attendanceService
-        .AddAttendance(this.EmployeeAttendanceForm.value)
-        .subscribe({
-          next: () => {
-            this.attendanceService.GetAllAttendance().subscribe({
-              next: (Response: any) => {
-                this.attendanceReport = Response;
-                this.toastService.showToast('success', 'Done', 'Add Attendance Successfully');
-              }
-            })
-          },
-          error:(error:any)=>{  
-            console.log(error);
-            console.log(error.error);
-            this.Show=true;
-           this.clearServerErrors();
-            for (const key of this.propertiesToPush) {
-              if (error.error[key] && Array.isArray(error.error[key]))  {
-                this.serverErrors.push(...error.error[key]);
+                this.toastService.showToast('error', 'Error', 'Edit Attendance Failed');
+                }
+            });
+            // this.Show=false;
+           
+          // console.log(this.OnReset());
+    
+        } 
+        else {
+          
+          //this.Show=true;
+          this.attendanceService
+            .AddAttendance(this.EmployeeAttendanceForm.value)
+            .subscribe({
+              next: () => {
+                 this.OnReset();
+                this.attendanceService.GetAllAttendance().subscribe({
+                  next: (Response: any) => {
+                    this.attendanceReport = Response;
+                    this.toastService.showToast('success', 'Done', 'Add Attendance Successfully');
+                  }
+                })
+              },
+              error:(error:any)=>{  
+                console.log(error);
+                console.log(error.error);
                 this.Show=true;
-                this.submitted=false;
+               this.clearServerErrors();
+                for (const key of this.propertiesToPush) {
+                  if (error.error[key] && Array.isArray(error.error[key]))  {
+                    this.serverErrors.push(...error.error[key]);
+                    this.Show=true;
+                    this.submitted=false;
+                    console.log(this.serverErrors);
+                  }
+                }
                 console.log(this.serverErrors);
-              }
-            }
-            console.log(this.serverErrors);
-            this.toastService.showToast('error', 'Error', 'Add Attendance Failed');
-            }
-        });
-      this.OnReset();
-    }
+                this.toastService.showToast('error', 'Error', 'Add Attendance Failed');
+                }
+            });
+        }
+      }
+   
   }
   
   Toggle() {
@@ -253,7 +257,7 @@ export class AttendanceviewComponent implements OnInit {
       // Do something else when called from another source
       this.clearServerErrors();
       this.Show = !this.Show
-      this.employeeAttendanceId = 0;
+      
       console.log('Reset called from another source');
   }
   }

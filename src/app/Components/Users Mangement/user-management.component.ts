@@ -101,6 +101,7 @@ export class UserManagementComponent implements OnInit {
         console.log(this.AddUser.value);
         this.userService.AddNewUser(this.AddUser.value).subscribe({
           next: (Response) => {
+            
             this.toastService.showToast('success', 'Done', 'Add User successfully');
             this.userService.GetAllUsers().subscribe({
               next: (response: any) => {
@@ -197,7 +198,7 @@ export class UserManagementComponent implements OnInit {
   // Reset the selectedItems array to empty
   this.selectedItems = [];
 // Disable the touched state of the form controls
-this.AddUser.markAsUntouched();
+  this.AddUser.markAsUntouched();
   this.userService.GetDataFormToCreate().subscribe({
     next: (response: any) => {
       this.employee = response;
@@ -206,7 +207,7 @@ this.AddUser.markAsUntouched();
   
   this.userId = '';
   this.flag = false;
- 
+  this.submitted=false;
 }
 clearServerErrors() {
   this.serverErrors = [];

@@ -124,6 +124,7 @@ export class PermissionsGurdService implements CanActivate {
   //   return false;
     
   // }
+ 
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | Promise<boolean> {
     
@@ -131,8 +132,12 @@ export class PermissionsGurdService implements CanActivate {
        console.log(route.data['allowedRoles']);
        console.log(route.data['allowedPermissions']);
       const token = localStorage.getItem("jwt") ?? "";
+
+      // if(!checkTokenVersion(token)){
+      //     return this.router.navigate(['SignIn']);
+      // }
       if(!this.isAuthenticated(token)){
-                return this.router.navigate(['SignIn']);
+          return this.router.navigate(['SignIn']);
       }
       if(this.hasRole(token, roles) || this.hasPermission(token, route.data['allowedPermissions'])){
           console.log('Access Granted');

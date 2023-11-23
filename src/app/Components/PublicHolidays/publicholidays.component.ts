@@ -56,6 +56,7 @@ export class PublicholidaysComponent implements OnInit {
       if (this.publicHolidayId > 0) {
         this.publicholidaysService.EditPublicholidy(this.PublicHolidyFrom.value, this.publicHolidayId).subscribe({
           next: (res) => {
+            this.OnReset()
             this.toastService.showToast('success', 'Done', 'Edit Public Holiday Successfully');
             this.publicholidaysService.GetAllPublicholidys().subscribe({
               next: (response) => {
@@ -83,13 +84,14 @@ export class PublicholidaysComponent implements OnInit {
             }
 
         });
-        this.OnReset()
+       
 
       }
       else {
         console.log(this.PublicHolidyFrom.value)
         this.publicholidaysService.AddPublicholidy(this.PublicHolidyFrom.value).subscribe({
           next: () => {
+            this.OnReset();
             this.toastService.showToast('success', 'Done', 'Add Public Holiday Successfully');
             this.publicholidaysService.GetAllPublicholidys().subscribe({
               next: (response) => {
@@ -117,14 +119,14 @@ export class PublicholidaysComponent implements OnInit {
             }
 
         });
-        this.OnReset();
+      
       }
     } 
   }
 
   OnEdit(id:any){
     console.log(id);
-    
+    this.clearServerErrors();
     this.publicHolidayId = id;
     this.publicholidaysService.GetPublicholidyId(id).subscribe({
       next: (response:any) => {
@@ -166,18 +168,18 @@ export class PublicholidaysComponent implements OnInit {
   }
   OnReset(source = '') {
        
-        if (source === 'cancel') {
-          this.PublicHolidyFrom.controls['id'].setValue(0);
+      if (source === 'cancel' || source === '') {
+        this.PublicHolidyFrom.controls['id'].setValue(0);
         this.PublicHolidyFrom.controls['name'].setValue('');
         this.PublicHolidyFrom.controls['date'].setValue('');
-
         this.publicHolidayId = 0;
       } else {
-          // Do something else when called from another source
+         
           this.clearServerErrors();
     
           console.log('Reset called from another source');
       }
+     
   }
 
   minDate(): string {

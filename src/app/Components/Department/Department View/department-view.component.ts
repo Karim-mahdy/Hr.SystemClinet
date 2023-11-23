@@ -15,6 +15,7 @@ import { DialogComponent } from '../../dialog/dialog.component';
   providers: [MessageService], // <-- Add this line
 })
 export class DepartmentViewComponent implements OnInit {
+ 
   serverErrors: string[] = [];
   departments: any;
   dtoption: DataTables.Settings = {};
@@ -79,14 +80,16 @@ export class DepartmentViewComponent implements OnInit {
 
   Toggle() {
     this.Show = true
+    
   }
 
   get controlsname() {
     return this.formadd.controls;
   }
   Edit(deparmentId: any) {
+    this.formadd.markAsUntouched();
+    this.clearServerErrors()
     this.Show = true
-
     this.deptid = deparmentId;
     this.deptservice.GetDepartmentById(deparmentId).subscribe({
       next: (response: any) => {
@@ -99,26 +102,34 @@ export class DepartmentViewComponent implements OnInit {
 
 
   OnReset(source = '') {
-
+    console.log(this.serverErrors);
+    
     if (source == 'cancel') {
       // Do something specific when called from the "Cancel" button
       this.formadd.controls['id'].setValue(0);
       this.formadd.controls['name'].setValue('');
-      this.Show = !this.Show
+     
       this.deptid = 0;
       this.clearServerErrors();
 
-    } else {
-
-      // Do something else when called from another source
+    } 
+    if(this.serverErrors.length>0){
       this.clearServerErrors();
+     
+      this.Show = !this.Show
+     
+
+      console.log('Reset called from another source');
+    }
+    else {
       this.formadd.controls['id'].setValue(0);
       this.formadd.controls['name'].setValue('');
       this.Show = !this.Show
       this.deptid = 0;
-
-      console.log('Reset called from another source');
+      this.clearServerErrors();
+      this.submitted=false
     }
+    this.formadd.markAsUntouched();
 
   }
 
@@ -132,6 +143,7 @@ export class DepartmentViewComponent implements OnInit {
           .EditDepartment(this.formadd.value, this.deptid)
           .subscribe({
             next: (res) => {
+              this.OnReset();
               this.deptservice.GetAllDepartment().subscribe({
                 next: (response: any) => {
                   this.departments = response;
@@ -143,6 +155,7 @@ export class DepartmentViewComponent implements OnInit {
               console.log(error.error.DeptName[0])
               this.clearServerErrors();
               this.serverErrors.push(error.error.DeptName[0]);
+              this.Show = true;
               console.log(this.serverErrors);
               this.toastService.showToast('error', 'Error', 'Edit Department failed');
 
@@ -150,11 +163,12 @@ export class DepartmentViewComponent implements OnInit {
 
           });
 
-        this.OnReset();
+       
       } else {
         this.deptservice.AddDepartment(this.formadd.value).subscribe({
 
           next: () => {
+            this.OnReset();
             this.toastService.showToast('success', 'Done', 'Add Department done');
             this.deptservice.GetAllDepartment().subscribe({
               next: (response) => {
@@ -165,19 +179,22 @@ export class DepartmentViewComponent implements OnInit {
             });
           },
           error: (error: any) => {
+
             this.clearServerErrors();
 
             this.serverErrors.push(error.error.DeptName[0]);
             console.log(this.serverErrors);
+            this.Show=true;
             this.toastService.showToast('error', 'Error', 'Add Department failed');
           }
         });
-        this.OnReset();
+     
       }
     }
   }
   clearServerErrors() {
     this.serverErrors = [];
+    
   }
 
 }

@@ -18,8 +18,8 @@ export class AuthenticationService {
   }
 
   baseUrl: string = 'https://localhost:44343/api/Authentication/Login';
-  refershtoken: string='https://localhost:44343/api/Authentication/RefreshToken'
-  tokenVersionUrl: string='https://localhost:44343/api/Authentication/GetTokenVersion'
+  //refershtoken: string='https://localhost:44343/api/Authentication/RefreshToken'
+  //tokenVersionUrl: string='https://localhost:44343/api/Authentication/GetTokenVersion'
   userData = new BehaviorSubject(null);
 
   decodeUserData() {

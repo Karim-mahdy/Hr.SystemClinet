@@ -26,6 +26,7 @@ export class GeneralSettingComponent implements OnInit {
   ModelState: any;
   flag2: boolean = true;
   show: boolean = false
+  flag3: boolean = true
  
   //array: { displayValue: string; isSelected: boolean }[] = [];
     
@@ -83,6 +84,9 @@ export class GeneralSettingComponent implements OnInit {
     this.show = !this.show
   }
   selectemployee() {
+     
+    this.flag3 =true;
+
     this.generalsettings.GetEmployeeGeneralSettingById(this.ControlName.empid.value).subscribe({
       next: (response: any) => {
         console.log(response);
@@ -94,6 +98,7 @@ export class GeneralSettingComponent implements OnInit {
         } else {
           this.flag = true;
           this.flag2 = false;
+
           this.GeneralSetting.controls['id'].setValue(response.id);
           this.GeneralSetting.controls['empid'].setValue(response.empid);
           this.GeneralSetting.controls['overtimeHour'].setValue(response.overtimeHour);
@@ -102,7 +107,6 @@ export class GeneralSettingComponent implements OnInit {
           this.setting.weekends = response.weekends;
            
           this.generalSettingId = response.id;
-
         }
 
       }
@@ -223,12 +227,17 @@ export class GeneralSettingComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.generalsettings.DeleteGeneralSetting(id).subscribe({
-
-          next: () => {
+          next: (response:any) => {
             this.toastService.showToast('warn', 'Done', 'Delete General Setting Successfully');
               this.resetDataForSpcial();
               this.flag2 = true
-
+              
+          
+            console.log(response)
+              if(response.employeeId !=null){ 
+                this.flag3=false
+              }
+              
           },
           error: (error: any) => {
             this.ModelState = error.error;
@@ -292,6 +301,7 @@ export class GeneralSettingComponent implements OnInit {
   resetFormAndShowEmployees() {
     this.resetDataForSpcial();
     this.ShowEmployees();
+    this.flag3 =false;
   }
   resetDataForSpcial() {
 
@@ -312,6 +322,7 @@ export class GeneralSettingComponent implements OnInit {
     ];
     this.flag = false;
     this.clearServerErrors();
+    
 
   }
   cancelAddCustomSettings() {
@@ -329,6 +340,8 @@ export class GeneralSettingComponent implements OnInit {
           this.flag2 = false;
           this.flag = true;
           this.show = false;
+          this.flag3 =true;
+
           this.clearServerErrors();
         }
         else {
@@ -336,6 +349,8 @@ export class GeneralSettingComponent implements OnInit {
           this.flag2 = true;
           this.flag = false;
           this.show = false;
+          this.flag3 =true;
+
 
         }
       }

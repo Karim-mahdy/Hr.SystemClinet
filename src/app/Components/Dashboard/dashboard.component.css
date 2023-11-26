@@ -170,6 +170,9 @@ body {
 	display: flex;
 	justify-content: center;
 }
+.ma{
+    margin-left: -30px;
+}
 /* SIDEBAR */
 
 

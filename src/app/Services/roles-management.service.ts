@@ -70,16 +70,13 @@ export class RolesManagementService {
     if (this.checkPermission('Permission.Permission.Edit')) {
       console.log(role);
       console.log(roleId);
-      
-      
-      return this.http.put(`${this.baseUrl}/${roleId}`, role).pipe(
-        tap(() =>  this.authservice.refreshToken()), // Tap into the observable and refresh the token
-        
-        
-        catchError(() => of([]))
-        
-      );
-    } else {
+        return this.http.put(`${this.baseUrl}/${roleId}`, role)}
+    //   .pipe(
+    //     tap(() =>  this.authservice.refreshToken()),
+    //     catchError(() => of([]))
+    //   );
+    // }
+     else {
       return of();
     }
   }

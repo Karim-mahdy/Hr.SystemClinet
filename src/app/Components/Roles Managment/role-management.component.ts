@@ -27,7 +27,7 @@ export class RoleManagementComponent implements OnInit {
   updatedRoleClaims: { displayValue: string; isSelected: boolean }[] = [];
   FormRole = new FormGroup({
     roleName: new FormControl('', [Validators.required]),
-    roleClaims: new FormControl(),
+    roleClaims: new FormControl([{}], [Validators.required]),
   })
 
   constructor(private rolesService: RolesManagementService, private elementRef: ElementRef,
@@ -59,11 +59,13 @@ export class RoleManagementComponent implements OnInit {
   
       this.rolesService.EditRole(this.FormRole.value, this.roleId).subscribe({
         next: () => {
+
           this.toastService.showToast('success', 'Done', 'Edit Role successfully');
           this.rolesService.GetDataToCreate().subscribe((response: any) => {
             this.roleClaims = response.roleClaims;
             this.rolesService.GetAllRoles().subscribe((response: any) => {
               this.roles = response;
+              this.clearServerErrors();
             });
           });
         },
@@ -94,6 +96,7 @@ export class RoleManagementComponent implements OnInit {
             this.roleClaims = response.roleClaims;
             this.rolesService.GetAllRoles().subscribe((response: any) => {
               this.roles = response;
+              this.clearServerErrors();
             });
   
             this.FormRole.reset();
@@ -102,7 +105,7 @@ export class RoleManagementComponent implements OnInit {
           });
         },
         error: (error: any) => {
-          console.log(error.error.RoleClaims[0]);
+          console.log(error);
   
           // this.clearServerErrors();
           for (const key of this.propertiesToPush) {
@@ -115,6 +118,8 @@ export class RoleManagementComponent implements OnInit {
           this.toastService.showToast('error', 'Error', 'Add Role Failed');
         }
       });
+      this.clearServerErrors();
+
     }
   }
   
@@ -139,7 +144,7 @@ export class RoleManagementComponent implements OnInit {
       if (result) {
         this.rolesService.DeleteRole(id).subscribe({
           next:()=>{
-            this.toastService.showToast('success', 'Done', 'Delete Role successfully');
+            this.toastService.showToast('warn', 'Done', 'Delete Role successfully');
             this.rolesService.GetDataToCreate().subscribe((response: any) => {
               this.roleClaims = response.roleClaims;
               this.rolesService.GetAllRoles().subscribe((response: any) => {
@@ -230,6 +235,8 @@ export class RoleManagementComponent implements OnInit {
       this.updatedRoleClaims = JSON.parse(JSON.stringify(this.roleClaims));
       this.Reset();
       this.flag=false;
+      this.clearServerErrors();
+
     })
   }
   clearServerErrors() {

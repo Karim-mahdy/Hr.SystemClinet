@@ -88,9 +88,8 @@
 
  
  
- 
-.bi {
-  font-size: 20px !important;
-  margin: 0 6px !important;
-  cursor: pointer !important;
-}
+  td .bi {
+    font-size: 20px !important;   
+    margin: 0 8px !important;
+    cursor: pointer !important;
+  }

@@ -51,9 +51,10 @@
         class="table  table-light table-striped table-hover text-center table-bordered" cellspacing="0" width="100%">
           <thead  class="thead-light  text-center">
             <tr>
-              <th >Name</th>
-              <th >Department</th>
-              <th >Salary</th>
+              <th >#</th>
+              <th >Employee Name</th>
+              <th >Department Name</th>
+              <th >Basic Salary</th>
               <th >Attendance Days</th>
               <th >Absence Days</th>
               <th >Additional Hours</th>
@@ -64,7 +65,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let employee of Reports.salaries " class="table-row-hover">
+            <tr *ngFor="let employee of Reports.salaries; let i = index " class="table-row-hover">
+              <td>{{ i+1 }}</td>
               <td>{{ employee.name }}</td>
               <td>{{ employee.department }}</td>
               <td>{{ employee.baseSalary }}</td>

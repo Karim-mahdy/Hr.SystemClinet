@@ -10,10 +10,10 @@
             <h3 class="mb-4 text-center" style="color: #007bff; font-size: 24px">
               Sign in
             </h3>
-            <div *ngIf="apiError" class="alert alert-danger">{{ apiError }}</div>
+        
             <!-- Email input with envelope icon -->
             <div class="form-outline mb-4">
-              <label for="form1Example13" style="color: black; font-size: 18px"
+              <label for="form1Example13" class="form-label mb-2" style="color: black; font-size: 18px"
                 >Email address</label
               >
               <div class="input-group">
@@ -92,7 +92,7 @@
                 >Forgot password?</a
               >
             </div>
-  
+            <div *ngIf="apiError" class="alert alert-danger text-center">{{ apiError }}</div>
             <!-- Submit button -->
             <button
             

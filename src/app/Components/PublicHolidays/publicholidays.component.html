@@ -56,7 +56,7 @@
               <tr *ngFor="let p of publicHolidays; let i = index">
                 <td>{{ i+1 }}</td>
                 <td>{{ p.name }}</td>
-                <td>{{ p.date }}</td>
+                <td>{{ p.date | date:'mediumDate' }}</td>
                 <td>
                   <i class="mx-1 bi bi-pencil-square text-warning" (click)="OnEdit(p.id)"></i>
                   <i class="bi text-danger bi-trash3-fill" (click)="OnDelete(p.id)"></i>

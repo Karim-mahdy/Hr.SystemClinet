@@ -128,6 +128,7 @@ export class AttendanceviewComponent implements OnInit {
     
                   next: (Response: any) => {
                     this.attendanceReport = Response;
+                    
                   }
                 })
               },
@@ -193,7 +194,11 @@ export class AttendanceviewComponent implements OnInit {
   Toggle() {
     this.Show = true
     this.flag=false
-    
+    this.EmployeeAttendanceForm.controls['selectedEmployee'].setValue(0);
+    this.EmployeeAttendanceForm.controls['leaveTime'].setValue('');
+    this.EmployeeAttendanceForm.controls['date'].setValue(this.minDate());
+    this.employeeAttendanceId =0
+     
   }
 
   Edit(id: any) {
@@ -254,7 +259,7 @@ export class AttendanceviewComponent implements OnInit {
       console.log(this.EmployeeAttendanceForm.value);
       console.log('Reset called from Cancel button');
   } else {
-      // Do something else when called from another source
+      
       this.clearServerErrors();
       this.Show = !this.Show
       

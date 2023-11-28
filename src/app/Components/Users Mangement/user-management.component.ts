@@ -55,6 +55,7 @@ export class UserManagementComponent implements OnInit {
             this.userService.GetAllUsers().subscribe({
               next: (response: any) => {
                 this.data = response;
+                this.dtTrigger.next(null);
               },
             });
           }
@@ -73,6 +74,7 @@ export class UserManagementComponent implements OnInit {
         console.log(this.AddUser.value);
         this.userService.EditUser(this.AddUser.value, this.userId).subscribe({
           next: (Response) => {
+            this.clearServerErrors();
             this.toastService.showToast('success', 'Done', 'Edit User successfully');
             this.userService.GetAllUsers().subscribe({
               next: (response: any) => {
@@ -101,7 +103,7 @@ export class UserManagementComponent implements OnInit {
         console.log(this.AddUser.value);
         this.userService.AddNewUser(this.AddUser.value).subscribe({
           next: (Response) => {
-            
+            this.clearServerErrors();
             this.toastService.showToast('success', 'Done', 'Add User successfully');
             this.userService.GetAllUsers().subscribe({
               next: (response: any) => {
@@ -134,6 +136,8 @@ export class UserManagementComponent implements OnInit {
     
     this.userService.GetUserById(userId).subscribe({
       next: (Response: any) => {
+        this.clearServerErrors();
+
         this.AddUser.controls['empId'].setValue(Response.empId);
         this.AddUser.controls['userName'].setValue(Response.userName);
         this.AddUser.controls['password'].setValue(Response.password);
@@ -159,7 +163,7 @@ export class UserManagementComponent implements OnInit {
         this.userService.DeleteUser(userId).subscribe({
 
           next: (Response) => {
-            this.toastService.showToast('success', 'Done', 'Delete User successfully');
+            this.toastService.showToast('warn', 'Done', 'Delete User successfully');
             this.userService.GetAllUsers().subscribe({
               next: (response) => {
                 this.data = response;

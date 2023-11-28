@@ -56,8 +56,8 @@
       </div>
 
       <div class="row ">
-        <div class=" err " *ngIf="serverErrors.length > 0">
-          <p class="text-danger" *ngFor="let error of serverErrors">{{ error }}</p>
+        <div *ngIf="serverErrors.length > 0">
+          <p class="text-danger text-center " *ngFor="let error of serverErrors">{{ error }}</p>
         </div>
       </div>
 

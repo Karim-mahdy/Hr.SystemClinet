@@ -1,5 +1,5 @@
 <section class="gradient-custom sec">
-  <div class="container py-5 h-100">
+  <div class="container py-4 h-100">
     <div class="card shadow w-75 mx-auto">
       <div class="card-header">
         <div class="d-flex justify-content-center align-items-center">
@@ -10,8 +10,8 @@
           </div>
         </div>
       </div>
-      <div class="card-body p-4 p-md-5">
-        <form [formGroup]="AddUser" (submit)="OnSubmit($event)" class="my-3">
+      <div class="card-body px-4 p-md-5">
+        <form [formGroup]="AddUser" (submit)="OnSubmit($event)" class=" mb-4">
           <div class="row">
             <div class="col-md-3 mb-2">
               <div class="form-outline">
@@ -101,7 +101,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row ">
             <div class="mb-2 mt-3 d-flex justify-content-center" *ngIf="(serverErrors.length > 0)">
               <p class="text-danger" *ngFor="let error of serverErrors">{{ error }}</p>
             </div>
@@ -114,7 +114,10 @@
         </form>
 
         <div class="row">
-          <table datatable [dtOptions]="dtoption"  class="pt-3  px-2 table table-light table-striped table-hover text-center table-bordered" [dtTrigger]="dtTrigger" id="dt-users"
+          <table datatable 
+          [dtOptions]="dtoption"
+          [dtTrigger]="dtTrigger"
+          class="pt-3  px-2 table table-light table-striped table-hover text-center table-bordered"  id="dt-users"
             width="100%"  >
             <thead class="thead-light text-uppercase text-center">
               <tr>

@@ -28,6 +28,7 @@
         >
           <thead class="thead-light   text-center ">
             <tr>
+              <th>#</th>
               <th>Name</th>
               <th>Department</th>
               <th>Salary</th>
@@ -43,7 +44,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let e of employees" class="table-row-hover">
+            <tr *ngFor="let e of employees ; let i = index" class="table-row-hover">
+              <td>{{ i + 1 }}</td>
               <td>{{ e.firstName }} {{ e.lastName }}</td>
               <td>{{ e.deptName }}</td>
               <td>{{ e.salary | currency:'USD':'symbol':'1.2-2' }}</td>

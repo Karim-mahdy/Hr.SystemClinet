@@ -54,10 +54,16 @@ export class DepartmentViewComponent implements OnInit {
 
 
           },
-          error: (error) => {
-            console.error('Error:', error); // Handle error response if needed
+          error: (error: any) => {
+
+            this.clearServerErrors();
+
+            this.serverErrors.push(error.error.message);
+           
+             
             this.toastService.showToast('error', 'Error', 'Delete Department failed');
-          },
+          }
+         
         });
       }
     });
@@ -80,7 +86,7 @@ export class DepartmentViewComponent implements OnInit {
 
   Toggle() {
     this.Show = true
-    
+    this.clearServerErrors();
   }
 
   get controlsname() {

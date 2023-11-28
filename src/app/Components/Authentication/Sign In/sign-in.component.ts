@@ -62,9 +62,9 @@ export class SignInComponent implements OnDestroy {
           // Handle the message or error from the response
           this.message = response.message;
         },
-        error: (err) => {
-          console.log(err);
-          this.apiError = err.error.title;
+        error: (err:any) => {
+          console.log(err.error.message);
+          this.apiError = err.error.message;
         },
       });
     }
